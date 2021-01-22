@@ -9,6 +9,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_splash
         super.onCreate(savedInstanceState)
+<<<<<<< HEAD
 
         // Set CountDown
         setCountdown()
@@ -41,5 +42,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             }
         }, 3000)
 
+=======
+>>>>>>> parent of 94aa155... add new onboarding looks
     }
 }
