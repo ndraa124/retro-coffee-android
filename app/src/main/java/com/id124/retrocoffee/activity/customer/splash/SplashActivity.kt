@@ -9,8 +9,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_splash
         super.onCreate(savedInstanceState)
-<<<<<<< Updated upstream
-=======
 
         // Set CountDown
         setCountdown()
@@ -42,6 +40,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 finish()
             }
         }, 3000)
->>>>>>> Stashed changes
+
     }
 }
