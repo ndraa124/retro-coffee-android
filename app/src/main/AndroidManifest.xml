@@ -53,7 +53,7 @@
         <activity
             android:name=".activity.customer.login.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
         <activity
             android:name=".activity.customer.forgot_password.new_password.NewPasswordActivity"
             android:screenOrientation="portrait"
