@@ -54,6 +54,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(), SplashContract.Vie
     }
 
     override fun setError() {
-        Toast.makeText(this, "Please Login First !", Toast.LENGTH_SHORT).show()
+        
     }
 }
