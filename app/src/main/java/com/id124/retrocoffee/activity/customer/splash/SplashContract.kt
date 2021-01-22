@@ -4,7 +4,7 @@ interface SplashContract {
 
     interface View {
         fun setCountdown()
-        fun setError(error: String)
+        fun setError()
     }
 
     interface Presenter{
