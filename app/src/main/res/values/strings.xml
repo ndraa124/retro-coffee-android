@@ -7,4 +7,7 @@
     <string name="create_new_account">Create New Account</string>
     <string name="img_description">MY IMAGE</string>
     <string name="tv_login">login</string>
+    <string name="coffee_for">Coffee for</string>
+    <string name="everyone">Everyone</string>
+    <string name="get_started">Get started</string>
 </resources>
