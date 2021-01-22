@@ -4,19 +4,25 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.id124.retrocoffee.R
+import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.activity.customer.register.RegisterActivity
-import com.id124.retrocoffee.base.BaseActivity
+import com.id124.retrocoffee.base.BaseActivityCoroutine
 import com.id124.retrocoffee.databinding.ActivityLoginBinding
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valEmail
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valPassword
 
-class LoginActivity : BaseActivity<ActivityLoginBinding>(), View.OnClickListener {
+class LoginActivity : BaseActivityCoroutine<ActivityLoginBinding>(), View.OnClickListener {
+    private lateinit var viewModel: LoginViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_login
         super.onCreate(savedInstanceState)
 
         initTextWatcher()
+        setViewModel()
+        subscribeLiveData()
     }
 
     override fun onClick(v: View?) {
@@ -28,10 +34,45 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), View.OnClickListener
                 when {
                     !valEmail(bind.inputLayoutEmail, bind.etEmail) -> {}
                     !valPassword(bind.inputLayoutPassword, bind.etPassword) -> {}
-                    else -> { noticeToast("Succes Login")}
+                    else -> {
+                        viewModel.serviceApi(
+                            email = bind.etEmail.text.toString(),
+                            password = bind.etPassword.text.toString()
+                        )
+                    }
                 }
             }
             }
+    }
+
+    private fun subscribeLiveData() {
+        viewModel.isLoadingLiveData.observe(this@LoginActivity, {
+            bind.btnLogin.visibility = View.GONE
+            bind.progressBar.visibility = View.VISIBLE
+        })
+
+        viewModel.onSuccessLiveData.observe(this@LoginActivity, {
+            if (it) {
+                bind.progressBar.visibility = View.GONE
+                bind.btnLogin.visibility = View.VISIBLE
+
+                intents<MainActivity>(this@LoginActivity)
+                this@LoginActivity.finish()
+            } else {
+                bind.progressBar.visibility = View.GONE
+                bind.btnLogin.visibility = View.VISIBLE
+            }
+        })
+
+        viewModel.onFailLiveData.observe(this@LoginActivity, {
+            noticeToast(it)
+        })
+    }
+
+    private fun setViewModel() {
+        viewModel = ViewModelProvider(this@LoginActivity).get(LoginViewModel::class.java)
+        viewModel.setService(createApi(this@LoginActivity))
+        viewModel.setSharedPref(sharedPref)
     }
 
     private fun initTextWatcher() {

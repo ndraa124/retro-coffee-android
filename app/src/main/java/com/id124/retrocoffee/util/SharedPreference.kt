@@ -30,13 +30,13 @@ class SharedPreference(private val context: Context) {
     private val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
     fun createAccount(
+        csId: Int,
         token: String,
         acId: Int,
         acName: String,
         acEmail: String,
         acPhone: String,
-        acLevel: Int,
-        csId: Int
+        acLevel: Int
     ) {
         editor.putBoolean(LOGIN, true)
         editor.putString(TOKEN, token)
@@ -123,5 +123,14 @@ class SharedPreference(private val context: Context) {
 
         context.startActivity(Intent(context, LoginActivity::class.java))
         (context as MainActivity).finish()
+    }
+
+    fun getAccountUser(): HashMap<String, String> {
+        val user: HashMap<String, String> = HashMap()
+        user[AC_NAME] = sharedPreferences.getString(AC_NAME, "Not set")!!
+        user[AC_EMAIL] = sharedPreferences.getString(AC_EMAIL, "Not set")!!
+        user[TOKEN] = sharedPreferences.getString(TOKEN, "Not set")!!
+
+        return user
     }
 }
