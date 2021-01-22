@@ -7,10 +7,92 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.customer.welcome.WelcomeActivity">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:textSize="65sp"
+            android:layout_marginTop="60dp"
+            android:textColor="#000000"
+            android:text="@string/welcome"
+            android:textAlignment="center"
+            android:fontFamily="@font/poppins_bold"
+            android:includeFontPadding="false"
+            android:layout_centerHorizontal="true"
+            android:letterSpacing="-0.03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_welcomeDesc"
+            android:text="@string/get_a_cup_of_coffee_for_free_only_new_user"
+            android:textColor="#000000"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:padding="4dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginEnd="38dp"
+            android:layout_below="@id/tv_welcome"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:src="@drawable/vt_welcome"
+            android:layout_marginTop="26dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_below="@id/tv_welcomeDesc"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bt_createNewAccount"
+            app:cardBackgroundColor="@color/primary"
+            app:cardCornerRadius="18dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="110dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/create_new_account"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bt_goLogin"
+            android:layout_marginBottom="32dp"
+            app:cardBackgroundColor="@color/secondary"
+            app:cardCornerRadius="18dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Login"
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
 </layout>
