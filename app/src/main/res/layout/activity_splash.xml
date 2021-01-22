@@ -7,10 +7,11 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:background="@drawable/bg_splashscreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.customer.splash.SplashActivity">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
