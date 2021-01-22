@@ -65,7 +65,7 @@
         <activity
             android:name=".activity.customer.welcome.WelcomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+            android:theme="@style/Theme.RetroCoffee.Fullscreen" />
         <activity
             android:name=".activity.customer.main.MainActivity"
             android:screenOrientation="portrait"
