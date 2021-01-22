@@ -53,13 +53,7 @@
         <activity
             android:name=".activity.customer.login.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
         <activity
             android:name=".activity.customer.forgot_password.new_password.NewPasswordActivity"
             android:screenOrientation="portrait"
@@ -80,6 +74,11 @@
             android:name=".activity.customer.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.RetroCoffee.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <provider

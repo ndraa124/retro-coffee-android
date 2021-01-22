@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient {
     companion object {
-        private const val BASE_URL = "http://3.80.117.134:2000/"
+        private const val BASE_URL = "http://34.226.122.189:3000/"
         const val BASE_URL_IMAGE = BASE_URL + "images/"
 
         private fun provideHttpLoggingInterceptor() = run {
