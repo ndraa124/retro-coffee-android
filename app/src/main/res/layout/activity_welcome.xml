@@ -57,7 +57,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="110dp"
+            android:layout_marginBottom="120dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -74,7 +74,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/bt_goLogin"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="42dp"
             app:cardBackgroundColor="@color/secondary"
             app:cardCornerRadius="18dp"
             android:layout_alignParentBottom="true"
