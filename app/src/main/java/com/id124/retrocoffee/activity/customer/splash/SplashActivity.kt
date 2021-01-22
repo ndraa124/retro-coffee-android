@@ -9,5 +9,39 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_splash
         super.onCreate(savedInstanceState)
+<<<<<<< Updated upstream
+=======
+
+        // Set CountDown
+        setCountdown()
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter?.bindToView(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter?.unbind()
+    }
+
+    override fun setCountdown() {
+        //Condition Login
+        val condition = 0 // Just Asal nanti diperbaiki ketika login dah selesai
+
+        Handler().postDelayed({
+            if(condition == 1){
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+            else {
+                val intent = Intent(this, OnboardActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }, 3000)
+>>>>>>> Stashed changes
     }
 }
