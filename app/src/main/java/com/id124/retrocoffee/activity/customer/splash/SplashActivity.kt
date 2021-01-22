@@ -1,16 +1,24 @@
 package com.id124.retrocoffee.activity.customer.splash
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
+import androidx.core.os.HandlerCompat.postDelayed
+import androidx.navigation.fragment.findNavController
 import com.id124.retrocoffee.R
+import com.id124.retrocoffee.activity.customer.main.MainActivity
+import com.id124.retrocoffee.activity.customer.onboard.OnboardActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivitySplashBinding
 
-class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+class SplashActivity : BaseActivity<ActivitySplashBinding>(), SplashContract.View {
+
+    private var presenter: SplashPresenter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_splash
         super.onCreate(savedInstanceState)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         // Set CountDown
         setCountdown()
@@ -38,14 +46,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             }
             else {
                 val intent = Intent(this, OnboardActivity::class.java)
+                setError()
                 startActivity(intent)
                 finish()
             }
         }, 3000)
+    }
 
-=======
->>>>>>> parent of 94aa155... add new onboarding looks
-=======
->>>>>>> parent of 94aa155... add new onboarding looks
+    override fun setError() {
+        Toast.makeText(this, "Login terlebih dahulu gan !", Toast.LENGTH_SHORT).show()
     }
 }
