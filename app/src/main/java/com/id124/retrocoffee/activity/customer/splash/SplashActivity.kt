@@ -54,6 +54,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(), SplashContract.Vie
     }
 
     override fun setError() {
-        
+
     }
 }
