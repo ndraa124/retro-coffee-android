@@ -84,6 +84,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.customer.product_search.ProductSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
