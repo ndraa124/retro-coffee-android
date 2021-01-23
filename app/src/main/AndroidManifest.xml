@@ -13,7 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RetroCoffee">
-        <activity android:name=".activity.customer.product_search.ProductSearchActivity"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -81,6 +80,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.customer.product_search.ProductSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

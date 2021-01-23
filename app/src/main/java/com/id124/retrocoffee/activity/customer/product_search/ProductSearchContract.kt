@@ -5,6 +5,8 @@ import com.id124.retrocoffee.model.product.ProductModel
 interface ProductSearchContract {
     interface View {
         fun addProductList(list: List<ProductModel>)
+        fun setService()
+        fun setRecyclerView()
         fun setError(error: String)
         fun showProgressBar()
         fun hideProgressBar()
