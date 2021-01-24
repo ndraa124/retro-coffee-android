@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.id124.retrocoffee.remote.ApiClient
+import com.id124.retrocoffee.util.SharedPreference
 
 abstract class BaseActivity<ActivityBinding : ViewDataBinding> : AppCompatActivity() {
     protected lateinit var bind: ActivityBinding
+    protected lateinit var sharedPref: SharedPreference
     protected var setLayout: Int? = null
 
     companion object {
@@ -20,6 +22,8 @@ abstract class BaseActivity<ActivityBinding : ViewDataBinding> : AppCompatActivi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = DataBindingUtil.setContentView(this@BaseActivity, setLayout!!)
+
+        sharedPref = SharedPreference(this@BaseActivity)
     }
 
     protected inline fun <reified ClassActivity> intents(context: Context) {
