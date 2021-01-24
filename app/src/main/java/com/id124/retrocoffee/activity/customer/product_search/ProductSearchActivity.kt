@@ -1,6 +1,10 @@
 package com.id124.retrocoffee.activity.customer.product_search
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
+import android.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +23,7 @@ import kotlinx.coroutines.cancel
 class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), ProductSearchContract.View {
 
     private lateinit var coroutineScope: CoroutineScope
+    private lateinit var handler: Handler
     private var presenter: ProductSearchPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,10 +33,14 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
         //Set Service
         setService()
 
+        //Set Data Refresh
+        setDataRefresh()
+
         //Set RecyclerView
         setRecyclerView()
 
-        presenter?.getAllProductList()
+        //Set Search
+        setSearchFeature()
 
     }
 
@@ -45,6 +54,16 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
         presenter = ProductSearchPresenter(coroutineScope, service)
     }
 
+    override fun setDataRefresh() {
+        handler = Handler(Looper.getMainLooper())
+        handler.post(object : Runnable {
+            override fun run() {
+                presenter?.getAllProductList()
+                handler.postDelayed(this, 5000)
+            }
+        })
+    }
+
     override fun setRecyclerView() {
         bind.rvProduct.adapter = ProductAdapter()
         bind.rvProduct.layoutManager = GridLayoutManager(
@@ -53,6 +72,34 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
             GridLayoutManager.VERTICAL,
             false
         )
+    }
+
+    override fun setSearchFeature() {
+        bind.tbSearchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                bind.tbSearchBar.clearFocus()
+                if (query != null) {
+                    bind.rvProduct.visibility = View.VISIBLE
+                    handler.removeCallbacksAndMessages(null)
+                    presenter?.getProductByName(query)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    handler.removeCallbacksAndMessages(null)
+                    presenter?.getProductByName(newText)
+                }
+                return false
+            }
+        })
+
+        bind.tbSearchBar.setOnCloseListener {
+            bind.tbSearchBar.clearFocus()
+            presenter?.getAllProductList()
+            false
+        }
     }
 
     override fun setError(error: String) {
