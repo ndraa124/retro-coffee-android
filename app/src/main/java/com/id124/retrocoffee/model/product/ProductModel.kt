@@ -5,20 +5,34 @@ import com.google.gson.annotations.SerializedName
 data class ProductModel(
     @SerializedName("pr_id")
     val prId: Int,
+
     @SerializedName("ct_id")
     val ctId: Int,
-    @SerializedName("ct_pic_image")
-    val ctImage: String,
+
     @SerializedName("pr_name")
     val prName: String,
+
     @SerializedName("pr_price")
-    val prPrice: String,
+    val prPrice: Long,
+
     @SerializedName("pr_desc")
     val prDesc: String,
+
+    @SerializedName("pr_discount")
+    val prDiscount: Int,
+
+    @SerializedName("pr_discount_price")
+    val prDiscountPrice: Long,
+
+    @SerializedName("pr_is_discount")
+    val prIsDiscount: Int,
+
     @SerializedName("pr_status")
-    val prStatus: String,
+    val prStatus: Int,
+
     @SerializedName("pr_pic_image")
-    val prImage: String,
-    @SerializedName("pr_updated_at")
-    val prUpdateStamp: String,
+    val prPicImage: String? = null,
+
+    @SerializedName("ct_name")
+    val ctName: String
 )

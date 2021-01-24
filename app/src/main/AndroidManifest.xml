@@ -22,6 +22,14 @@
             android:required="false" />
 
         <activity
+            android:name=".activity.customer.profile.EditProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
+            android:name=".activity.customer.profile.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
             android:name=".activity.customer.promote.PromoteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.RetroCoffee.NoActionBar" />

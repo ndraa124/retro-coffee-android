@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_edit_profile"
+        android:title="@string/menu_edit_profile" />
+
+    <item
+        android:id="@+id/nav_orders"
+        android:icon="@drawable/ic_orders"
+        android:title="@string/menu_orders" />
+
+    <item
+        android:id="@+id/nav_all_menu"
+        android:icon="@drawable/ic_all_menu"
+        android:title="@string/menu_all" />
+
+    <item
+        android:id="@+id/nav_privacy"
+        android:icon="@drawable/ic_privacy"
+        android:title="@string/menu_privacy" />
+
+    <item
+        android:id="@+id/nav_security"
+        android:icon="@drawable/ic_security"
+        android:title="@string/menu_security" />
+</menu>
