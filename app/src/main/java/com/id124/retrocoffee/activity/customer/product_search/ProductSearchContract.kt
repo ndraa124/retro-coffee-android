@@ -6,7 +6,9 @@ interface ProductSearchContract {
     interface View {
         fun addProductList(list: List<ProductModel>)
         fun setService()
+        fun setDataRefresh()
         fun setRecyclerView()
+        fun setSearchFeature()
         fun setError(error: String)
         fun showProgressBar()
         fun hideProgressBar()
