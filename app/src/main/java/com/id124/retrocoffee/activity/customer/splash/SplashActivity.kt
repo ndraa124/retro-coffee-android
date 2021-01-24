@@ -1,11 +1,7 @@
 package com.id124.retrocoffee.activity.customer.splash
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.widget.Toast
-import androidx.core.os.HandlerCompat.postDelayed
-import androidx.navigation.fragment.findNavController
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.activity.customer.onboard.OnboardActivity
@@ -20,9 +16,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(), SplashContract.Vie
         setLayout = R.layout.activity_splash
         super.onCreate(savedInstanceState)
 
-        // Set CountDown
         setCountdown()
-
     }
 
     override fun onStart() {
@@ -36,24 +30,18 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(), SplashContract.Vie
     }
 
     override fun setCountdown() {
-        //Condition Login
-        val condition = 0 // Just Asal nanti diperbaiki ketika login dah selesai
-
         Handler().postDelayed({
-            if(condition == 1){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+            if(sharedPref.getIsLogin()) {
+                intents<MainActivity>(this@SplashActivity)
+                finish()
             }
             else {
-                val intent = Intent(this, OnboardActivity::class.java)
-                setError()
-                startActivity(intent)
+                intents<OnboardActivity>(this@SplashActivity)
                 finish()
             }
         }, 3000)
     }
 
     override fun setError() {
-
     }
 }

@@ -26,7 +26,7 @@
                 app:tint="@color/black" />
 
             <TextView
-                android:text="@string/search_product"
+                android:text="Favorite Product"
                 android:textSize="20sp"
                 android:paddingTop="4dp"
                 android:fontFamily="@font/poppins_semibold"
@@ -38,25 +38,20 @@
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.SearchView
+        <TextView
             android:id="@+id/tv_everyoneFavorite"
-            android:layout_marginTop="32dp"
-            app:queryHint="Product Name..."
-            android:layout_marginHorizontal="25dp"
-            app:queryBackground="@color/white"
+            android:layout_marginTop="72dp"
             android:fontFamily="@font/poppins_bold"
             android:textColor="#000000"
             android:layout_below="@id/tv_favoriteProduct"
-            app:iconifiedByDefault="false"
+            android:text="Everyone's Favorite"
             android:gravity="center"
             android:textSize="25sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_Product"
+            android:id="@+id/rv_favoriteProduct"
             android:layout_below="@id/tv_everyoneFavorite"
             android:layout_marginTop="12dp"
             android:layout_centerInParent="true"

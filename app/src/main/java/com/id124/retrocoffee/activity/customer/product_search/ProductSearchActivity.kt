@@ -1,6 +1,7 @@
 package com.id124.retrocoffee.activity.customer.product_search
 
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
@@ -22,10 +23,16 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_product_search
+        super.onCreate(savedInstanceState)
+
+        //Set Service
+        setService()
+
+        //Set RecyclerView
+        setRecyclerView()
 
         presenter?.getAllProductList()
 
-        super.onCreate(savedInstanceState)
     }
 
     override fun addProductList(list: List<ProductModel>) {
@@ -40,8 +47,12 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
 
     override fun setRecyclerView() {
         bind.rvProduct.adapter = ProductAdapter()
-        bind.rvProduct.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-
+        bind.rvProduct.layoutManager = GridLayoutManager(
+            this,
+            2,
+            GridLayoutManager.VERTICAL,
+            false
+        )
     }
 
     override fun setError(error: String) {

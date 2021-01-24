@@ -6,4 +6,6 @@
     <string name="welcome">Welcome!</string>
     <string name="create_new_account">Create New Account</string>
     <string name="search_product">Search Product</string>
+    <string name="img_description" />
+    <string name="tv_login">Login</string>
 </resources>
