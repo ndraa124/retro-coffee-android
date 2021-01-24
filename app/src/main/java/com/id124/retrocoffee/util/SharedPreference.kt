@@ -110,8 +110,12 @@ class SharedPreference(private val context: Context) {
         return sharedPreferences.getString(CS_DOB, "")!!
     }
 
+    fun getIsLogin(): Boolean {
+        return sharedPreferences.getBoolean(LOGIN, false)
+    }
+
     fun checkIsLogin() {
-        if (!sharedPreferences.getBoolean(LOGIN, false)) {
+        if (!getIsLogin()) {
             context.startActivity(Intent(context, LoginActivity::class.java))
             (context as MainActivity).finish()
         }
