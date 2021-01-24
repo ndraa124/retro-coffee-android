@@ -16,6 +16,8 @@
         android:theme="@style/Theme.RetroCoffee"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".activity.customer.profile.EditProfileActivity"></activity>
+        <activity android:name=".activity.customer.profile.ProfileActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"

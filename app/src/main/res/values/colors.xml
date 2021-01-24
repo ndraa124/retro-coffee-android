@@ -8,4 +8,5 @@
     <color name="black">#000000</color>
     <color name="shimmer">#DDDDDD</color>
     <color name="gray_500">#9A9A9A</color>
+    <color name="bgprofile">#F5F5F8</color>
 </resources>
