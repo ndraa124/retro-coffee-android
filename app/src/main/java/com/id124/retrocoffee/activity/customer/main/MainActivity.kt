@@ -10,6 +10,7 @@ import com.google.android.material.navigation.NavigationView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
 import com.id124.retrocoffee.activity.customer.main.fragment.ProductFragment
+import com.id124.retrocoffee.activity.customer.profile.ProfileActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityMainBinding
 import com.id124.retrocoffee.util.ViewPagerAdapter
@@ -44,7 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_profile -> {
-                Log.d("msg", "Edit Profile")
+                intents<ProfileActivity>(this@MainActivity)
             }
             R.id.nav_orders -> {
                 Log.d("msg", "Orders")
