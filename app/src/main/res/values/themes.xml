@@ -20,32 +20,4 @@
         <item name="android:windowFullscreen">true</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-    <style name="Theme.RetroCoffee.NavigationTheme" parent="Theme.RetroCoffee">
-        <item name="listPreferredItemHeightSmall">64dp</item>
-        <item name="fontFamily">@font/poppins_semibold</item>
-    </style>
-
-    <style name="Theme.RetroCoffee.SearchViewTheme" parent="Widget.AppCompat.Light.SearchView">
-        <item name="android:textColorHint">@color/gray_500</item>
-        <item name="android:editTextColor">@color/primary</item>
-    </style>
-
-    <style name="Theme.RetroCoffee.FontTabLayout" parent="@android:style/TextAppearance.Widget.TabWidget">
-        <item name="android:fontFamily">@font/poppins</item>
-        <item name="android:typeface">normal</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="Theme.RetroCoffee.CardViewHome" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeCardViewHome</item>
-    </style>
-
-    <style name="ShapeCardViewHome" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">32dp</item>
-        <item name="cornerSizeTopLeft">0dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-    </style>
 </resources>
