@@ -4,11 +4,8 @@
     <color name="secondary">#FFBA33</color>
     <color name="background">#F9F9FF</color>
     <color name="white">#FFFFFF</color>
-    <color name="transparent">#00FFFFFF</color>
+    <color name="transparent">#00AF0000</color>
     <color name="black">#000000</color>
     <color name="shimmer">#DDDDDD</color>
-    <color name="gray_700">#6A6A6A</color>
     <color name="gray_500">#9A9A9A</color>
-    <color name="gray_300">#EFEEEE</color>
-    <color name="gray_200">#F6F6F6</color>
 </resources>
