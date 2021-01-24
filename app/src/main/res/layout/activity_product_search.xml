@@ -42,6 +42,7 @@
             android:id="@+id/tv_everyoneFavorite"
             android:layout_marginTop="32dp"
             app:queryHint="Product Name..."
+            android:layout_marginHorizontal="25dp"
             app:queryBackground="@color/white"
             android:fontFamily="@font/poppins_bold"
             android:textColor="#000000"

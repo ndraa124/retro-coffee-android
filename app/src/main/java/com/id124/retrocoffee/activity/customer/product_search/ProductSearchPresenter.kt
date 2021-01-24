@@ -49,10 +49,8 @@ class ProductSearchPresenter (private val coroutineScope: CoroutineScope,
                         ProductModel(it.prId, it.ctId, it.ctImage, it.prName, it.prPrice, it.prDesc, it.prStatus, it.prImage, it.prUpdateStamp)
                     }
                     view?.addProductList(list)
-                    view?.hideProgressBar()
                 }
                 else {
-                    view?.hideProgressBar()
                     view?.setError(result.message)
                 }
             }
