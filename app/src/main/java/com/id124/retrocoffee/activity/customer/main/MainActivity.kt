@@ -1,5 +1,6 @@
 package com.id124.retrocoffee.activity.customer.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -11,6 +12,7 @@ import com.google.android.material.navigation.NavigationView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
 import com.id124.retrocoffee.activity.customer.main.fragment.ProductFragment
+import com.id124.retrocoffee.activity.customer.product_search.ProductSearchActivity
 import com.id124.retrocoffee.activity.customer.profile.ProfileActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityMainBinding
@@ -34,7 +36,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.ln_search -> {
-
+                startActivity(Intent(this, ProductSearchActivity::class.java))
             }
             R.id.btn_logout -> {
                 bind.drawerLayout.closeDrawer(GravityCompat.START)

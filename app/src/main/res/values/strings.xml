@@ -30,4 +30,6 @@
     <!-- Detail Product -->
     <string name="info_detail_product">Delivery only on Monday to friday at 1 – 7 pm</string>
     <string name="add_to_cart">Add to cart</string>
+    <string name="search_product">Search Product</string>
+    <string name="not_found">not found</string>
 </resources>
