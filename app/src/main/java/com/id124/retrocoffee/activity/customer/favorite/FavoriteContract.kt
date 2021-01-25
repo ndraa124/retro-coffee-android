@@ -6,6 +6,7 @@ interface FavoriteContract {
     interface View {
         fun showFavoriteList(list: List<FavoriteModel>)
         fun setError(error: String)
+        fun setService()
         fun showProgressBar()
         fun hideProgressBar()
     }
