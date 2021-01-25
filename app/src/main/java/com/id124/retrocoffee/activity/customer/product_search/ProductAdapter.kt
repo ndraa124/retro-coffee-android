@@ -41,7 +41,7 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
         holder.binding.tvProductPrice.text = format.format(item.prPrice.toDouble())
 
         Glide.with(context)
-            .load("http://18.212.11.190:3000/images/${item.prImage}")
+            .load("http://18.212.11.190:3000/images/${item.prPicImage}")
             .into(holder.binding.ivProductImage)
 
         holder.itemView.setOnClickListener {
