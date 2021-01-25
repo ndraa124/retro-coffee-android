@@ -7,6 +7,9 @@ interface FavoriteContract {
         fun showFavoriteList(list: List<FavoriteModel>)
         fun setError(error: String)
         fun setService()
+        fun getSavedCostumerID()
+        fun setRecyclerView()
+        fun setDataRefresh()
         fun showProgressBar()
         fun hideProgressBar()
     }
