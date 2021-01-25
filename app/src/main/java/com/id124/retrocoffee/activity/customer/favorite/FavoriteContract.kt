@@ -13,7 +13,7 @@ interface FavoriteContract {
     interface Presenter{
         fun bindToView(view: View)
         fun unbind()
-        fun getFavorite()
+        fun getFavorite(costumerID: String)
         fun deleteFavorite(favoriteID : String)
     }
 }
