@@ -90,14 +90,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     }
 
     private fun setToolbarActionBar() {
+        setStatusBar()
+        setSupportActionBar(bind.toolbar)
+        supportActionBar?.title = ""
+    }
+
+    private fun setStatusBar() {
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         window.statusBarColor = this.resources.getColor(R.color.background, theme)
-
-        setSupportActionBar(bind.toolbar)
-        supportActionBar?.title = ""
     }
 
     private fun setNavigationDrawer() {
