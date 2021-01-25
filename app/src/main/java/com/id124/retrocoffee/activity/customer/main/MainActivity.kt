@@ -6,6 +6,7 @@ import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.google.android.material.navigation.NavigationView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
