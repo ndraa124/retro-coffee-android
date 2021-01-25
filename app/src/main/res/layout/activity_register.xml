@@ -213,7 +213,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:indeterminate="true"
-                        android:indeterminateTint="@color/white"
+                        android:indeterminateTint="@color/primary"
                         android:visibility="gone" />
 
                     <Button
