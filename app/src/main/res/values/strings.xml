@@ -19,6 +19,8 @@
     <string name="menu_security">Security</string>
     <string name="menu_divider">Divider</string>
     <string name="menu_cart">Cart</string>
+    <string name="menu_favorite">Add to favorite</string>
+    <string name="menu_unfavorite">Remove favorite</string>
     <string name="sign_out">Sign-out</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
