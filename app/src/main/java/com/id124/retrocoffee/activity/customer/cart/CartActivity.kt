@@ -9,5 +9,12 @@ class CartActivity : BaseActivity<ActivityCartBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_cart
         super.onCreate(savedInstanceState)
+
+        bind.toolbar.title = "My Cart"
+        setSupportActionBar(bind.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        bind.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 }
