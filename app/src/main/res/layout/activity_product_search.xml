@@ -42,8 +42,9 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_marginTop="32dp"
+            android:layout_marginStart="40dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="42dp">
 
             <SearchView
                 android:id="@+id/tb_SearchBar"
@@ -55,13 +56,19 @@
                 android:queryBackground="@color/white"
                 android:gravity="center"
                 android:textSize="25sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_width="300dp"
+                android:layout_height="match_parent"/>
+
+            <ImageView
+                android:id="@+id/filter"
+                android:src="@drawable/ic_filter"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
-
-
-
 
         <RelativeLayout
             android:id="@+id/loadingScreen"
@@ -99,9 +106,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_Product"
-            android:layout_below="@id/tb_SearchBar"
             android:layout_marginTop="12dp"
-            android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

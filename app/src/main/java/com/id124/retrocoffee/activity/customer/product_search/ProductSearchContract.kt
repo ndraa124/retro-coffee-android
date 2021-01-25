@@ -9,6 +9,10 @@ interface ProductSearchContract {
         fun setDataRefresh()
         fun setRecyclerView()
         fun setSearchFeature()
+        fun popUpManager()
+        fun quickPopUpManager()
+        fun quickFilterListener()
+        fun searchFilterListener(Query: String)
         fun setError(error: String)
         fun showProgressBar()
         fun hideProgressBar()
@@ -19,7 +23,10 @@ interface ProductSearchContract {
         fun unbind()
         fun getAllProductList()
         fun getProductByName(product: String)
-        fun getByHigherPrice(product: String)
-        fun getByLowerPrice(product: String)
+        fun getProductByCategory(product: String)
+        fun getByHigherPrice()
+        fun getByLowerPrice()
+        fun searchByHigherPrice(product: String)
+        fun searchByLowerPrice(product: String)
     }
 }

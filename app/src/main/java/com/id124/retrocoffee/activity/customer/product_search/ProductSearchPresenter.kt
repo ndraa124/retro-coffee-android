@@ -46,12 +46,14 @@ class ProductSearchPresenter (private val coroutineScope: CoroutineScope,
             if (result is ProductResponse) {
                 if (result.success){
                     val list = result.data?.map{
-                        ProductModel(it.prId, it.ctId, it.ctImage, it.prName, it.prPrice, it.prDesc, it.prStatus, it.prImage, it.prUpdateStamp)
+                        ProductModel(it.prId, it.ctId, it.prName, it.prPrice, it.prDesc, it.prDiscount, it.prDiscountPrice, it.prIsDiscount, it.prStatus, it.prPicImage, it.ctName)
                     }
                     view?.addProductList(list)
+                    view?.hideProgressBar()
                 }
                 else {
                     view?.setError(result.message)
+                    view?.hideProgressBar()
                 }
             }
         }
@@ -81,7 +83,7 @@ class ProductSearchPresenter (private val coroutineScope: CoroutineScope,
             if (result is ProductResponse) {
                 if (result.success){
                     val list = result.data?.map{
-                        ProductModel(it.prId, it.ctId, it.ctImage, it.prName, it.prPrice, it.prDesc, it.prStatus, it.prImage, it.prUpdateStamp)
+                        ProductModel(it.prId, it.ctId, it.prName, it.prPrice, it.prDesc, it.prDiscount, it.prDiscountPrice, it.prIsDiscount, it.prStatus, it.prPicImage, it.ctName)
                     }
                     view?.addProductList(list)
                     view?.hideProgressBar()
@@ -94,12 +96,189 @@ class ProductSearchPresenter (private val coroutineScope: CoroutineScope,
         }
     }
 
-    override fun getByHigherPrice(product: String) {
-        TODO("Not yet implemented")
+    override fun getProductByCategory(product: String) {
+        coroutineScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service?.searchProductByCategory(product)
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main){
+                        when{
+                            e.code() == 404 -> {
+                                view?.setError("Product Not Found !")
+                            }
+
+                            else -> {
+                                view?.setError("Unknown Error, Please Try Again Later !")
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (result is ProductResponse) {
+                if (result.success){
+                    val list = result.data?.map{
+                        ProductModel(it.prId, it.ctId, it.prName, it.prPrice, it.prDesc, it.prDiscount, it.prDiscountPrice, it.prIsDiscount, it.prStatus, it.prPicImage, it.ctName)
+                    }
+                    view?.addProductList(list)
+                    view?.hideProgressBar()
+                }
+                else {
+                    view?.hideProgressBar()
+                    view?.setError(result.message)
+                }
+            }
+        }
     }
 
-    override fun getByLowerPrice(product: String) {
-        TODO("Not yet implemented")
+    override fun getByHigherPrice() {
+        coroutineScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service?.getProductByHigher()
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main){
+                        when{
+                            e.code() == 404 -> {
+                                view?.setError("Product Not Found !")
+                            }
+
+                            else -> {
+                                view?.setError("Unknown Error, Please Try Again Later !")
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (result is ProductResponse) {
+                if (result.success){
+                    val list = result.data?.map{
+                        ProductModel(it.prId, it.ctId, it.prName, it.prPrice, it.prDesc, it.prDiscount, it.prDiscountPrice, it.prIsDiscount, it.prStatus, it.prPicImage, it.ctName)
+                    }
+                    view?.addProductList(list)
+                    view?.hideProgressBar()
+                }
+                else {
+                    view?.hideProgressBar()
+                    view?.setError(result.message)
+                }
+            }
+        }
+    }
+
+    override fun getByLowerPrice() {
+        coroutineScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service?.getProductByLower()
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main){
+                        when{
+                            e.code() == 404 -> {
+                                view?.setError("Product Not Found !")
+                            }
+
+                            else -> {
+                                view?.setError("Unknown Error, Please Try Again Later !")
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (result is ProductResponse) {
+                if (result.success){
+                    val list = result.data?.map{
+                        ProductModel(it.prId, it.ctId, it.prName, it.prPrice, it.prDesc, it.prDiscount, it.prDiscountPrice, it.prIsDiscount, it.prStatus, it.prPicImage, it.ctName)
+                    }
+                    view?.addProductList(list)
+                    view?.hideProgressBar()
+                }
+                else {
+                    view?.hideProgressBar()
+                    view?.setError(result.message)
+                }
+            }
+        }
+    }
+
+    override fun searchByHigherPrice(product: String) {
+        coroutineScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service?.searchProductByHigher(product)
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main){
+                        when{
+                            e.code() == 404 -> {
+                                view?.setError("Product Not Found !")
+                            }
+
+                            else -> {
+                                view?.setError("Unknown Error, Please Try Again Later !")
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (result is ProductResponse) {
+                if (result.success){
+                    val list = result.data?.map{
+                        ProductModel(it.prId, it.ctId, it.prName, it.prPrice, it.prDesc, it.prDiscount, it.prDiscountPrice, it.prIsDiscount, it.prStatus, it.prPicImage, it.ctName)
+                    }
+                    view?.addProductList(list)
+                    view?.hideProgressBar()
+                }
+                else {
+                    view?.hideProgressBar()
+                    view?.setError(result.message)
+                }
+            }
+        }
+    }
+
+    override fun searchByLowerPrice(product: String) {
+        coroutineScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service?.searchProductByLower(product)
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main){
+                        when{
+                            e.code() == 404 -> {
+                                view?.setError("Product Not Found !")
+                            }
+
+                            else -> {
+                                view?.setError("Unknown Error, Please Try Again Later !")
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (result is ProductResponse) {
+                if (result.success){
+                    val list = result.data?.map{
+                        ProductModel(it.prId, it.ctId, it.prName, it.prPrice, it.prDesc, it.prDiscount, it.prDiscountPrice, it.prIsDiscount, it.prStatus, it.prPicImage, it.ctName)
+                    }
+                    view?.addProductList(list)
+                    view?.hideProgressBar()
+                }
+                else {
+                    view?.hideProgressBar()
+                    view?.setError(result.message)
+                }
+            }
+        }
     }
 
 

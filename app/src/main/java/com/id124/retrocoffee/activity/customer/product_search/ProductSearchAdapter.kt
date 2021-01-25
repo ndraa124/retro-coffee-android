@@ -14,7 +14,7 @@ import com.id124.retrocoffee.model.product.ProductModel
 import java.text.NumberFormat
 import java.util.*
 
-class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
+class ProductSearchAdapter: RecyclerView.Adapter<ProductSearchAdapter.ProductHolder>() {
     private var items = mutableListOf<ProductModel>()
 
     fun addList(list: List<ProductModel>){
