@@ -6,6 +6,7 @@ import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.google.android.material.navigation.NavigationView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
@@ -89,14 +90,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     }
 
     private fun setToolbarActionBar() {
+        setStatusBar()
+        setSupportActionBar(bind.toolbar)
+        supportActionBar?.title = ""
+    }
+
+    private fun setStatusBar() {
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         window.statusBarColor = this.resources.getColor(R.color.background, theme)
-
-        setSupportActionBar(bind.toolbar)
-        supportActionBar?.title = ""
     }
 
     private fun setNavigationDrawer() {
