@@ -10,6 +10,7 @@ interface ProductSearchContract {
         fun setRecyclerView()
         fun setSearchFeature()
         fun setError(error: String)
+        fun setBackButton()
         fun showProgressBar()
         fun hideProgressBar()
     }

@@ -106,6 +106,12 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
         TODO("Not yet implemented")
     }
 
+    override fun setBackButton() {
+        bind.btBackButton.setOnClickListener {
+            finish()
+        }
+    }
+
     override fun showProgressBar() {
         TODO("Not yet implemented")
     }
