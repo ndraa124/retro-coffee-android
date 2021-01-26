@@ -25,5 +25,5 @@ data class CartModel(
     val crExpired: Int,
 
     @SerializedName("cr_pic_image")
-    val crPicImage: String
+    val crPicImage: String? = null
 )
