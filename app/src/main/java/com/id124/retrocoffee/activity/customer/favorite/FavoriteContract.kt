@@ -4,7 +4,7 @@ import com.id124.retrocoffee.model.favorite.FavoriteModel
 
 interface FavoriteContract {
     interface View {
-        fun showFavoriteList(list: List<FavoriteModel>)
+        fun addFavoriteList(list: List<FavoriteModel>)
         fun setError(error: String)
         fun setService()
         fun getSavedCostumerID()

@@ -47,7 +47,6 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder>() {
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ProductDetailActivity::class.java)
             intent.putExtra("productID", item.prID)
-            intent.putExtra("favoriteID", item.faId)
 
             context.startActivity(intent)
         }

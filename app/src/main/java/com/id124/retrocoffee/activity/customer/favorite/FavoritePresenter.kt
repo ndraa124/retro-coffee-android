@@ -48,7 +48,7 @@ class FavoritePresenter (private val coroutineScope: CoroutineScope,
                     val list = result.data?.map{
                         FavoriteModel(it.faId, it.csId, it.prID, it.prName, it.prPrice, it.prDesc, it.prPic)
                     }
-                    view?.showFavoriteList(list)
+                    view?.addFavoriteList(list)
                     view?.hideProgressBar()
                 }
                 else {
@@ -85,7 +85,7 @@ class FavoritePresenter (private val coroutineScope: CoroutineScope,
                     val list = result.data?.map{
                         FavoriteModel(it.faId, it.csId, it.prID, it.prName, it.prPrice, it.prDesc, it.prPic)
                     }
-                    view?.showFavoriteList(list)
+                    view?.addFavoriteList(list)
                     view?.hideProgressBar()
                 }
                 else {

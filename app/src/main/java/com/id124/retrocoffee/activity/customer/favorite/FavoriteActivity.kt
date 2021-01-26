@@ -16,6 +16,7 @@ import com.id124.retrocoffee.service.ProductApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 
 class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContract.View {
 
@@ -34,14 +35,15 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
         //Set RecyclerView
         setRecyclerView()
 
-        //Show Progressbar
-        showProgressBar()
-
         //Set Favorite list
         setFavoriteList()
+
+        //Show ProgressBar
+        showProgressBar()
+
     }
 
-    override fun showFavoriteList(list: List<FavoriteModel>) {
+    override fun addFavoriteList(list: List<FavoriteModel>) {
         (bind.rvFavoriteProduct.adapter as FavoriteAdapter).addList(list)
         bind.rvFavoriteProduct.visibility = View.VISIBLE
         bind.lnNotFound.visibility = View.GONE
@@ -73,7 +75,7 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
     }
 
     override fun setFavoriteList() {
-        presenter?.getFavorite(2)
+        presenter?.getFavorite(costumerID!!)
     }
 
     override fun showProgressBar() {
@@ -83,5 +85,20 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
 
     override fun hideProgressBar() {
         bind.loadingScreen.visibility = View.GONE
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter?.bindToView(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter?.unbind()
+    }
+
+    override fun onDestroy() {
+        coroutineScope.cancel()
+        super.onDestroy()
     }
 }
