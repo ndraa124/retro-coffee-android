@@ -9,7 +9,7 @@ interface FavoriteContract {
         fun setService()
         fun getSavedCostumerID()
         fun setRecyclerView()
-        fun setDataRefresh()
+        fun setFavoriteList()
         fun showProgressBar()
         fun hideProgressBar()
     }
@@ -17,7 +17,7 @@ interface FavoriteContract {
     interface Presenter{
         fun bindToView(view: View)
         fun unbind()
-        fun getFavorite(costumerID: String)
-        fun deleteFavorite(favoriteID : String)
+        fun getFavorite(costumerID: Int)
+        fun deleteFavorite(favoriteID : Int)
     }
 }

@@ -32,4 +32,6 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="search_product">Search Product</string>
     <string name="not_found">not found</string>
+    <string name="search_now">Search Now</string>
+    <string name="you_don_t_have_any_favorite_yet">You don\'t have any favorite yet</string>
 </resources>

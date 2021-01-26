@@ -22,7 +22,7 @@ class FavoritePresenter (private val coroutineScope: CoroutineScope,
         this.view = null
     }
 
-    override fun getFavorite(costumerID: String) {
+    override fun getFavorite(costumerID: Int) {
         coroutineScope.launch {
             val result = withContext(Dispatchers.IO) {
                 try {
@@ -59,8 +59,41 @@ class FavoritePresenter (private val coroutineScope: CoroutineScope,
         }
     }
 
-    override fun deleteFavorite(favoriteID: String) {
-        TODO("Not yet implemented")
+    override fun deleteFavorite(favoriteID: Int) {
+        coroutineScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    service?.deleteFavorite(favoriteID)
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main){
+                        when{
+                            e.code() == 404 -> {
+                                view?.setError("Favorite Product Not Found !")
+                            }
+
+                            else -> {
+                                view?.setError("Unknown Error, Please Try Again Later !")
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (result is FavoriteResponse) {
+                if (result.success){
+                    val list = result.data?.map{
+                        FavoriteModel(it.faId, it.csId, it.prID, it.prName, it.prPrice, it.prDesc, it.prPic)
+                    }
+                    view?.showFavoriteList(list)
+                    view?.hideProgressBar()
+                }
+                else {
+                    view?.setError(result.message)
+                    view?.hideProgressBar()
+                }
+            }
+        }
     }
 
 }
