@@ -28,8 +28,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.RecyclerViewHolder>()
                 bind.imageUrl = BASE_URL_IMAGE + pr.prPicImage
             }
 
-            bind.price = "IDR ${currencyFormat(pr.prPrice.toString())}"
-
+            bind.price = currencyFormat(pr.prPrice.toString())
             bind.executePendingBindings()
 
             itemView.setOnClickListener {
