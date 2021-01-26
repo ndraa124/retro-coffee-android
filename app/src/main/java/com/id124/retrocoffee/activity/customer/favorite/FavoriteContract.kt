@@ -4,8 +4,12 @@ import com.id124.retrocoffee.model.favorite.FavoriteModel
 
 interface FavoriteContract {
     interface View {
-        fun showFavoriteList(list: List<FavoriteModel>)
+        fun addFavoriteList(list: List<FavoriteModel>)
         fun setError(error: String)
+        fun setService()
+        fun getSavedCostumerID()
+        fun setRecyclerView()
+        fun setFavoriteList()
         fun showProgressBar()
         fun hideProgressBar()
     }
@@ -13,7 +17,7 @@ interface FavoriteContract {
     interface Presenter{
         fun bindToView(view: View)
         fun unbind()
-        fun getFavorite()
-        fun deleteFavorite(favoriteID : String)
+        fun getFavorite(costumerID: Int)
+        fun deleteFavorite(favoriteID : Int)
     }
 }
