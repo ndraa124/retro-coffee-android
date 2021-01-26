@@ -42,6 +42,9 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
         //Set Search
         setSearchFeature()
 
+        //Set Back Button
+        setBackButton()
+
     }
 
     override fun addProductList(list: List<ProductModel>) {
