@@ -135,7 +135,6 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
 
     override fun setBackButton() {
         bind.btBackButton.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }
