@@ -22,6 +22,14 @@
             android:required="false" />
 
         <activity
+            android:name=".activity.customer.profile.EditProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
+            android:name=".activity.customer.profile.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
             android:name=".activity.customer.promote.PromoteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.RetroCoffee.NoActionBar" />
@@ -77,12 +85,19 @@
             android:name=".activity.customer.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.RetroCoffee.Fullscreen">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity
+            android:name=".activity.customer.product_search.ProductSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

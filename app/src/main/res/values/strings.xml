@@ -10,4 +10,28 @@
     <string name="coffee_for">Coffee for</string>
     <string name="everyone">Everyone</string>
     <string name="get_started">Get started</string>
+
+    <!-- Menu Drawer -->
+    <string name="menu_edit_profile">Edit Profile</string>
+    <string name="menu_orders">Orders</string>
+    <string name="menu_all">All Menu</string>
+    <string name="menu_privacy">Privacy policy</string>
+    <string name="menu_security">Security</string>
+    <string name="menu_divider">Divider</string>
+    <string name="menu_cart">Cart</string>
+    <string name="menu_favorite">Add to favorite</string>
+    <string name="menu_unfavorite">Remove favorite</string>
+    <string name="sign_out">Sign-out</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+
+    <!-- Home -->
+    <string name="a_good_coffee_is_a_good_day">A good coffee is a good day</string>
+    <string name="search">Search</string>
+
+    <!-- Detail Product -->
+    <string name="info_detail_product">Delivery only on Monday to friday at 1 – 7 pm</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="search_product">Search Product</string>
+    <string name="not_found">not found</string>
 </resources>

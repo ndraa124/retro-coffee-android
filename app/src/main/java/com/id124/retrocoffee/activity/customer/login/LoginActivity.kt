@@ -8,12 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.activity.customer.register.RegisterActivity
-import com.id124.retrocoffee.base.BaseActivityCoroutine
+import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityLoginBinding
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valEmail
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valPassword
 
-class LoginActivity : BaseActivityCoroutine<ActivityLoginBinding>(), View.OnClickListener {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(), View.OnClickListener {
     private lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,14 +26,16 @@ class LoginActivity : BaseActivityCoroutine<ActivityLoginBinding>(), View.OnClic
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.tv_forget_password -> {
                 intents<RegisterActivity>(this)
             }
             R.id.btn_login -> {
                 when {
-                    !valEmail(bind.inputLayoutEmail, bind.etEmail) -> {}
-                    !valPassword(bind.inputLayoutPassword, bind.etPassword) -> {}
+                    !valEmail(bind.inputLayoutEmail, bind.etEmail) -> {
+                    }
+                    !valPassword(bind.inputLayoutPassword, bind.etPassword) -> {
+                    }
                     else -> {
                         viewModel.serviceApi(
                             email = bind.etEmail.text.toString(),
@@ -42,7 +44,7 @@ class LoginActivity : BaseActivityCoroutine<ActivityLoginBinding>(), View.OnClic
                     }
                 }
             }
-            }
+        }
     }
 
     private fun subscribeLiveData() {
