@@ -134,8 +134,10 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
     }
 
     override fun setBackButton() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+        bind.btBackButton.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     override fun popUpManager() {
