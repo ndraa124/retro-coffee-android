@@ -9,6 +9,7 @@ interface ProductSearchContract {
         fun setDataRefresh()
         fun setRecyclerView()
         fun setSearchFeature()
+        fun setBackButton()
         fun popUpManager()
         fun quickPopUpManager()
         fun quickFilterListener()

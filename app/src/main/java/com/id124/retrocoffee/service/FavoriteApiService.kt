@@ -4,6 +4,7 @@ import com.id124.retrocoffee.model.favorite.FavoriteResponse
 import retrofit2.http.*
 
 interface FavoriteApiService {
+
     @FormUrlEncoded
     @POST("favorite")
     suspend fun addFavorite(
@@ -22,4 +23,11 @@ interface FavoriteApiService {
         @Query("cs_id") csId: Int,
         @Query("pr_id") prId: Int
     ): FavoriteResponse
+
+    @GET("favorite/{csId}")
+    suspend fun getFavoriteProduct(@Path("csId") costumerID: Int) : FavoriteResponse
+
+    @DELETE("favorite/{faId}")
+    suspend fun deleteFavorite(@Path("faId") favoriteID: Int) : FavoriteResponse
+
 }

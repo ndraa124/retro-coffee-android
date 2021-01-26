@@ -1,6 +1,7 @@
 package com.id124.retrocoffee.activity.customer.product_search
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +12,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.id124.retrocoffee.R
+import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityProductSearchBinding
 import com.id124.retrocoffee.model.product.ProductModel
@@ -57,6 +59,9 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
             handler.removeCallbacksAndMessages(null)
             quickFilterListener()
         }
+
+        //Set Back Button
+        setBackButton()
 
     }
 
@@ -125,6 +130,12 @@ class ProductSearchActivity : BaseActivity<ActivityProductSearchBinding>(), Prod
             bind.tbSearchBar.clearFocus()
             presenter?.getAllProductList()
             false
+        }
+    }
+
+    override fun setBackButton() {
+        bind.btBackButton.setOnClickListener {
+            finish()
         }
     }
 

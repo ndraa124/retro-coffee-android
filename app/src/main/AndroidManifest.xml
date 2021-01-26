@@ -99,6 +99,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
 
+        <activity
+            android:name=".activity.customer.favorite.FavoriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar">
+
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
