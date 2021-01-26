@@ -14,7 +14,6 @@ interface ProductSearchContract {
         fun quickFilterListener()
         fun searchFilterListener(Query: String)
         fun setError(error: String)
-        fun setBackButton()
         fun showProgressBar()
         fun hideProgressBar()
     }
