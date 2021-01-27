@@ -1,18 +1,14 @@
 package com.id124.retrocoffee.activity.customer.favorite
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.id124.retrocoffee.R
-import com.id124.retrocoffee.activity.customer.product_search.ProductSearchAdapter
-import com.id124.retrocoffee.activity.customer.product_search.ProductSearchPresenter
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityFavoriteBinding
 import com.id124.retrocoffee.model.favorite.FavoriteModel
 import com.id124.retrocoffee.remote.ApiClient
 import com.id124.retrocoffee.service.FavoriteApiService
-import com.id124.retrocoffee.service.ProductApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -48,7 +44,6 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
         bind.rvFavoriteProduct.visibility = View.VISIBLE
         bind.lnNotFound.visibility = View.GONE
     }
-
     override fun setError(error: String) {
         bind.lnNotFound.visibility = View.VISIBLE
         bind.rvFavoriteProduct.visibility = View.GONE
@@ -61,7 +56,7 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
     }
 
     override fun getSavedCostumerID() {
-        costumerID = intent.getIntExtra("costumerID", 0)
+        costumerID = intent.getIntExtra("cs_id", 0)
     }
 
     override fun setRecyclerView() {
@@ -75,7 +70,7 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
     }
 
     override fun setFavoriteList() {
-        presenter?.getFavorite(costumerID!!)
+        presenter?.getFavorite(2)
     }
 
     override fun showProgressBar() {

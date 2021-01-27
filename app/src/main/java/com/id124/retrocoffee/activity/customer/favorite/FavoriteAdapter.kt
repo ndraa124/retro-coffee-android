@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.id124.retrocoffee.R
-import com.id124.retrocoffee.activity.customer.product_detail.ProductDetailActivity
+import com.id124.retrocoffee.activity.customer.favorite.favorite_detail.FavoriteDetailActivity
 import com.id124.retrocoffee.databinding.ItemSearchProductBinding
 import com.id124.retrocoffee.model.favorite.FavoriteModel
 import java.text.NumberFormat
@@ -45,8 +45,11 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder>() {
             .into(holder.binding.ivProductImage)
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ProductDetailActivity::class.java)
-            intent.putExtra("productID", item.prID)
+            val intent = Intent(context, FavoriteDetailActivity::class.java)
+            intent.putExtra("favoriteID", item.faId)
+            intent.putExtra("productName", item.prName)
+            intent.putExtra("productDesc", item.prDesc)
+            intent.putExtra("productImage", item.prPic)
 
             context.startActivity(intent)
         }

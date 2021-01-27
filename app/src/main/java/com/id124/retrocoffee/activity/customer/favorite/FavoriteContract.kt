@@ -18,6 +18,5 @@ interface FavoriteContract {
         fun bindToView(view: View)
         fun unbind()
         fun getFavorite(costumerID: Int)
-        fun deleteFavorite(favoriteID : Int)
     }
 }
