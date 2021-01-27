@@ -17,5 +17,13 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
         bind.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+
+        bind.btnEditProfile.setOnClickListener {
+            editProfile()
+        }
+    }
+
+    private fun editProfile() {
+        intents<EditProfileActivity>(this)
     }
 }

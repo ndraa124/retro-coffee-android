@@ -131,6 +131,19 @@
                 app:layout_constraintLeft_toRightOf="@id/tv_item_total"/>
 
             <TextView
+                android:id="@+id/item_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="750000"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins"
+                android:layout_marginLeft="70dp"
+                app:layout_constraintTop_toTopOf="@id/tv_item_total"
+                android:layout_marginRight="16dp"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
                 android:id="@+id/tv_delivery_charge"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -154,6 +167,19 @@
                 app:layout_constraintLeft_toRightOf="@id/tv_delivery_charge"/>
 
             <TextView
+                android:id="@+id/delivery_charge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10000"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins"
+                android:layout_marginLeft="70dp"
+                app:layout_constraintTop_toTopOf="@id/tv_delivery_charge"
+                android:layout_marginRight="16dp"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
                 android:id="@+id/tv_tax"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -175,6 +201,19 @@
                 android:layout_marginLeft="70dp"
                 app:layout_constraintTop_toTopOf="@id/tv_tax"
                 app:layout_constraintLeft_toRightOf="@id/tv_tax"/>
+
+            <TextView
+                android:id="@+id/tax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15000"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins"
+                android:layout_marginLeft="70dp"
+                app:layout_constraintTop_toTopOf="@id/tv_tax"
+                android:layout_marginRight="16dp"
+                app:layout_constraintRight_toRightOf="parent"/>
 
 
             <TextView
