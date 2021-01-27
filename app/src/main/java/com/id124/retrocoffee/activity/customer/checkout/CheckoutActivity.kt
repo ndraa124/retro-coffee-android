@@ -171,7 +171,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
         })
 
         viewModel.onSuccess.observe(this@CheckoutActivity, { list ->
-            for (i in 1 until list.size) {
+            for (i in list.indices) {
                 subtotal += list[i].crTotal
             }
 
