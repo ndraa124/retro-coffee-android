@@ -6,7 +6,6 @@ import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
 import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.activity.customer.onboard.OnboardActivity
-import com.id124.retrocoffee.activity.customer.profile.ProfileActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivitySplashBinding
 
@@ -34,11 +33,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(), SplashContract.Vie
     override fun setCountdown() {
         Handler().postDelayed({
             if(sharedPref.getIsLogin()) {
-                intents<ProfileActivity>(this@SplashActivity)
+                intents<CartActivity>(this@SplashActivity)
                 finish()
             }
             else {
-                intents<ProfileActivity>(this@SplashActivity)
+                intents<CartActivity>(this@SplashActivity)
                 finish()
             }
         }, 3000)

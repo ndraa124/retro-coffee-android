@@ -196,7 +196,6 @@
                         android:padding="18dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-
                 <LinearLayout
                     android:id="@+id/ln_login"
                     android:layout_width="match_parent"
