@@ -64,6 +64,11 @@ class SharedPreference(private val context: Context) {
         editor.commit()
     }
 
+    fun createAddress(csAddress: String) {
+        editor.putString(CS_ADDRESS, csAddress)
+        editor.commit()
+    }
+
     fun createCsGender(acGender: Int) {
         editor.putInt(CS_GENDER, acGender)
         editor.commit()
@@ -100,6 +105,10 @@ class SharedPreference(private val context: Context) {
 
     fun getCsId(): Int {
         return sharedPreferences.getInt(CS_ID, 0)
+    }
+
+    fun getCsAddress(): String {
+        return sharedPreferences.getString(CS_ADDRESS, "")!!
     }
 
     fun getCsGender(): Int {

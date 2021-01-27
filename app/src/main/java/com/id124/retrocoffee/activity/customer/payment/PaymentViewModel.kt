@@ -4,23 +4,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.id124.retrocoffee.model.cart.CartModel
 import com.id124.retrocoffee.model.cart.CartResponse
+import com.id124.retrocoffee.model.order.OrderResponse
 import com.id124.retrocoffee.service.CartApiService
+import com.id124.retrocoffee.service.OrderApiService
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
 class PaymentViewModel : ViewModel(), CoroutineScope {
-    private lateinit var service: CartApiService
+    private lateinit var serviceCart: CartApiService
+    private lateinit var serviceOrder: OrderApiService
 
-    val onSuccess = MutableLiveData<List<CartModel>>()
-    val onFail = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
+    val isLoadingOrder = MutableLiveData<Boolean>()
+    val onSuccess = MutableLiveData<List<CartModel>>()
+    val onSuccessOrder = MutableLiveData<Boolean>()
+    val onFail = MutableLiveData<String>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    fun setService(service: CartApiService) {
-        this@PaymentViewModel.service = service
+    fun setServiceCart(service: CartApiService) {
+        this@PaymentViewModel.serviceCart = service
+    }
+
+    fun setServiceOrder(service: OrderApiService) {
+        this@PaymentViewModel.serviceOrder = service
     }
 
     fun serviceGetApi(csId: Int) {
@@ -29,7 +38,7 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
 
             val response = withContext(Dispatchers.IO) {
                 try {
-                    service.getAllCart(
+                    serviceCart.getAllCart(
                         csId = csId
                     )
                 } catch (e: HttpException) {
@@ -53,6 +62,50 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
 
                 if (response.success) {
                     onSuccess.value = response.data
+                } else {
+                    onFail.value = response.message
+                }
+            }
+        }
+    }
+
+    fun serviceAddApi(csId: Int, orPayTotal: Long, orAddress: String, orNoteApprove: String, orMethodPayment: String, orFee: Long, orDateOrder: String) {
+        launch {
+            isLoadingOrder.value = true
+
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    serviceOrder.addOrder(
+                        csId = csId,
+                        orPayTotal = orPayTotal,
+                        orAddress = orAddress,
+                        orNoteCancel = "",
+                        orNoteApprove = orNoteApprove,
+                        orMethodPayment = orMethodPayment,
+                        orFee = orFee,
+                        orDateOrder = orDateOrder
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        isLoadingOrder.value = false
+
+                        when {
+                            e.code() == 400 -> {
+                                onFail.value = "Fail to order product!"
+                            }
+                            else -> {
+                                onFail.value = "Server is maintenance!"
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (response is OrderResponse) {
+                isLoadingOrder.value = false
+
+                if (response.success) {
+                    onSuccessOrder.value = true
                 } else {
                     onFail.value = response.message
                 }

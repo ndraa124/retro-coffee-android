@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.checkout.adapter.CartAdapter
 import com.id124.retrocoffee.activity.customer.payment.PaymentActivity
+import com.id124.retrocoffee.activity.customer.profile.EditProfileActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityCheckoutBinding
 import com.id124.retrocoffee.util.Utils.Companion.currencyFormat
@@ -39,15 +40,23 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_choose_address -> {
-
+                intents<EditProfileActivity>(this@CheckoutActivity)
             }
             R.id.btn_payment -> {
-                if (chooseStore == null) {
-                    noticeToast("Please choose store first!")
-                } else {
-                    val intent = Intent(this@CheckoutActivity, PaymentActivity::class.java)
-                    intent.putExtra("pay_total", total)
-                    startActivity(intent)
+                when {
+                    sharedPref.getCsAddress() == "" -> {
+                        noticeToast("Please add address first!")
+                        intents<EditProfileActivity>(this@CheckoutActivity)
+                    }
+                    chooseStore == null -> {
+                        noticeToast("Please choose store first!")
+                    }
+                    else -> {
+                        val intent = Intent(this@CheckoutActivity, PaymentActivity::class.java)
+                        intent.putExtra("pay_total", total)
+                        intent.putExtra("store", chooseStore)
+                        startActivity(intent)
+                    }
                 }
             }
             R.id.btn_back -> {
@@ -56,9 +65,26 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (sharedPref.getCsAddress() == "") {
+            bind.address = "Empty address! Please add address first!"
+            bind.addressDelivery.setTextColor(resources.getColor(R.color.gray_500, theme))
+        } else {
+            bind.address = sharedPref.getCsAddress()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         setTouchSelectedResume()
+
+        if (sharedPref.getCsAddress() == "") {
+            bind.address = "Empty address! Please add address first!"
+            bind.addressDelivery.setTextColor(resources.getColor(R.color.gray_500, theme))
+        } else {
+            bind.address = sharedPref.getCsAddress()
+        }
     }
 
     private fun setToolbarActionBar() {

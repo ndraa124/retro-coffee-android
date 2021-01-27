@@ -15,6 +15,8 @@ import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityPaymentBinding
 import com.id124.retrocoffee.model.slider.SliderModel
 import com.id124.retrocoffee.util.Utils.Companion.currencyFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.abs
 
 class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickListener {
@@ -49,6 +51,22 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
                     bind.rbCod.id -> {
                         paymentMethod = "Cash on delivery"
                     }
+                }
+
+                if (paymentMethod == null) {
+                    noticeToast("Please choose payment method!")
+                } else {
+                    val date: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
+                    viewModel.serviceAddApi(
+                        csId = sharedPref.getCsId(),
+                        orPayTotal = intent.getLongExtra("pay_total", 0),
+                        orAddress = sharedPref.getCsAddress(),
+                        orNoteApprove = intent.getStringExtra("store")!!,
+                        orMethodPayment = paymentMethod!!,
+                        orFee = 5000,
+                        orDateOrder = date
+                    )
                 }
             }
             R.id.btn_back -> {
@@ -104,7 +122,8 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
 
     private fun setViewModel() {
         viewModel = ViewModelProvider(this@PaymentActivity).get(PaymentViewModel::class.java)
-        viewModel.setService(createApi(this@PaymentActivity))
+        viewModel.setServiceCart(createApi(this@PaymentActivity))
+        viewModel.setServiceOrder(createApi(this@PaymentActivity))
         viewModel.serviceGetApi(
             csId = sharedPref.getCsId()
         )

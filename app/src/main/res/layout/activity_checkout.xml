@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="address"
+            type="String" />
+
+        <variable
             name="dataNotFound"
             type="String" />
     </data>
@@ -81,7 +85,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="Senayan, South Jakarta"
+                    android:text="@{address}"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="14sp"
