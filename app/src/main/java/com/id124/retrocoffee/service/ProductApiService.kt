@@ -13,4 +13,26 @@ interface ProductApiService {
         @Query("limit") limit: Int? = null,
         @Query("page") page: Int? = null
     ): ProductResponse
+
+    @GET("product")
+    suspend fun getAllProduct() : ProductResponse
+
+    @GET("product/filter/higher")
+    suspend fun getProductByHigher() : ProductResponse
+
+    @GET("product/filter/lower")
+    suspend fun getProductByLower() : ProductResponse
+
+    @GET("product")
+    suspend fun searchProductByName(@Query("search") productName:String) : ProductResponse
+
+    @GET("product/filter/category")
+    suspend fun searchProductByCategory(@Query("search") productName:String) : ProductResponse
+
+    @GET("product/filter/higher")
+    suspend fun searchProductByHigher(@Query("search") productName:String) : ProductResponse
+
+    @GET("product/filter/lower")
+    suspend fun searchProductByLower(@Query("search") productName:String) : ProductResponse
+
 }

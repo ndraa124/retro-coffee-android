@@ -12,9 +12,9 @@ class Utils {
             return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
         }
 
-        fun currencyFormat(amount: String): String? {
+        fun currencyFormat(amount: String): String {
             val formatter = DecimalFormat("#,###")
-            return formatter.format(amount.toDouble())
+            return "IDR ${formatter.format(amount.toDouble())}"
         }
 
         class BottomOffsetDecoration(private val mBottomOffset: Int) : RecyclerView.ItemDecoration() {

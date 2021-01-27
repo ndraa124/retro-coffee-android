@@ -19,6 +19,8 @@
     <string name="menu_security">Security</string>
     <string name="menu_divider">Divider</string>
     <string name="menu_cart">Cart</string>
+    <string name="menu_favorite">Add to favorite</string>
+    <string name="menu_unfavorite">Remove favorite</string>
     <string name="sign_out">Sign-out</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
@@ -30,4 +32,8 @@
     <!-- Detail Product -->
     <string name="info_detail_product">Delivery only on Monday to friday at 1 – 7 pm</string>
     <string name="add_to_cart">Add to cart</string>
+    <string name="search_product">Search Product</string>
+    <string name="not_found">not found</string>
+    <string name="search_now">Search Now</string>
+    <string name="you_don_t_have_any_favorite_yet">You don\'t have any favorite yet</string>
 </resources>
