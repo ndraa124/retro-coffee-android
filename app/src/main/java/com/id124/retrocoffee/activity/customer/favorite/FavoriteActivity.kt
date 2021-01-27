@@ -66,7 +66,7 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
     }
 
     override fun getSavedCostumerID() {
-        costumerID = intent.getIntExtra("cs_id", 0)
+        costumerID = sharedPref.getCsId()
     }
 
     override fun setRecyclerView() {
@@ -83,7 +83,7 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
         handler = Handler(Looper.getMainLooper())
         handler.post(object : Runnable {
             override fun run() {
-                presenter?.getFavorite(2)
+                presenter?.getFavorite(costumerID!!)
                 handler.postDelayed(this, 2000)
             }
         })
