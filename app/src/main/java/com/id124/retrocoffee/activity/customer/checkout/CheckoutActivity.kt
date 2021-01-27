@@ -1,6 +1,7 @@
 package com.id124.retrocoffee.activity.customer.checkout
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -44,7 +45,9 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
                 if (chooseStore == null) {
                     noticeToast("Please choose store first!")
                 } else {
-                    intents<PaymentActivity>(this@CheckoutActivity)
+                    val intent = Intent(this@CheckoutActivity, PaymentActivity::class.java)
+                    intent.putExtra("pay_total", total)
+                    startActivity(intent)
                 }
             }
             R.id.btn_back -> {
