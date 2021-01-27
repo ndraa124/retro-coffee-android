@@ -125,6 +125,7 @@
                 android:textColor="@color/primary"
                 android:fontFamily="@font/poppins"
                 android:text="See more"
+                android:onClick="onClick"
                 android:layout_marginHorizontal="16dp"
                 app:layout_constraintTop_toTopOf="@id/order_history"
                 app:layout_constraintRight_toRightOf="parent"/>

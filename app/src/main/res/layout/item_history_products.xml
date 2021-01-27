@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.id124.retrocoffee.model.product.ProductModel" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="price"
+            type="String" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:fontFamily="@font/poppins_bold"
+            android:paddingTop="5dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/iv_product"
+            android:text="Choco Coffelatea"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_below="@+id/tv_title"
+            android:layout_toRightOf="@+id/iv_product"
+            android:text="IDR 28.000"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/primary"
+            android:layout_marginLeft="15dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins"
+            android:layout_below="@+id/tv_price"
+            android:layout_toRightOf="@+id/iv_product"
+            android:text="XL (Extra Large)"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/tv_size"
+            android:layout_toRightOf="@+id/iv_product"
+            android:fontFamily="@font/poppins"
+            android:text="Delivered (Monday, 2 PM)"
+            android:layout_marginTop="10dp"
+            android:textSize="9sp" />
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/iv_product"
+            android:layout_width="140dp"
+            android:layout_height="145dp"
+            android:elevation="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            app:cardCornerRadius="16dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/img_description"
+                android:elevation="4dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/example_coffee"
+                app:loadImage="@{imageUrl}" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</layout>
