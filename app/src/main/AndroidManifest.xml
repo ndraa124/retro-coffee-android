@@ -85,26 +85,24 @@
             android:name=".activity.customer.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.RetroCoffee.Fullscreen">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".activity.customer.product_search.ProductSearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
-
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
         <activity
             android:name=".activity.customer.favorite.FavoriteActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
+        <activity
+            android:name=".activity.customer.favorite.favorite_detail.FavoriteDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

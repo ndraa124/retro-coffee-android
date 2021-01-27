@@ -57,7 +57,7 @@
         <LinearLayout
             android:id="@+id/ln_notFound"
             android:orientation="vertical"
-            android:layout_marginTop="124dp"
+            android:layout_marginTop="250dp"
             android:visibility="gone"
             android:layout_gravity="center"
             android:layout_width="wrap_content"

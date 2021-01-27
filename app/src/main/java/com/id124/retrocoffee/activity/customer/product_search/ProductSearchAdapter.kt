@@ -46,7 +46,17 @@ class ProductSearchAdapter: RecyclerView.Adapter<ProductSearchAdapter.ProductHol
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ProductDetailActivity::class.java)
-            intent.putExtra("productID", item.prId)
+            intent.putExtra("ct_id", item.ctId)
+            intent.putExtra("ct_name", item.ctName)
+            intent.putExtra("pr_id", item.prId)
+            intent.putExtra("pr_status", item.prStatus)
+            intent.putExtra("pr_name", item.prName)
+            intent.putExtra("pr_price", item.prPrice)
+            intent.putExtra("pr_pic_image", item.prPicImage)
+            intent.putExtra("pr_desc", item.prDesc)
+            intent.putExtra("pr_discount", item.prDiscount)
+            intent.putExtra("pr_discount_price", item.prDiscountPrice)
+            intent.putExtra("pr_is_discount", item.prDiscount)
 
             context.startActivity(intent)
         }
