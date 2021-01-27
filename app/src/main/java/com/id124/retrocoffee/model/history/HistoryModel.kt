@@ -3,6 +3,11 @@ package com.id124.retrocoffee.model.history
 import com.google.gson.annotations.SerializedName
 
 data class HistoryModel(
-    @SerializedName("ht_id")
-    val htId: Int
+    val htId: Int?,
+    val csId: Int?,
+    val orId: String?,
+    val htProduct: String?,
+    val htPrice: String?,
+    val htQty: String?,
+    val htTotal: String?
 )
