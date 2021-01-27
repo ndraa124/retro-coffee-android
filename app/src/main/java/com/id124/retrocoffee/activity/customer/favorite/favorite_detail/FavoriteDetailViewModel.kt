@@ -50,7 +50,6 @@ class FavoriteDetailViewModel: ViewModel(), CoroutineScope {
 
                 if (response.success) {
                     onSuccessLiveData.value = true
-                    
                 } else {
                     onFailLiveData.value = response.message
                 }
