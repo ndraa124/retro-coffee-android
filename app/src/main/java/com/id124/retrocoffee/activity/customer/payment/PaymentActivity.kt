@@ -1,5 +1,6 @@
 package com.id124.retrocoffee.activity.customer.payment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.id124.retrocoffee.R
+import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.activity.customer.payment.adapter.CardSliderAdapter
 import com.id124.retrocoffee.activity.customer.payment.adapter.CartAdapter
 import com.id124.retrocoffee.base.BaseActivity
@@ -18,6 +20,7 @@ import com.id124.retrocoffee.util.Utils.Companion.currencyFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
+
 
 class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickListener {
     private lateinit var viewModel: PaymentViewModel
@@ -56,7 +59,9 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
                 if (paymentMethod == null) {
                     noticeToast("Please choose payment method!")
                 } else {
-                    val date: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                    val date: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(
+                        Date()
+                    )
 
                     viewModel.serviceAddApi(
                         csId = sharedPref.getCsId(),
@@ -138,14 +143,43 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
             }
         })
 
+        viewModel.isLoadingOrder.observe(this@PaymentActivity, {
+            if (it) {
+                bind.clPayment.visibility = View.GONE
+                bind.progressBarOrder.visibility = View.VISIBLE
+            }
+        })
+
         viewModel.onSuccess.observe(this@PaymentActivity, { list ->
             adapter.addList(list)
             bind.tvDataNotFound.visibility = View.GONE
         })
 
+        viewModel.onSuccessOrder.observe(this@PaymentActivity, {
+            if (it) {
+                noticeToast("Order success")
+
+                val intent = Intent(this@PaymentActivity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+        })
+
         viewModel.onFail.observe(this@PaymentActivity, { message ->
+            bind.clPayment.visibility = View.VISIBLE
             bind.tvDataNotFound.text = message
             bind.tvDataNotFound.visibility = View.VISIBLE
+        })
+
+        viewModel.onFailOrder.observe(this@PaymentActivity, {
+            noticeToast("Order is fail! Please try again later.")
+
+            val intent = Intent(this@PaymentActivity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            finish()
         })
     }
 

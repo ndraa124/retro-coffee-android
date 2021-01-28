@@ -20,6 +20,7 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
     val onSuccess = MutableLiveData<List<CartModel>>()
     val onSuccessOrder = MutableLiveData<Boolean>()
     val onFail = MutableLiveData<String>()
+    val onFailOrder = MutableLiveData<String>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -91,10 +92,10 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
 
                         when {
                             e.code() == 400 -> {
-                                onFail.value = "Fail to order product!"
+                                onFailOrder.value = "Fail to order product!"
                             }
                             else -> {
-                                onFail.value = "Server is maintenance!"
+                                onFailOrder.value = "Server is maintenance!"
                             }
                         }
                     }
@@ -107,7 +108,7 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
                 if (response.success) {
                     onSuccessOrder.value = true
                 } else {
-                    onFail.value = response.message
+                    onFailOrder.value = response.message
                 }
             }
         }
