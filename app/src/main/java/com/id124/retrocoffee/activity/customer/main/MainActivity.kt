@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.navigation.NavigationView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
+import com.id124.retrocoffee.activity.customer.favorite.FavoriteActivity
+import com.id124.retrocoffee.activity.customer.history.HistoryActivity
 import com.id124.retrocoffee.activity.customer.main.fragment.ProductFragment
 import com.id124.retrocoffee.activity.customer.product_search.ProductSearchActivity
 import com.id124.retrocoffee.activity.customer.profile.ProfileActivity
@@ -50,10 +52,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
                 intents<ProfileActivity>(this@MainActivity)
             }
             R.id.nav_orders -> {
-                Log.d("msg", "Orders")
+                intents<HistoryActivity>(this@MainActivity)
             }
             R.id.nav_all_menu -> {
-                Log.d("msg", "All Menu")
+                intents<FavoriteActivity>(this@MainActivity)
             }
             R.id.nav_privacy -> {
                 Log.d("msg", "Privacy")

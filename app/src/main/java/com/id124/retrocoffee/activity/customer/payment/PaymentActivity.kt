@@ -1,5 +1,6 @@
 package com.id124.retrocoffee.activity.customer.payment
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -59,19 +60,7 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
                 if (paymentMethod == null) {
                     noticeToast("Please choose payment method!")
                 } else {
-                    val date: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(
-                        Date()
-                    )
-
-                    viewModel.serviceAddApi(
-                        csId = sharedPref.getCsId(),
-                        orPayTotal = intent.getLongExtra("pay_total", 0),
-                        orAddress = sharedPref.getCsAddress(),
-                        orNoteApprove = intent.getStringExtra("store")!!,
-                        orMethodPayment = paymentMethod!!,
-                        orFee = 5000,
-                        orDateOrder = date
-                    )
+                    confirmTransaction()
                 }
             }
             R.id.btn_back -> {
@@ -185,5 +174,32 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
 
     private fun setPayTotal() {
         bind.tvPayTotal.text = currencyFormat(intent.getLongExtra("pay_total", 0).toString())
+    }
+
+    private fun confirmTransaction() {
+        val dialog = AlertDialog
+            .Builder(this@PaymentActivity)
+            .setTitle("Notice!")
+            .setMessage("Are you sure to process this order?")
+            .setPositiveButton("OK") { _, _ ->
+                val date: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(
+                    Date()
+                )
+
+                viewModel.serviceAddApi(
+                    csId = sharedPref.getCsId(),
+                    orPayTotal = intent.getLongExtra("pay_total", 0),
+                    orAddress = sharedPref.getCsAddress(),
+                    orNoteApprove = intent.getStringExtra("store")!!,
+                    orMethodPayment = paymentMethod!!,
+                    orFee = 5000,
+                    orDateOrder = date
+                )
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        dialog?.show()
     }
 }

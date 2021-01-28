@@ -83,7 +83,7 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
         handler = Handler(Looper.getMainLooper())
         handler.post(object : Runnable {
             override fun run() {
-                presenter?.getFavorite(costumerID!!)
+                presenter?.getFavorite(sharedPref.getCsId())
                 handler.postDelayed(this, 2000)
             }
         })
