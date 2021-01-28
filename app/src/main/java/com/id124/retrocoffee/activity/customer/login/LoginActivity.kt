@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.activity.customer.register.RegisterActivity
@@ -48,12 +49,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), View.OnClickListener
     }
 
     private fun subscribeLiveData() {
-        viewModel.isLoadingLiveData.observe(this@LoginActivity, {
+        viewModel.isLoadingLiveData.observe(this@LoginActivity) {
             bind.btnLogin.visibility = View.GONE
             bind.progressBar.visibility = View.VISIBLE
-        })
+        }
 
-        viewModel.onSuccessLiveData.observe(this@LoginActivity, {
+        viewModel.onSuccessLiveData.observe(this@LoginActivity) {
             if (it) {
                 bind.progressBar.visibility = View.GONE
                 bind.btnLogin.visibility = View.VISIBLE
@@ -64,7 +65,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), View.OnClickListener
                 bind.progressBar.visibility = View.GONE
                 bind.btnLogin.visibility = View.VISIBLE
             }
-        })
+        }
 
         viewModel.onFailLiveData.observe(this@LoginActivity, {
             noticeToast(it)

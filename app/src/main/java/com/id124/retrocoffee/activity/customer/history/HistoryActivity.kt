@@ -49,17 +49,17 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(), HistoryAdapter.o
     }
 
     private fun subscribeLiveData() {
-        viewModel.isLoadingLiveData.observe(this@HistoryActivity, {
+        viewModel.isLoadingLiveData.observe(this@HistoryActivity) {
             if (it) {
                 Log.d("msg", "Show Loading")
             } else {
                 Log.d("msg", "Hide Loading")
             }
-        })
+        }
 
-        viewModel.getAllHistory().observe(this, {
+        viewModel.getAllHistory().observe(this) {
             (bind.rvHistory.adapter as HistoryAdapter).addList(it)
-        })
+        }
     }
 
     override fun onHistoryItem(position: Int) {
