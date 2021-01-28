@@ -78,6 +78,10 @@ class SharedPreference(private val context: Context) {
         editor.putString(CS_DOB, csDob)
         editor.commit()
     }
+    fun createEmail(acId: Int){
+        editor.putString(AC_ID, acId.toString())
+        editor.commit()
+    }
 
     fun getToken(): String {
         return sharedPreferences.getString(TOKEN, "")!!
