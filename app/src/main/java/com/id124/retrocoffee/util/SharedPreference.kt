@@ -22,6 +22,7 @@ class SharedPreference(private val context: Context) {
         const val CS_ADDRESS = "CS_ADDRESS"
         const val CS_LATITUDE = "CS_LATITUDE"
         const val CS_LONGITUDE = "CS_LONGITUDE"
+        const val CS_PIC_IMAGE = "CS_PIC_IMAGE"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -36,7 +37,11 @@ class SharedPreference(private val context: Context) {
         acName: String,
         acEmail: String,
         acPhone: String,
-        acLevel: Int
+        acLevel: Int,
+        csGender: Int,
+        csDob: String,
+        csAddress: String,
+        csPicImage: String
     ) {
         editor.putBoolean(LOGIN, true)
         editor.putString(TOKEN, token)
@@ -46,6 +51,10 @@ class SharedPreference(private val context: Context) {
         editor.putString(AC_PHONE, acPhone)
         editor.putInt(AC_LEVEL, acLevel)
         editor.putInt(CS_ID, csId)
+        editor.putInt(CS_GENDER, csGender)
+        editor.putString(CS_DOB, csDob)
+        editor.putString(CS_ADDRESS, csAddress)
+        editor.putString(CS_PIC_IMAGE, csPicImage)
         editor.commit()
     }
 
@@ -78,6 +87,12 @@ class SharedPreference(private val context: Context) {
         editor.putString(CS_DOB, csDob)
         editor.commit()
     }
+
+    fun createCsPicImage(csPicImage: String) {
+        editor.putString(CS_PIC_IMAGE, csPicImage)
+        editor.commit()
+    }
+
     fun createEmail(acId: Int){
         editor.putString(AC_ID, acId.toString())
         editor.commit()
@@ -121,6 +136,10 @@ class SharedPreference(private val context: Context) {
 
     fun getCsDateOfBirth(): String {
         return sharedPreferences.getString(CS_DOB, "")!!
+    }
+
+    fun getCsPicImage(): String {
+        return sharedPreferences.getString(CS_PIC_IMAGE, "")!!
     }
 
     fun getIsLogin(): Boolean {
