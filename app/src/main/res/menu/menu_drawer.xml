@@ -12,10 +12,15 @@
         android:title="@string/menu_orders" />
 
     <item
-        android:id="@+id/nav_all_menu"
+        android:id="@+id/nav_promo"
         android:icon="@drawable/ic_all_menu"
-        android:title="@string/menu_all" />
+        android:title="@string/menu_promo" />
 
+    <item
+        android:id="@+id/nav_all_menu"
+        android:icon="@drawable/ic_favorite_brown"
+        android:title="@string/menu_all" />
+<!--
     <item
         android:id="@+id/nav_privacy"
         android:icon="@drawable/ic_privacy"
@@ -24,5 +29,5 @@
     <item
         android:id="@+id/nav_security"
         android:icon="@drawable/ic_security"
-        android:title="@string/menu_security" />
+        android:title="@string/menu_security" />-->
 </menu>

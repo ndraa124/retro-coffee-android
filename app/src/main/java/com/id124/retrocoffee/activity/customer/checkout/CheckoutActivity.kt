@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
@@ -45,10 +44,10 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
             }
             R.id.btn_payment -> {
                 when {
-                    /*sharedPref.getCsAddress() == "" -> {
+                    sharedPref.getCsAddress() == "" -> {
                         noticeToast("Please add address first!")
                         intents<EditProfileActivity>(this@CheckoutActivity)
-                    }*/
+                    }
                     chooseStore == null -> {
                         noticeToast("Please choose store first!")
                     }

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.id124.retrocoffee.model.product.ProductModel" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="price"
+            type="String" />
+
+        <variable
+            name="pricePromo"
+            type="String" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/background">
+
+        <com.tistory.zladnrms.roundablelayout.RoundableLayout
+            android:id="@+id/cv_product"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp"
+            app:backgroundColor="@color/white"
+            app:cornerLeftBottom="32dp"
+            app:cornerLeftTop="32dp"
+            app:cornerRightBottom="32dp"
+            app:cornerRightTop="32dp">
+
+            <TextView
+                android:id="@+id/tv_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="@{product.prName}"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_price"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="@{price}"
+                android:textColor="@color/gray_500"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </com.tistory.zladnrms.roundablelayout.RoundableLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_productImage"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:elevation="9dp"
+            android:src="@drawable/lepet1"
+            app:loadImage="@{imageUrl}" />
+
+        <TextView
+            android:id="@+id/tv_price_promo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/bg_radius_corner_text_view"
+            android:elevation="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@{pricePromo}"
+            android:textColor="@color/primary"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+</layout>

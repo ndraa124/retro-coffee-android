@@ -14,6 +14,13 @@ interface ProductApiService {
         @Query("page") page: Int? = null
     ): ProductResponse
 
+    @GET("product/promo")
+    suspend fun getAllProductByPromo(
+        @Query("search") search: String? = null,
+        @Query("limit") limit: Int? = null,
+        @Query("page") page: Int? = null
+    ): ProductResponse
+
     @GET("product")
     suspend fun getAllProduct() : ProductResponse
 
