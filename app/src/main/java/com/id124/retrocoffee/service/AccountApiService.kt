@@ -1,5 +1,7 @@
 package com.id124.retrocoffee.service
 
+import com.id124.retrocoffee.activity.customer.forgot_password.email_check.EmailCheckModel
+import com.id124.retrocoffee.model.account.EmailModel
 import com.id124.retrocoffee.model.account.LoginResponse
 import com.id124.retrocoffee.model.account.RegisterResponse
 import retrofit2.http.Field
@@ -24,4 +26,10 @@ interface   AccountApiService {
         @Field("ac_level") acLevel: Int,
         @Field("ac_status") acStatus: Int
     ): RegisterResponse
+
+    @FormUrlEncoded
+    @POST("account/email")
+    suspend fun cekEmail(
+        @Field("email")email:String
+    ): EmailModel
 }

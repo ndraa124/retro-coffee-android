@@ -7,8 +7,8 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.id124.retrocoffee.R
+import com.id124.retrocoffee.activity.customer.forgot_password.email_check.EmailCheckActivity
 import com.id124.retrocoffee.activity.customer.main.MainActivity
-import com.id124.retrocoffee.activity.customer.register.RegisterActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityLoginBinding
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valEmail
@@ -29,7 +29,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), View.OnClickListener
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tv_forget_password -> {
-                intents<RegisterActivity>(this)
+                intents<EmailCheckActivity>(this)
             }
             R.id.btn_login -> {
                 when {
