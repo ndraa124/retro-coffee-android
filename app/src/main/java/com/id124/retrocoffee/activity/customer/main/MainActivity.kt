@@ -1,13 +1,19 @@
 package com.id124.retrocoffee.activity.customer.main
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.navigation.NavigationView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
@@ -18,7 +24,9 @@ import com.id124.retrocoffee.activity.customer.product_search.ProductSearchActiv
 import com.id124.retrocoffee.activity.customer.profile.ProfileActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityMainBinding
+import com.id124.retrocoffee.remote.ApiClient.Companion.BASE_URL_IMAGE
 import com.id124.retrocoffee.util.ViewPagerAdapter
+import de.hdodenhof.circleimageview.CircleImageView
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     NavigationView.OnNavigationItemSelectedListener {
@@ -31,6 +39,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
 
         setToolbarActionBar()
         setNavigationDrawer()
+        setNavigationDrawerHeader()
         setViewModel()
         subscribeLiveData()
     }
@@ -125,6 +134,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         toggle.syncState()
 
         bind.navView.setNavigationItemSelectedListener(this@MainActivity)
+    }
+
+    private fun setNavigationDrawerHeader() {
+        val navHead: View = bind.navView.getHeaderView(0)
+        val ivProfile = navHead.findViewById<CircleImageView>(R.id.iv_profile)
+        val tvName = navHead.findViewById<TextView>(R.id.tv_name)
+        val tvEmail = navHead.findViewById<TextView>(R.id.tv_email)
+
+        if (sharedPref.getCsPicImage() == "") {
+            ivProfile.setImageResource(R.drawable.profile)
+        } else {
+            Glide.with(this@MainActivity)
+                .asBitmap()
+                .load(BASE_URL_IMAGE + sharedPref.getCsPicImage())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(object : CustomTarget<Bitmap?>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap?>?) {
+                        ivProfile.setImageBitmap(resource)
+                        ivProfile.buildLayer()
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {}
+
+                    override fun onLoadStarted(placeholder: Drawable?) {
+                        ivProfile.setImageResource(R.drawable.ic_loading)
+                    }
+                })
+        }
+
+        tvName.text = sharedPref.getAcName()
+        tvEmail.text = sharedPref.getAcEmail()
     }
 
     private fun setViewModel() {
