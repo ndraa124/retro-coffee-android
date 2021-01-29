@@ -14,6 +14,7 @@
     <!-- Menu Drawer -->
     <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_orders">History Orders</string>
+    <string name="menu_promo">Promo</string>
     <string name="menu_all">Favorite</string>
     <string name="menu_privacy">Privacy policy</string>
     <string name="menu_security">Security</string>

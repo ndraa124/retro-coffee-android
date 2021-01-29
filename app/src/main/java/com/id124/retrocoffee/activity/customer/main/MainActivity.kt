@@ -22,6 +22,7 @@ import com.id124.retrocoffee.activity.customer.history.HistoryActivity
 import com.id124.retrocoffee.activity.customer.main.fragment.ProductFragment
 import com.id124.retrocoffee.activity.customer.product_search.ProductSearchActivity
 import com.id124.retrocoffee.activity.customer.profile.ProfileActivity
+import com.id124.retrocoffee.activity.customer.promote.PromoteActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityMainBinding
 import com.id124.retrocoffee.remote.ApiClient.Companion.BASE_URL_IMAGE
@@ -67,11 +68,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
             R.id.nav_all_menu -> {
                 intents<FavoriteActivity>(this@MainActivity)
             }
-            R.id.nav_privacy -> {
-                Log.d("msg", "Privacy")
-            }
-            R.id.nav_security -> {
-                Log.d("msg", "Security")
+            R.id.nav_promo -> {
+                intents<PromoteActivity>(this@MainActivity)
             }
         }
 
