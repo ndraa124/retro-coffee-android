@@ -3,11 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="model"
+            type="com.id124.retrocoffee.model.customer.CustomerModel" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
         tools:context=".activity.customer.profile.ProfileActivity">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/primary"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -38,6 +63,7 @@
                     android:layout_width="110dp"
                     android:layout_height="132dp"
                     android:src="@drawable/profile"
+                    app:loadImage="@{imageUrl}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="18dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Zulaikha"
+                    android:text="@{model.acName}"
                     android:textColor="@color/primary"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toTopOf="@id/profile_email"
@@ -61,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="zulaikha17@gmail.com"
+                    android:text="@{model.acEmail}"
                     android:textColor="@color/primary"
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -73,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="+62 81312372987"
+                    android:text="@{model.acPhone}"
                     android:textColor="@color/primary"
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -85,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Iskandar Street Block A Number 102"
+                    android:text="@{model.csAddress}"
                     android:textColor="@color/primary"
                     android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"

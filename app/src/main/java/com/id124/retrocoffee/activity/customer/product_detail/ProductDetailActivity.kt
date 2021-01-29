@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
 import com.id124.retrocoffee.base.BaseActivity
@@ -48,7 +49,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
         menuInflater.inflate(R.menu.menu_detail_product, menu)
         actionMenu = menu!!
 
-        viewModel.onSuccessCheckFavorite.observe(this@ProductDetailActivity, {
+        viewModel.onSuccessCheckFavorite.observe(this@ProductDetailActivity) {
             if (it) {
                 actionMenu.findItem(R.id.nav_favorite).isVisible = true
                 actionMenu.findItem(R.id.nav_unfavorite).isVisible = false
@@ -56,11 +57,11 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
                 actionMenu.findItem(R.id.nav_favorite).isVisible = false
                 actionMenu.findItem(R.id.nav_unfavorite).isVisible = true
             }
-        })
+        }
 
-        viewModel.onSuccessFavorite.observe(this@ProductDetailActivity, {
+        viewModel.onSuccessFavorite.observe(this@ProductDetailActivity) {
             noticeToast("Success add to favorite")
-        })
+        }
 
         return true
     }
@@ -128,16 +129,16 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
     }
 
     private fun subscribeLiveData() {
-        viewModel.isLoading.observe(this@ProductDetailActivity, {
+        viewModel.isLoading.observe(this@ProductDetailActivity) {
             if (it) {
                 Log.d("msg", "Show Loading")
             } else {
                 Log.d("msg", "Hide Loading")
             }
-        })
+        }
 
-        viewModel.onSuccessCart.observe(this@ProductDetailActivity, {
+        viewModel.onSuccessCart.observe(this@ProductDetailActivity) {
             noticeToast("Success add to cart")
-        })
+        }
     }
 }
