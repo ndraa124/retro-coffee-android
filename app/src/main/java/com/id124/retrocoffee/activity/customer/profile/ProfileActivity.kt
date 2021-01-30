@@ -53,11 +53,11 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
     }
 
     private fun subcsribeLiveData(){
-        viewModel.onSuccessProfile.observe(this) {
+        viewModel.isLoading.observe(this) {
             if(it) {
-                bind.progressBar.visibility = View.GONE
-            } else {
                 bind.progressBar.visibility = View.VISIBLE
+            } else {
+                bind.progressBar.visibility = View.GONE
             }
         }
 

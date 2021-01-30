@@ -1,6 +1,5 @@
 package com.id124.retrocoffee.activity.customer.profile
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.id124.retrocoffee.model.customer.CustomerModel
