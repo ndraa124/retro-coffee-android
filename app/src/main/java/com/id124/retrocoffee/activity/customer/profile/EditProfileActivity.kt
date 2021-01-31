@@ -62,11 +62,16 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
             }
             R.id.btn_save -> {
                 when {
-                    !valName(bind.inputLayoutName, bind.etName) -> {}
-                    !valEmail(bind.inputLayoutEmail, bind.etEmail) -> {}
-                    !valPhoneNumber(bind.inputLayoutPhoneNumber, bind.etPhoneNumber) -> {}
-                    !valDob(bind.inputLayoutDob, bind.etDob) -> {}
-                    !valDeliveryAddress(bind.inputLayoutAddress, bind.etAddress) -> {}
+                    !valName(bind.inputLayoutName, bind.etName) -> {
+                    }
+                    !valEmail(bind.inputLayoutEmail, bind.etEmail) -> {
+                    }
+                    !valPhoneNumber(bind.inputLayoutPhoneNumber, bind.etPhoneNumber) -> {
+                    }
+                    !valDob(bind.inputLayoutDob, bind.etDob) -> {
+                    }
+                    !valDeliveryAddress(bind.inputLayoutAddress, bind.etAddress) -> {
+                    }
                     else -> {
                         when (bind.rgGender.checkedRadioButtonId) {
                             bind.rbFemale.id -> {
@@ -77,35 +82,39 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
                             }
                         }
 
-                        if (pathImage == null) {
-                            viewModel.updateCustomer(
-                                csId = sharedPref.getCsId(),
-                                csGender = createPartFromString(gender!!),
-                                csDob = createPartFromString(bind.etDob.text.toString()),
-                                csAddress = createPartFromString(bind.etAddress.text.toString())
-                            )
-
-                            viewModel.updateAccount(
-                                acId = sharedPref.getAcId(),
-                                acName = bind.etName.text.toString(),
-                                acEmail = bind.etEmail.text.toString(),
-                                acPhone = bind.etPhoneNumber.text.toString()
-                            )
+                        if (gender == null) {
+                            noticeToast("Please choose your gender first!")
                         } else {
-                            viewModel.updateCustomer(
-                                csId = sharedPref.getCsId(),
-                                csGender = createPartFromString(gender!!),
-                                csDob = createPartFromString(bind.etDob.text.toString()),
-                                csAddress = createPartFromString(bind.etAddress.text.toString()),
-                                image = createPartFromFile(pathImage!!)
-                            )
+                            if (pathImage == null) {
+                                viewModel.updateCustomer(
+                                    csId = sharedPref.getCsId(),
+                                    csGender = createPartFromString(gender!!),
+                                    csDob = createPartFromString(bind.etDob.text.toString()),
+                                    csAddress = createPartFromString(bind.etAddress.text.toString())
+                                )
 
-                            viewModel.updateAccount(
-                                acId = sharedPref.getAcId(),
-                                acName = bind.etName.text.toString(),
-                                acEmail = bind.etEmail.text.toString(),
-                                acPhone = bind.etPhoneNumber.text.toString()
-                            )
+                                viewModel.updateAccount(
+                                    acId = sharedPref.getAcId(),
+                                    acName = bind.etName.text.toString(),
+                                    acEmail = bind.etEmail.text.toString(),
+                                    acPhone = bind.etPhoneNumber.text.toString()
+                                )
+                            } else {
+                                viewModel.updateCustomer(
+                                    csId = sharedPref.getCsId(),
+                                    csGender = createPartFromString(gender!!),
+                                    csDob = createPartFromString(bind.etDob.text.toString()),
+                                    csAddress = createPartFromString(bind.etAddress.text.toString()),
+                                    image = createPartFromFile(pathImage!!)
+                                )
+
+                                viewModel.updateAccount(
+                                    acId = sharedPref.getAcId(),
+                                    acName = bind.etName.text.toString(),
+                                    acEmail = bind.etEmail.text.toString(),
+                                    acPhone = bind.etPhoneNumber.text.toString()
+                                )
+                            }
                         }
                     }
                 }
@@ -157,7 +166,7 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
     }
 
     private fun setDataSharedPref() {
-        if (sharedPref.getCsPicImage() == null) {
+        if (sharedPref.getCsPicImage() == null || sharedPref.getCsPicImage() == "") {
             bind.ivImageProfile.setImageResource(R.drawable.profile)
         } else {
             bind.imageUrl = BASE_URL_IMAGE + sharedPref.getCsPicImage()
@@ -210,14 +219,15 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
     }
 
     private fun setViewModel() {
-        viewModel = ViewModelProvider(this@EditProfileActivity).get(EditProfileViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this@EditProfileActivity).get(EditProfileViewModel::class.java)
         viewModel.setServiceAccount(createApi(this@EditProfileActivity))
         viewModel.setServiceCustomer(createApi(this@EditProfileActivity))
     }
 
     private fun subscribeLiveData() {
         viewModel.isLoading.observe(this@EditProfileActivity) {
-            if(it) {
+            if (it) {
                 bind.btnSave.visibility = View.GONE
                 bind.progressBar.visibility = View.VISIBLE
             } else {
@@ -226,8 +236,16 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
             }
         }
 
-        viewModel.onSuccess.observe(this@EditProfileActivity, {
-            if (it) {
+        viewModel.onSuccess.observe(this@EditProfileActivity, { success ->
+            if (success) {
+                viewModel.onSuccessCs.observe(this@EditProfileActivity, {
+                    if (it == "" || it == null) {
+                        sharedPref.createCsPicImage("")
+                    } else {
+                        sharedPref.createCsPicImage(it)
+                    }
+                })
+
                 sharedPref.createAcName(bind.etName.text.toString())
                 sharedPref.createAcEmail(bind.etEmail.text.toString())
                 sharedPref.createAcPhone(bind.etPhoneNumber.text.toString())
@@ -237,10 +255,6 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
 
                 this@EditProfileActivity.finish()
             }
-        })
-
-        viewModel.onSuccessCs.observe(this@EditProfileActivity, {
-            sharedPref.createCsPicImage(it)
         })
 
         viewModel.onFail.observe(this@EditProfileActivity, { message ->
@@ -255,7 +269,10 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
             when (view.id) {
                 R.id.et_name -> valName(bind.inputLayoutName, bind.etName)
                 R.id.et_email -> valEmail(bind.inputLayoutEmail, bind.etEmail)
-                R.id.et_phone_number -> valPhoneNumber(bind.inputLayoutPhoneNumber, bind.etPhoneNumber)
+                R.id.et_phone_number -> valPhoneNumber(
+                    bind.inputLayoutPhoneNumber,
+                    bind.etPhoneNumber
+                )
                 R.id.et_dob -> valDob(bind.inputLayoutDob, bind.etDob)
                 R.id.et_address -> valDeliveryAddress(bind.inputLayoutAddress, bind.etAddress)
             }

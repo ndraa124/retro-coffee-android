@@ -164,7 +164,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         val tvName = navHead.findViewById<TextView>(R.id.tv_name)
         val tvEmail = navHead.findViewById<TextView>(R.id.tv_email)
 
-        if (sharedPref.getCsPicImage() == null) {
+        if (sharedPref.getCsPicImage() == null || sharedPref.getCsPicImage() == "") {
             ivProfile.setImageResource(R.drawable.profile)
         } else {
             Glide.with(this@MainActivity)

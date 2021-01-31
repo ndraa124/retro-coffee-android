@@ -67,7 +67,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
     }
 
     private fun setDataSharedPref() {
-        if (sharedPref.getCsPicImage() == null) {
+        if (sharedPref.getCsPicImage() == null || sharedPref.getCsPicImage() == "") {
             bind.ivImageProfile.setImageResource(R.drawable.profile)
         } else {
             bind.imageUrl = BASE_URL_IMAGE + sharedPref.getCsPicImage()
