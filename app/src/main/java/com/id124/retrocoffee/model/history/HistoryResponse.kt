@@ -13,6 +13,7 @@ data class HistoryResponse(
                           @SerializedName("ht_product") val historyProduct: String,
                           @SerializedName("ht_price") val historyPrice: String,
                           @SerializedName("ht_qty") val historyQty: String,
-                          @SerializedName("ht_total") val historyTotal: String,
+                          @SerializedName("ht_total") val historyTotal: Long,
+                          @SerializedName("ht_pic_image") val historyImage: String,
     )
 }

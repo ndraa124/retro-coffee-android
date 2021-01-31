@@ -1,9 +1,8 @@
 package com.id124.retrocoffee.service
 
+import com.id124.retrocoffee.model.history.HistoryResponse
 import com.id124.retrocoffee.model.order.OrderResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface OrderApiService {
     @FormUrlEncoded
@@ -17,5 +16,10 @@ interface OrderApiService {
         @Field("or_method_payment") orMethodPayment: String,
         @Field("or_fee") orFee: Long,
         @Field("or_date_order") orDateOrder: String
+    ): OrderResponse
+
+    @GET("order/{csId}")
+    suspend fun getAllOrder(
+        @Path("csId") csId: Int,
     ): OrderResponse
 }

@@ -6,101 +6,98 @@
     <data>
 
         <variable
-            name="product"
-            type="com.id124.retrocoffee.model.product.ProductModel" />
+            name="cart"
+            type="com.id124.retrocoffee.model.cart.CartModel" />
 
         <variable
-            name="imageUrl"
+            name="status"
             type="String" />
 
         <variable
             name="price"
             type="String" />
+
+        <variable
+            name="qty"
+            type="String" />
+
+        <variable
+            name="date"
+            type="String" />
     </data>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:gravity="left"
-        android:orientation="horizontal"
-        android:scrollbarAlwaysDrawVerticalTrack="true">
+        android:id="@+id/itemProduct"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:fontFamily="@font/poppins_bold"
-            android:paddingTop="5dp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/iv_product"
-            android:text="Choco Coffelatea"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tv_price"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/poppins_bold"
-            android:layout_below="@+id/tv_title"
-            android:layout_toRightOf="@+id/iv_product"
-            android:text="IDR 28.000"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/primary"
-            android:layout_marginLeft="15dp"
-            android:textSize="12sp" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/poppins"
-            android:layout_below="@+id/tv_price"
-            android:layout_toRightOf="@+id/iv_product"
-            android:text="XL (Extra Large)"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="12sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
-            android:layout_below="@+id/tv_size"
-            android:layout_toRightOf="@+id/iv_product"
-            android:fontFamily="@font/poppins"
-            android:text="Delivered (Monday, 2 PM)"
-            android:layout_marginTop="10dp"
-            android:textSize="9sp" />
-
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/iv_product"
-            android:layout_width="140dp"
-            android:layout_height="145dp"
-            android:elevation="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="50dp"
-            app:cardCornerRadius="16dp">
-
-            <ImageView
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/img_description"
-                android:elevation="4dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/example_coffee"
-                app:loadImage="@{imageUrl}" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                >
 
-        </androidx.cardview.widget.CardView>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_productImage"
+                        android:src="@drawable/lepet1"
+                        android:layout_marginTop="28dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:text="@{date}"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="left"
+                        android:textSize="18sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_toRightOf="@+id/iv_productImage"/>
+
+                    <TextView
+                        android:id="@+id/tv_price"
+                        android:text="@{price}"
+                        android:gravity="left"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:layout_below="@id/tv_date"
+                        android:layout_toRightOf="@+id/iv_productImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="@{status}"
+                        android:gravity="left"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:layout_below="@id/tv_price"
+                        android:layout_toRightOf="@+id/iv_productImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
 
     </RelativeLayout>
-
 </layout>

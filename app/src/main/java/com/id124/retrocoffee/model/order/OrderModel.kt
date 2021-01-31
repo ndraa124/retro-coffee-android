@@ -1,8 +1,16 @@
 package com.id124.retrocoffee.model.order
 
-import com.google.gson.annotations.SerializedName
-
 data class OrderModel(
-    @SerializedName("or_id")
-    val orId: Int
+    val orId: Int?,
+    val csId: Int?,
+    val orTotal: String?,
+    val orAddress: String?,
+    val orLatitude: String?,
+    val orLongitude: String?,
+    val orStatus: Int?,
+    val orNoteCancel: String?,
+    val orNoteApprove: String?,
+    val orMethodPayment: String?,
+    val orFee: String?,
+    val orDate: String?,
 )
