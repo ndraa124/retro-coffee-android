@@ -3,6 +3,7 @@ package com.id124.retrocoffee.activity.customer.cart.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
@@ -11,13 +12,13 @@ import com.id124.retrocoffee.model.cart.CartModel
 import com.id124.retrocoffee.remote.ApiClient
 import com.id124.retrocoffee.util.Utils
 
-class AdapterCart : RecyclerView.Adapter<AdapterCart.RecyclerViewHolder>() {
+class AdapterCart(private val items : ArrayList<CartModel>, private val onRecyclerViewClickListener: OnRecyclerViewClickListener) : RecyclerView.Adapter<AdapterCart.RecyclerViewHolder>() {
     private lateinit var bind: ItemCartBinding
-    private var items = mutableListOf<CartModel>()
 
     inner class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(cr: CartModel) {
             bind.cart = cr
+
 
             if (cr.crPicImage != null) {
                 bind.imageUrl = ApiClient.BASE_URL_IMAGE + cr.crPicImage
@@ -27,6 +28,8 @@ class AdapterCart : RecyclerView.Adapter<AdapterCart.RecyclerViewHolder>() {
             bind.qty = "x ${cr.crQty}"
 
             bind.executePendingBindings()
+
+
         }
     }
 
@@ -43,6 +46,10 @@ class AdapterCart : RecyclerView.Adapter<AdapterCart.RecyclerViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.setIsRecyclable(false)
         holder.bind(items[position])
+
+        bind.icDelete.setOnClickListener {
+            onRecyclerViewClickListener.onRecyclerViewItemClicked(position)
+        }
     }
 
     override fun getItemCount(): Int {

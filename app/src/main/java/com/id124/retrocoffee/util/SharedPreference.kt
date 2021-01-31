@@ -23,6 +23,7 @@ class SharedPreference(private val context: Context) {
         const val CS_LATITUDE = "CS_LATITUDE"
         const val CS_LONGITUDE = "CS_LONGITUDE"
         const val CS_PIC_IMAGE = "CS_PIC_IMAGE"
+        const val CART_ID = "CART_ID"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -93,6 +94,11 @@ class SharedPreference(private val context: Context) {
         editor.commit()
     }
 
+    fun createCartId(cartId: Int) {
+        editor.putInt(CART_ID, cartId)
+        editor.commit()
+    }
+
     fun createEmail(acId: Int){
         editor.putString(AC_ID, acId.toString())
         editor.commit()
@@ -104,6 +110,10 @@ class SharedPreference(private val context: Context) {
 
     fun getAcId(): Int {
         return sharedPreferences.getInt(AC_ID, 0)
+    }
+
+    fun getCartId(): Int {
+        return sharedPreferences.getInt(CART_ID, 0)
     }
 
     fun getAcName(): String {
