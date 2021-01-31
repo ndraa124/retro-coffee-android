@@ -42,6 +42,9 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
         //Show ProgressBar
         showProgressBar()
 
+        //Set Back Button
+        setBackButton()
+
     }
 
     override fun addFavoriteList(list: List<FavoriteModel>) {
@@ -63,6 +66,12 @@ class FavoriteActivity :  BaseActivity<ActivityFavoriteBinding>(), FavoriteContr
         coroutineScope = CoroutineScope(Job() + Dispatchers.Main)
         val service = this.let { ApiClient.getApiClient(it).create(FavoriteApiService::class.java) }
         presenter = FavoritePresenter(coroutineScope, service)
+    }
+
+    override fun setBackButton() {
+        bind.btBackButton.setOnClickListener {
+            finish()
+        }
     }
 
     override fun getSavedCostumerID() {
