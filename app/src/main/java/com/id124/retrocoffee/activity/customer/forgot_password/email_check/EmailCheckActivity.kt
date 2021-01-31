@@ -7,14 +7,12 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.forgot_password.new_password.NewPasswordActivity
-import com.id124.retrocoffee.activity.customer.login.LoginViewModel
-import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityEmailCheckBinding
-import com.id124.retrocoffee.util.form_validate.ValidateAccount
+import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valEmail
 
 class EmailCheckActivity : BaseActivity<ActivityEmailCheckBinding>(), View.OnClickListener {
-    private lateinit var viewModel: EmailCheckModel
+    private lateinit var viewModel: EmailCheckViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_email_check
         super.onCreate(savedInstanceState)
@@ -25,12 +23,12 @@ class EmailCheckActivity : BaseActivity<ActivityEmailCheckBinding>(), View.OnCli
     }
     override fun onClick(v: View?){
         when (v?.id) {
-            R.id.btn_login -> {
+            R.id.btn_cekEmail -> {
                 when {
-                    !ValidateAccount.valEmail(bind.inputLayoutEmail, bind.inputemails) -> {
+                    !valEmail(bind.inputLayoutEmail, bind.etEmailReset) -> {
                     }
                     else -> {
-                        viewModel.toString()
+                        viewModel.serviceApi(bind.etEmailReset.text.toString())
                     }
                 }
             }
@@ -47,7 +45,6 @@ class EmailCheckActivity : BaseActivity<ActivityEmailCheckBinding>(), View.OnCli
                 bind.btnCekEmail.visibility = View.GONE
                 bind.btnCekEmail.visibility = View.VISIBLE
                 intents<NewPasswordActivity>(this@EmailCheckActivity)
-                this@EmailCheckActivity.finish()
             } else {
                 bind.btnCekEmail.visibility = View.GONE
                 bind.btnCekEmail.visibility = View.VISIBLE
@@ -60,13 +57,13 @@ class EmailCheckActivity : BaseActivity<ActivityEmailCheckBinding>(), View.OnCli
     }
 
     private fun setViewModel() {
-        viewModel = ViewModelProvider(this@EmailCheckActivity).get(EmailCheckModel::class.java)
+        viewModel = ViewModelProvider(this@EmailCheckActivity).get(EmailCheckViewModel::class.java)
         viewModel.setService(createApi(this@EmailCheckActivity))
         viewModel.setSharedPref(sharedPref)
     }
 
     private fun initTextWatcher() {
-        bind.btnCekEmail.addTextChangedListener(MyTextWatcher(bind.btnCekEmail))
+        bind.etEmailReset.addTextChangedListener(MyTextWatcher(bind.etEmailReset))
     }
 
     inner class MyTextWatcher(private val view: View) : TextWatcher {
@@ -74,7 +71,7 @@ class EmailCheckActivity : BaseActivity<ActivityEmailCheckBinding>(), View.OnCli
         override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
         override fun afterTextChanged(editable: Editable) {
             when (view.id) {
-                R.id.inputemails -> ValidateAccount.valEmail(bind.inputLayoutEmail, bind.inputemails)
+                R.id.et_email_reset -> valEmail(bind.inputLayoutEmail, bind.etEmailReset)
             }
         }
     }

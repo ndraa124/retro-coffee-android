@@ -100,7 +100,7 @@ class SharedPreference(private val context: Context) {
     }
 
     fun createEmail(acId: Int){
-        editor.putString(AC_ID, acId.toString())
+        editor.putInt(AC_ID, acId)
         editor.commit()
     }
 

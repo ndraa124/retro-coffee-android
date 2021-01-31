@@ -1,9 +1,9 @@
 package com.id124.retrocoffee.service
 
-import com.id124.retrocoffee.activity.customer.forgot_password.email_check.EmailCheckModel
-import com.id124.retrocoffee.model.account.EmailModel
+import com.id124.retrocoffee.model.account.CheckEmailResponse
 import com.id124.retrocoffee.model.account.LoginResponse
 import com.id124.retrocoffee.model.account.RegisterResponse
+import com.id124.retrocoffee.model.account.ResetPasswordResponse
 import retrofit2.http.*
 
 interface   AccountApiService {
@@ -28,8 +28,8 @@ interface   AccountApiService {
     @FormUrlEncoded
     @POST("account/email")
     suspend fun cekEmail(
-        @Field("email")email:String
-    ): EmailModel
+        @Field("email") email: String
+    ): CheckEmailResponse
 
     @FormUrlEncoded
     @PUT("account/{id}")
@@ -39,4 +39,11 @@ interface   AccountApiService {
         @Field("ac_email") accountEmail: String,
         @Field("ac_phone") accountPhone: String
     ): RegisterResponse
+
+    @FormUrlEncoded
+    @PUT("account/password/{acId}")
+    suspend fun updatePassword(
+        @Path("acId") accountId: Int,
+        @Field("ac_password") acPassword: String
+    ): ResetPasswordResponse
 }

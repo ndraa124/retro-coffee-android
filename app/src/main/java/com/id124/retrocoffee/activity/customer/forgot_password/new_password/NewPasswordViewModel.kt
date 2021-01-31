@@ -1,72 +1,77 @@
-package com.id124.retrocoffee.activity.customer.forgot_password.email_check
+package com.id124.retrocoffee.activity.customer.forgot_password.new_password
 
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.id124.retrocoffee.activity.customer.forgot_password.new_password.NewPasswordActivity
-import com.id124.retrocoffee.model.account.EmailModel
+import com.id124.retrocoffee.model.account.LoginResponse
+import com.id124.retrocoffee.model.account.ResetPasswordResponse
 import com.id124.retrocoffee.service.AccountApiService
 import com.id124.retrocoffee.util.SharedPreference
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
-class EmailCheckModel: ViewModel(),CoroutineScope {
+class NewPasswordViewModel: ViewModel(), CoroutineScope {
     private lateinit var service: AccountApiService
     private lateinit var sharedPref: SharedPreference
 
     val onSuccessLiveData = MutableLiveData<Boolean>()
     val onFailLiveData = MutableLiveData<String>()
     val isLoadingLiveData = MutableLiveData<Boolean>()
+    val onMessageLiveData = MutableLiveData<String>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
     fun setService(service: AccountApiService) {
-        this@EmailCheckModel.service = service
+        this@NewPasswordViewModel.service = service
     }
+
     fun setSharedPref(sharedPref: SharedPreference) {
-        this@EmailCheckModel.sharedPref = sharedPref
+        this@NewPasswordViewModel.sharedPref = sharedPref
     }
-    fun serviceApi(email: String) {
+
+    fun serviceApi(acId: Int, password: String) {
         launch {
             isLoadingLiveData.value = true
+
             val response = withContext(Dispatchers.IO) {
                 try {
-                    service.cekEmail(
-                        email = email
+                    service.updatePassword(
+                        accountId = acId,
+                        acPassword = password
                     )
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
                         onSuccessLiveData.value = false
+
                         when {
                             e.code() == 404 -> {
-                                onFailLiveData.value = "Account not registered"
+                                onFailLiveData.value = "Failed Update Password"
                             }
                             e.code() == 400 -> {
                                 onFailLiveData.value = "Password is invalid!"
                             }
                             else -> {
-                                onFailLiveData.value = "Email is fail! Please try again later!"
+                                onFailLiveData.value = "Update is fail! Please try again later!"
                             }
                         }
                     }
                 }
             }
-            if (response is EmailModel) {
+
+            if (response is ResetPasswordResponse) {
+                Log.d("Response Reset" , response.toString())
                 isLoadingLiveData.value = false
+
                 if (response.success) {
-                    val data = response
-                    sharedPref.createEmail(
-                        acId = data.data.ac_id,
-                    )
                     onSuccessLiveData.value = true
+                    onMessageLiveData.value = response.message
                 } else {
                     onFailLiveData.value = response.message
-
                 }
             }
         }
     }
+
 }
