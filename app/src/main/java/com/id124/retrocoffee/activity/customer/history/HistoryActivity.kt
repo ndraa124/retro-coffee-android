@@ -2,20 +2,15 @@ package com.id124.retrocoffee.activity.customer.history
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.history.Adapter.HistoryAdapter
 import com.id124.retrocoffee.activity.customer.history_detail.HistoryDetailActivity
-import com.id124.retrocoffee.activity.customer.product_detail.ProductDetailActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityHistoryBinding
-import com.id124.retrocoffee.model.history.HistoryModel
 import com.id124.retrocoffee.model.order.OrderModel
 import com.id124.retrocoffee.util.Utils
 
@@ -71,7 +66,7 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(), HistoryAdapter.o
 
         viewModel.getAllOrder().observe(this, {
             (bind.rvHistory.adapter as HistoryAdapter).addList(it)
-        }
+        })
     }
 
     override fun onOrderItem(position: Int) {

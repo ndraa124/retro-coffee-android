@@ -1,21 +1,14 @@
 package com.id124.retrocoffee.activity.customer.history_detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
-import com.id124.retrocoffee.activity.customer.history.Adapter.HistoryAdapter
-import com.id124.retrocoffee.activity.customer.history.HistoryViewModel
 import com.id124.retrocoffee.activity.customer.history_detail.adapter.HistoryDetailAdapter
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityHistoryDetailBinding
-import com.id124.retrocoffee.model.cart.CartModel
 import com.id124.retrocoffee.model.history.HistoryModel
 import com.id124.retrocoffee.util.Utils
 
@@ -30,7 +23,6 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_history_detail
         super.onCreate(savedInstanceState)
-
 
         setRecycleView()
         setViewModel()
@@ -76,49 +68,48 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
     }
 
     private fun setButtonChooseStore() {
-        var approveNote = intent.getStringExtra("approveNote")
-        if(approveNote == "Dine In") {
-            bind.btnDineIn.setTextColor(resources.getColor(R.color.white, theme))
-            bind.btnDoorDelivery.setTextColor(resources.getColor(R.color.gray_500, theme))
-            bind.btnPickUp.setTextColor(resources.getColor(R.color.gray_500, theme))
+        when (intent.getStringExtra("approveNote")) {
+            "Dine In" -> {
+                bind.btnDineIn.setTextColor(resources.getColor(R.color.white, theme))
+                bind.btnDoorDelivery.setTextColor(resources.getColor(R.color.gray_500, theme))
+                bind.btnPickUp.setTextColor(resources.getColor(R.color.gray_500, theme))
 
-            bind.btnDineIn.isPressed = true
-            bind.btnDineIn.isClickable = false
+                bind.btnDineIn.isPressed = true
+                bind.btnDineIn.isClickable = false
 
-            bind.btnDoorDelivery.isPressed = false
-            bind.btnDoorDelivery.isClickable = false
+                bind.btnDoorDelivery.isPressed = false
+                bind.btnDoorDelivery.isClickable = false
 
-            bind.btnPickUp.isPressed = false
-            bind.btnPickUp.isClickable = false
-        }
+                bind.btnPickUp.isPressed = false
+                bind.btnPickUp.isClickable = false
+            }
+            "Door Delivery" -> {
+                bind.btnDineIn.setTextColor(resources.getColor(R.color.gray_500, theme))
+                bind.btnDoorDelivery.setTextColor(resources.getColor(R.color.white, theme))
+                bind.btnPickUp.setTextColor(resources.getColor(R.color.gray_500, theme))
 
-        else if(approveNote == "Door Delivery") {
-            bind.btnDineIn.setTextColor(resources.getColor(R.color.gray_500, theme))
-            bind.btnDoorDelivery.setTextColor(resources.getColor(R.color.white, theme))
-            bind.btnPickUp.setTextColor(resources.getColor(R.color.gray_500, theme))
+                bind.btnDineIn.isPressed = false
+                bind.btnDoorDelivery.isPressed = true
+                bind.btnPickUp.isPressed = false
 
-            bind.btnDineIn.isPressed = false
-            bind.btnDoorDelivery.isPressed = true
-            bind.btnPickUp.isPressed = false
-
-            bind.btnDineIn.isClickable = false
-            bind.btnDoorDelivery.isClickable = false
-            bind.btnPickUp.isClickable = false
-        }
-
-        else if(approveNote == "Pick Up") {
-            bind.btnDineIn.setTextColor(resources.getColor(R.color.gray_500, theme))
-            bind.btnDoorDelivery.setTextColor(resources.getColor(R.color.gray_500, theme))
-            bind.btnPickUp.setTextColor(resources.getColor(R.color.white, theme))
+                bind.btnDineIn.isClickable = false
+                bind.btnDoorDelivery.isClickable = false
+                bind.btnPickUp.isClickable = false
+            }
+            "Pick Up" -> {
+                bind.btnDineIn.setTextColor(resources.getColor(R.color.gray_500, theme))
+                bind.btnDoorDelivery.setTextColor(resources.getColor(R.color.gray_500, theme))
+                bind.btnPickUp.setTextColor(resources.getColor(R.color.white, theme))
 
 
-            bind.btnDineIn.isPressed = false
-            bind.btnDoorDelivery.isPressed = false
-            bind.btnPickUp.isPressed = true
+                bind.btnDineIn.isPressed = false
+                bind.btnDoorDelivery.isPressed = false
+                bind.btnPickUp.isPressed = true
 
-            bind.btnDineIn.isClickable = false
-            bind.btnDoorDelivery.isClickable = false
-            bind.btnPickUp.isClickable = false
+                bind.btnDineIn.isClickable = false
+                bind.btnDoorDelivery.isClickable = false
+                bind.btnPickUp.isClickable = false
+            }
         }
     }
 
