@@ -86,33 +86,27 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
                             noticeToast("Please choose your gender first!")
                         } else {
                             if (pathImage == null) {
-                                viewModel.updateCustomer(
+                                viewModel.updateAccount(
+                                    acId = sharedPref.getAcId(),
+                                    acName = bind.etName.text.toString(),
+                                    acEmail = bind.etEmail.text.toString(),
+                                    acPhone = bind.etPhoneNumber.text.toString(),
                                     csId = sharedPref.getCsId(),
                                     csGender = createPartFromString(gender!!),
                                     csDob = createPartFromString(bind.etDob.text.toString()),
                                     csAddress = createPartFromString(bind.etAddress.text.toString())
                                 )
-
+                            } else {
                                 viewModel.updateAccount(
                                     acId = sharedPref.getAcId(),
                                     acName = bind.etName.text.toString(),
                                     acEmail = bind.etEmail.text.toString(),
-                                    acPhone = bind.etPhoneNumber.text.toString()
-                                )
-                            } else {
-                                viewModel.updateCustomer(
+                                    acPhone = bind.etPhoneNumber.text.toString(),
                                     csId = sharedPref.getCsId(),
                                     csGender = createPartFromString(gender!!),
                                     csDob = createPartFromString(bind.etDob.text.toString()),
                                     csAddress = createPartFromString(bind.etAddress.text.toString()),
                                     image = createPartFromFile(pathImage!!)
-                                )
-
-                                viewModel.updateAccount(
-                                    acId = sharedPref.getAcId(),
-                                    acName = bind.etName.text.toString(),
-                                    acEmail = bind.etEmail.text.toString(),
-                                    acPhone = bind.etPhoneNumber.text.toString()
                                 )
                             }
                         }
@@ -236,25 +230,21 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
             }
         }
 
-        viewModel.onSuccess.observe(this@EditProfileActivity, { success ->
-            if (success) {
-                viewModel.onSuccessCs.observe(this@EditProfileActivity, {
-                    if (it == "" || it == null) {
-                        sharedPref.createCsPicImage("")
-                    } else {
-                        sharedPref.createCsPicImage(it)
-                    }
-                })
-
-                sharedPref.createAcName(bind.etName.text.toString())
-                sharedPref.createAcEmail(bind.etEmail.text.toString())
-                sharedPref.createAcPhone(bind.etPhoneNumber.text.toString())
-                sharedPref.createCsGender(gender!!)
-                sharedPref.createCsDateOfBirth(bind.etDob.text.toString())
-                sharedPref.createAddress(bind.etAddress.text.toString())
-
-                this@EditProfileActivity.finish()
+        viewModel.onSuccess.observe(this@EditProfileActivity, { image ->
+            sharedPref.createAcName(bind.etName.text.toString())
+            sharedPref.createAcEmail(bind.etEmail.text.toString())
+            sharedPref.createAcPhone(bind.etPhoneNumber.text.toString())
+            sharedPref.createCsGender(gender!!)
+            sharedPref.createCsDateOfBirth(bind.etDob.text.toString())
+            sharedPref.createAddress(bind.etAddress.text.toString())
+            if (image == "" || image == null) {
+                sharedPref.createCsPicImage("")
+            } else {
+                sharedPref.createCsPicImage(image)
             }
+
+            noticeToast("Update profile success")
+            this@EditProfileActivity.finish()
         })
 
         viewModel.onFail.observe(this@EditProfileActivity, { message ->

@@ -2,7 +2,6 @@ package com.id124.retrocoffee.activity.customer.profile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.id124.retrocoffee.model.account.RegisterResponse
 import com.id124.retrocoffee.model.customer.CustomerUpdateResponse
 import com.id124.retrocoffee.service.AccountApiService
 import com.id124.retrocoffee.service.CustomerApiService
@@ -19,8 +18,7 @@ class EditProfileViewModel : ViewModel(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    val onSuccess = MutableLiveData<Boolean>()
-    val onSuccessCs = MutableLiveData<String>()
+    val onSuccess = MutableLiveData<String>()
     val onFail = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
 
@@ -32,12 +30,35 @@ class EditProfileViewModel : ViewModel(), CoroutineScope {
         this.customerService = service
     }
 
-    fun updateAccount(acId: Int, acName: String, acEmail: String, acPhone: String) {
+    fun updateAccount(
+        acId: Int,
+        acName: String,
+        acEmail: String,
+        acPhone: String,
+        csId: Int,
+        csGender: RequestBody,
+        csDob: RequestBody,
+        csAddress: RequestBody,
+        image: MultipartBody.Part? = null
+    ) {
         launch {
             isLoading.value = true
             val response = withContext(Dispatchers.IO) {
                 try {
-                    accountService.updateAccount(acId, acName, acEmail, acPhone)
+                    accountService.updateAccount(
+                        accountId = acId,
+                        accountName = acName,
+                        accountEmail = acEmail,
+                        accountPhone = acPhone
+                    )
+
+                    customerService.updateCustomer(
+                        csId = csId,
+                        csGender = csGender,
+                        csDob = csDob,
+                        csAddress = csAddress,
+                        image = image
+                    )
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
                         isLoading.value = false
@@ -54,11 +75,11 @@ class EditProfileViewModel : ViewModel(), CoroutineScope {
                 }
             }
 
-            if (response is RegisterResponse) {
+            if (response is CustomerUpdateResponse) {
                 isLoading.value = false
 
                 if (response.success) {
-                    onSuccess.value = true
+                    onSuccess.value = response.image
                 } else {
                     onFail.value = response.message
                 }
@@ -66,7 +87,7 @@ class EditProfileViewModel : ViewModel(), CoroutineScope {
         }
     }
 
-    fun updateCustomer(
+    /*fun updateCustomer(
         csId: Int,
         csGender: RequestBody,
         csDob: RequestBody,
@@ -113,5 +134,5 @@ class EditProfileViewModel : ViewModel(), CoroutineScope {
                 }
             }
         }
-    }
+    }*/
 }
