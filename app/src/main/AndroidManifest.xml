@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.id124.retrocoffee">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,17 +13,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RetroCoffee"
-        android:usesCleartextTraffic="true"
-        tools:targetApi="m">
+        android:usesCleartextTraffic="true">
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
         <activity
+            android:name=".activity.customer.product_search.ProductSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
+            android:name=".activity.customer.favorite.FavoriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
+            android:name=".activity.customer.favorite.favorite_detail.FavoriteDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
             android:name=".activity.customer.history_detail.HistoryDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
         <activity
             android:name=".activity.customer.profile.EditProfileActivity"
             android:screenOrientation="portrait"
@@ -95,18 +105,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.customer.product_search.ProductSearchActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
-        <activity
-            android:name=".activity.customer.favorite.FavoriteActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
-        <activity
-            android:name=".activity.customer.favorite.favorite_detail.FavoriteDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
