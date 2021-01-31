@@ -97,6 +97,7 @@
             app:layout_constraintLeft_toRightOf="@id/tv_qty"/>
 
         <ImageView
+            android:id="@+id/ic_delete"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_delete"

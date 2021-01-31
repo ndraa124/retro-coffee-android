@@ -20,4 +20,11 @@ interface CartApiService {
     suspend fun getAllCart(
         @Path("csId") csId: Int
     ): CartResponse
+
+    @DELETE("cart/{csId}")
+    suspend fun deleteCart(
+        @Path("csId") csId: Int
+    ): CartResponse
+
+
 }
