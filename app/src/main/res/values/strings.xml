@@ -38,7 +38,7 @@
     <string name="search_now">Search Now</string>
     <string name="you_don_t_have_any_favorite_yet">You don\'t have any favorite yet</string>
 
-<!-- Fitur forget password   -->
+    <!-- Fitur forget password   -->
     <string name="don_t_worry">Dont Worry!</string>
     <string name="enter_your_">Enter your email adress to get reset password link</string>
     <string name="enter_your_email">Enter your email adress</string>
@@ -50,5 +50,9 @@
     <string name="resend_pass">Reset Password</string>
     <string name="product">Product</string>
     <string name="see_more">See more</string>
+    <!--    coupons-->
     <string name="promo_for_you">Promo for you</string>
+    <string name="my_coupons">My Coupons</string>
+    <string name="claim_coupo">Claim coupons by clicking it</string>
+    <string name="get_a_cup_o">Get a cup of coffee for free on sunday morning\nOnly at 7 to 9 AM</string>
 </resources>

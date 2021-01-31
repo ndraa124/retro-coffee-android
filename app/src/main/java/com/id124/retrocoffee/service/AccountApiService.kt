@@ -3,6 +3,7 @@ package com.id124.retrocoffee.service
 import com.id124.retrocoffee.activity.customer.forgot_password.email_check.EmailCheckModel
 import com.id124.retrocoffee.model.account.EmailModel
 import com.id124.retrocoffee.model.account.LoginResponse
+import com.id124.retrocoffee.model.account.PasswordResponse
 import com.id124.retrocoffee.model.account.RegisterResponse
 import retrofit2.http.*
 
@@ -39,4 +40,11 @@ interface   AccountApiService {
         @Field("ac_email") accountEmail: String,
         @Field("ac_phone") accountPhone: String
     ): RegisterResponse
+
+    @FormUrlEncoded
+    @PUT("account/password/{id}")
+    suspend fun resetPassword(
+        @Path("id") accountId: String,
+        @Field("ac_password") accountPassword : String
+    ):PasswordResponse
 }

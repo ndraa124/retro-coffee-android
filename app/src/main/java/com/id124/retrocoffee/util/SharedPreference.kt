@@ -97,6 +97,9 @@ class SharedPreference(private val context: Context) {
         editor.putString(AC_ID, acId.toString())
         editor.commit()
     }
+    fun getIdEmail():Int{
+        return sharedPreferences.getInt(AC_ID, 0)
+    }
 
     fun getToken(): String {
         return sharedPreferences.getString(TOKEN, "")!!

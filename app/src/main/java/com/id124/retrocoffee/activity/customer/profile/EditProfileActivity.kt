@@ -66,9 +66,6 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>() {
             }
         }
 
-
-
-
         bind.tvDob.setOnClickListener {
             datePicker()
         }

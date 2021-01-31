@@ -11,6 +11,7 @@ import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.adapter.AdapterCart
 import com.id124.retrocoffee.activity.customer.checkout.CheckoutActivity
 import com.id124.retrocoffee.activity.customer.checkout.adapter.CartAdapter
+import com.id124.retrocoffee.activity.customer.coupon.CouponActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityCartBinding
 import com.id124.retrocoffee.util.Utils
@@ -34,7 +35,9 @@ class CartActivity : BaseActivity<ActivityCartBinding>() {
         bind.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-
+        bind.btnCoupons.setOnClickListener{
+            intents<CouponActivity>(this@CartActivity)
+        }
         bind.btnCheckout.setOnClickListener {
             intents<CheckoutActivity>(this@CartActivity)
         }
