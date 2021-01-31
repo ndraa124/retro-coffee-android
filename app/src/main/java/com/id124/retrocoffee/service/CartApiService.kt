@@ -21,10 +21,15 @@ interface CartApiService {
         @Path("csId") csId: Int
     ): CartResponse
 
-    @DELETE("cart/{csId}")
-    suspend fun deleteCart(
-        @Path("csId") csId: Int
+    @FormUrlEncoded
+    @PUT("cart/{crId}")
+    suspend fun updateCart(
+        @Path("crId") crId: Int,
+        @Field("cr_qty") crQty: Int
     ): CartResponse
 
-
+    @DELETE("cart/{crId}")
+    suspend fun deleteCart(
+        @Path("crId") crId: Int
+    ): CartResponse
 }

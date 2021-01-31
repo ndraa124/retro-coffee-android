@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -24,23 +25,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_product"
-            android:layout_width="60dp"
-            android:layout_height="85dp"
+            android:layout_width="40dp"
+            android:layout_height="65dp"
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:contentDescription="@string/img_description"
             android:elevation="4dp"
             android:scaleType="fitXY"
             android:src="@color/gray_300"
+            app:riv_corner_radius="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loadImage="@{imageUrl}"
-            app:riv_corner_radius="12dp" />
+            app:loadImage="@{imageUrl}" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -66,40 +66,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_qty"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal"
+                android:fontFamily="@font/poppins"
+                android:text="@{qty}"
+                android:textColor="@color/black"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_product_name">
-
-                <ImageView
-                    android:id="@+id/iv_remove"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:contentDescription="@string/img_description"
-                    android:src="@drawable/ic_remove" />
-
-                <TextView
-                    android:id="@+id/tv_qty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="16dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:gravity="center"
-                    android:text="@{qty}"
-                    android:textColor="@color/black" />
-
-                <ImageView
-                    android:id="@+id/iv_add"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:contentDescription="@string/img_description"
-                    android:src="@drawable/ic_add" />
-
-            </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
         </LinearLayout>
 

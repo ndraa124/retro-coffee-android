@@ -61,14 +61,14 @@ class CartViewModel : ViewModel(), CoroutineScope {
         }
     }
 
-    fun serviceDeleteApi(csId: Int) {
+    fun serviceDeleteApi(crId: Int) {
         launch {
             isLoading.value = true
 
             val response = withContext(Dispatchers.IO) {
                 try {
                     service.deleteCart(
-                        csId = csId
+                        crId = crId
                     )
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
@@ -98,6 +98,41 @@ class CartViewModel : ViewModel(), CoroutineScope {
         }
     }
 
+    fun serviceUpdateApi(crId: Int, crQty: Int) {
+        launch {
+            isLoading.value = true
 
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    service.updateCart(
+                        crId = crId,
+                        crQty = crQty
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
 
+                        when {
+                            e.code() == 404 -> {
+                                onFail.value = "Data not found!"
+                            }
+                            else -> {
+                                onFail.value = "Server is maintenance!"
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (response is CartResponse) {
+                isLoading.value = false
+
+                if (response.success) {
+                    onSuccessCart.value = response.message
+                } else {
+                    onFail.value = response.message
+                }
+            }
+        }
+    }
 }

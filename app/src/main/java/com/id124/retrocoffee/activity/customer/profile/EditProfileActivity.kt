@@ -36,49 +36,6 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_edit_profile
         super.onCreate(savedInstanceState)
-<<<<<<< HEAD
-        c = Calendar.getInstance()
-
-        setToolbar()
-        setViewModel()
-        subcsribeLiveData()
-
-        bind.radioGroup.setOnCheckedChangeListener { radioGroup, i ->
-            if (i == R.id.male) {
-                sharedPref.createCsGender(1)
-                Log.d("gender", sharedPref.getCsGender().toString())
-                Toast.makeText(this, sharedPref.getCsGender().toString() , Toast.LENGTH_SHORT).show()
-            } else if (i == R.id.female) {
-                sharedPref.createCsGender(0)
-                Log.d("gender", sharedPref.getCsGender().toString())
-                Toast.makeText(this, sharedPref.getCsGender().toString() , Toast.LENGTH_SHORT).show()
-            } else {
-                Log.d("error", "error")
-            }
-        }
-
-        bind.tvDob.setOnClickListener {
-            datePicker()
-        }
-
-        bind.btnDob.setOnClickListener {
-            datePicker()
-        }
-
-        bind.btnSave.setOnClickListener {
-            val acId = sharedPref.getAcId()
-            val csId = sharedPref.getCsId()
-            val name = bind.etName.text.toString()
-            val email = bind.etEmail.text.toString()
-            val phone = bind.etPhone.text.toString()
-            val gender = sharedPref.getCsGender().toString()
-            val dob = bind.tvDob.text.toString()
-            val address = bind.etAddress.text.toString()
-
-            viewModel.updateAccount(acId, name, email, phone)
-            viewModel.updateCustomer(csId, gender, dob, address)
-        }
-=======
 
         setToolbarActionBar()
         setDataSharedPref()
@@ -90,7 +47,6 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
         setViewModel()
         subscribeLiveData()
     }
->>>>>>> ca356e2c37b37462168333b0f6c9b99dad5d27f8
 
     override fun onClick(v: View?) {
         when (v?.id) {

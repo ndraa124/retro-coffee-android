@@ -40,8 +40,8 @@
 
     <!-- Fitur forget password   -->
     <string name="don_t_worry">Dont Worry!</string>
-    <string name="enter_your_">Enter your email adress to get reset password link</string>
-    <string name="enter_your_email">Enter your email adress</string>
+    <string name="enter_your_">Enter your email address to get reset password link</string>
+    <string name="enter_your_email">Enter your email address</string>
     <string name="haven_t_rec">Havent received any link?</string>
     <string name="resend_link">Resend Link</string>
     <string name="image">image</string>
@@ -50,16 +50,14 @@
     <string name="resend_pass">Reset Password</string>
     <string name="product">Product</string>
     <string name="see_more">See more</string>
-    <!--    coupons-->
     <string name="promo_for_you">Promo for you</string>
-<<<<<<< HEAD
+    <string name="order_history">Order History</string>
+
+    <!--    coupons-->
     <string name="my_coupons">My Coupons</string>
     <string name="claim_coupo">Claim coupons by clicking it</string>
     <string name="get_a_cup_o">Get a cup of coffee for free on sunday morning\nOnly at 7 to 9 AM</string>
-=======
-    <string name="order_history">Order History</string>
 
     <!-- Empty Field -->
     <string name="empty_address">Empty address! Please add address first!</string>
->>>>>>> ca356e2c37b37462168333b0f6c9b99dad5d27f8
 </resources>

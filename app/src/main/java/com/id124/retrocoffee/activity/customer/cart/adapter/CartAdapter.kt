@@ -6,14 +6,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
-import com.id124.retrocoffee.activity.customer.main.fragment.adapter.ProductAdapter
-import com.id124.retrocoffee.databinding.ItemCartCheckoutBinding
+import com.id124.retrocoffee.databinding.ItemCartBinding
 import com.id124.retrocoffee.model.cart.CartModel
 import com.id124.retrocoffee.remote.ApiClient.Companion.BASE_URL_IMAGE
 import com.id124.retrocoffee.util.Utils.Companion.currencyFormat
 
 class CartAdapter : RecyclerView.Adapter<CartAdapter.RecyclerViewHolder>() {
-    private lateinit var bind: ItemCartCheckoutBinding
+    private lateinit var bind: ItemCartBinding
     private lateinit var onItemClickCallback: OnItemClickCallback
     private var items = mutableListOf<CartModel>()
 
@@ -47,7 +46,7 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.RecyclerViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         bind = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_cart_checkout,
+            R.layout.item_cart,
             parent,
             false
         )

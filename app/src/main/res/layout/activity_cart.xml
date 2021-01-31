@@ -91,6 +91,7 @@
                     android:background="@drawable/button_radius_secondary"
                     android:drawableEnd="@drawable/ic_arrow_right"
                     android:fontFamily="@font/poppins"
+                    android:onClick="onClick"
                     android:paddingHorizontal="32dp"
                     android:text="Apply Delivery Coupons"
                     android:textAllCaps="false"

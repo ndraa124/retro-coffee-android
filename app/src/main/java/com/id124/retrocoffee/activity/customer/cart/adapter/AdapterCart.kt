@@ -3,7 +3,6 @@ package com.id124.retrocoffee.activity.customer.cart.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
@@ -46,10 +45,6 @@ class AdapterCart(private val items : ArrayList<CartModel>, private val onRecycl
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         holder.setIsRecyclable(false)
         holder.bind(items[position])
-
-        bind.icDelete.setOnClickListener {
-            onRecyclerViewClickListener.onRecyclerViewItemClicked(position)
-        }
     }
 
     override fun getItemCount(): Int {

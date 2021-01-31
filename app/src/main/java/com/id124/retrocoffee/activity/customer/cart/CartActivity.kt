@@ -1,8 +1,8 @@
 package com.id124.retrocoffee.activity.customer.cart
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.adapter.CartAdapter
 import com.id124.retrocoffee.activity.customer.checkout.CheckoutActivity
+import com.id124.retrocoffee.activity.customer.coupon.CouponActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityCartBinding
 import com.id124.retrocoffee.model.cart.CartModel
 import com.id124.retrocoffee.util.Utils
+import java.util.*
 
 class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
     private lateinit var viewModel: CartViewModel
@@ -47,6 +49,9 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
             R.id.btn_see_product -> {
                 this@CartActivity.finish()
             }
+            R.id.btn_coupons -> {
+                intents<CouponActivity>(this@CartActivity)
+            }
             R.id.btn_back -> {
                 onBackPressed()
             }
@@ -75,11 +80,22 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
 
         adapter.setOnItemClickCallback(object : CartAdapter.OnItemClickCallback {
             override fun onClickAddItem(data: CartModel) {
-                Log.d("msg", "Add Item ${data.crId}")
+                viewModel.serviceUpdateApi(
+                    crId = data.crId,
+                    crQty = data.crQty + 1
+                )
             }
 
             override fun onClickRemoveItem(data: CartModel) {
-                Log.d("msg", "Remove Item ${data.crId}")
+                if (data.crQty > 1) {
+                    viewModel.serviceUpdateApi(
+                        crId = data.crId,
+                        crQty = data.crQty - 1
+                    )
+                } else {
+                    confirmDelete(crId = data.crId)
+                }
+
             }
         })
     }
@@ -93,7 +109,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
     }
 
     private fun subscribeLiveData() {
-        viewModel.isLoading.observe(this) {
+        viewModel.isLoading.observe(this@CartActivity) {
             if (it) {
                 bind.lnProgressBar.visibility = View.VISIBLE
             } else {
@@ -101,7 +117,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
             }
         }
 
-        viewModel.onSuccess.observe(this) { list ->
+        viewModel.onSuccess.observe(this@CartActivity) { list ->
             for (i in list.indices) {
                 subtotal += list[i].crTotal
             }
@@ -111,6 +127,10 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
             bind.svCart.visibility = View.VISIBLE
 
             setPayTotal()
+        }
+
+        viewModel.onSuccessCart.observe(this@CartActivity) {
+            viewModel.serviceGetApi(csId = sharedPref.getCsId())
         }
 
         viewModel.onFail.observe(this@CartActivity) {
@@ -127,5 +147,22 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
         bind.tvIdrTotal.text = Utils.currencyFormat(subtotal.toString())
         bind.tvTaxTotal.text = Utils.currencyFormat(fee.toString())
         bind.tvPayTotal.text = Utils.currencyFormat(total.toString())
+    }
+
+    private fun confirmDelete(crId: Int) {
+        val dialog = AlertDialog
+            .Builder(this@CartActivity)
+            .setTitle("Notice!")
+            .setMessage("Are you sure to remove this product?")
+            .setPositiveButton("OK") { _, _ ->
+                viewModel.serviceDeleteApi(
+                    crId = crId
+                )
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        dialog?.show()
     }
 }

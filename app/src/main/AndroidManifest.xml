@@ -13,19 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RetroCoffee"
-<<<<<<< HEAD
-        android:usesCleartextTraffic="true"
-        tools:targetApi="m">
-        <activity android:name=".activity.customer.coupon.CouponActivity"></activity>
-        <activity android:name=".activity.customer.history_detail.HistoryDetailActivity" />
-=======
         android:usesCleartextTraffic="true">
->>>>>>> ca356e2c37b37462168333b0f6c9b99dad5d27f8
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <activity
+            android:name=".activity.customer.coupon.CouponActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
         <activity
             android:name=".activity.customer.product_search.ProductSearchActivity"
             android:screenOrientation="portrait"
