@@ -25,12 +25,14 @@ class EmailCheckActivity : BaseActivity<ActivityEmailCheckBinding>(), View.OnCli
     }
     override fun onClick(v: View?){
         when (v?.id) {
-            R.id.btn_login -> {
+            R.id.btn_cekEmail -> {
                 when {
                     !ValidateAccount.valEmail(bind.inputLayoutEmail, bind.inputemails) -> {
                     }
                     else -> {
-                        viewModel.toString()
+                        viewModel.serviceApi(
+                            email = bind.inputemails.text.toString()
+                        )
                     }
                 }
             }

@@ -1,21 +1,23 @@
 package com.id124.retrocoffee.model.account
 
+import com.google.gson.annotations.SerializedName
+
 //data class EmailModel()
 
 data class EmailModel(
-    val data: EmailResponse,
     val message: String,
-    val success: Boolean)
+    val success: Boolean,
+    val `data`: EmailResponse)
 {
     data class EmailResponse(
-        val ac_created_at: String,
-        val ac_email: String,
-        val ac_id: Int,
-        val ac_level: Int,
-        val ac_name: String,
-        val ac_password: String,
-        val ac_phone: String,
-        val ac_status: Int,
-        val ac_updated_at: String
+        @SerializedName("ac_id") val acid: Int,
+        @SerializedName("ac_name") val acname: String,
+        @SerializedName("ac_email") val acemail: String,
+        @SerializedName("ac_phone") val acphone: String,
+        @SerializedName("ac_password") val acpassword: String,
+        @SerializedName("ac_level") val aclevel: Int,
+        @SerializedName("ac_status") val acstatus: Int,
+        @SerializedName("ac_created_at") val accreatedat: String,
+        @SerializedName("ac_updated_at") val acupdatedat: String
     )
 }

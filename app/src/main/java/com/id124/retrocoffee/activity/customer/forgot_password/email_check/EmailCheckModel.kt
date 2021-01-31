@@ -1,10 +1,7 @@
 package com.id124.retrocoffee.activity.customer.forgot_password.email_check
 
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.id124.retrocoffee.activity.customer.forgot_password.new_password.NewPasswordActivity
 import com.id124.retrocoffee.model.account.EmailModel
 import com.id124.retrocoffee.service.AccountApiService
 import com.id124.retrocoffee.util.SharedPreference
@@ -57,9 +54,9 @@ class EmailCheckModel: ViewModel(),CoroutineScope {
             if (response is EmailModel) {
                 isLoadingLiveData.value = false
                 if (response.success) {
-                    val data = response
+                    val data = response.data
                     sharedPref.createEmail(
-                        acId = data.data.ac_id,
+                        acId = data.acid
                     )
                     onSuccessLiveData.value = true
                 } else {

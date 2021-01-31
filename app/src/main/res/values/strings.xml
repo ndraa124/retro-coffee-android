@@ -50,9 +50,16 @@
     <string name="resend_pass">Reset Password</string>
     <string name="product">Product</string>
     <string name="see_more">See more</string>
+    <!--    coupons-->
     <string name="promo_for_you">Promo for you</string>
+<<<<<<< HEAD
+    <string name="my_coupons">My Coupons</string>
+    <string name="claim_coupo">Claim coupons by clicking it</string>
+    <string name="get_a_cup_o">Get a cup of coffee for free on sunday morning\nOnly at 7 to 9 AM</string>
+=======
     <string name="order_history">Order History</string>
 
     <!-- Empty Field -->
     <string name="empty_address">Empty address! Please add address first!</string>
+>>>>>>> ca356e2c37b37462168333b0f6c9b99dad5d27f8
 </resources>

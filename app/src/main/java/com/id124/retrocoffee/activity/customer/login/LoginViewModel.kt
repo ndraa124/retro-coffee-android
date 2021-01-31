@@ -62,7 +62,6 @@ class LoginViewModel : ViewModel(), CoroutineScope {
 
                 if (response.success) {
                     val data = response.data
-
                     sharedPref.createAccount(
                         csId = data.csId,
                         acId = data.acId,
