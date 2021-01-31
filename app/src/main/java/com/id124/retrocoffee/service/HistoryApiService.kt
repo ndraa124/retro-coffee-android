@@ -6,8 +6,8 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface HistoryApiService {
-    @GET("history/{csId}")
+    @GET("history/detail/{orId}")
     suspend fun getAllHistoryOrder(
-        @Path("csId") csId: Int,
+        @Path("orId") orId: Int,
     ): HistoryResponse
 }
