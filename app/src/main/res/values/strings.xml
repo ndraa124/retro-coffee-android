@@ -2,4 +2,57 @@
     <string name="app_name">Retro Coffee</string>
     <string name="permission_dialog">Accessing Location Permissions required</string>
     <string name="go_to_permissions_settings">Go to App settings and enable permissions</string>
+    <string name="get_a_cup_of_coffee_for_free_only_new_user">Get a cup of coffee for free only for new user</string>
+    <string name="welcome">Welcome!</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="img_description">MY IMAGE</string>
+    <string name="tv_login">login</string>
+    <string name="coffee_for">Coffee for</string>
+    <string name="everyone">Everyone</string>
+    <string name="get_started">Get started</string>
+
+    <!-- Menu Drawer -->
+    <string name="menu_edit_profile">Edit Profile</string>
+    <string name="menu_orders">History Orders</string>
+    <string name="menu_promo">Promo</string>
+    <string name="menu_all">Favorite</string>
+    <string name="menu_privacy">Privacy policy</string>
+    <string name="menu_security">Security</string>
+    <string name="menu_divider">Divider</string>
+    <string name="menu_cart">Cart</string>
+    <string name="menu_favorite">Add to favorite</string>
+    <string name="menu_unfavorite">Remove favorite</string>
+    <string name="sign_out">Sign-out</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+
+    <!-- Home -->
+    <string name="a_good_coffee_is_a_good_day">A good coffee is a good day</string>
+    <string name="search">Search</string>
+
+    <!-- Detail Product -->
+    <string name="info_detail_product">Delivery only on Monday to friday at 1 – 7 pm</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="search_product">Search Product</string>
+    <string name="not_found">not found</string>
+    <string name="search_now">Search Now</string>
+    <string name="you_don_t_have_any_favorite_yet">You don\'t have any favorite yet</string>
+
+    <!-- Fitur forget password   -->
+    <string name="don_t_worry">Dont Worry!</string>
+    <string name="enter_your_">Enter your email adress to get reset password link</string>
+    <string name="enter_your_email">Enter your email adress</string>
+    <string name="haven_t_rec">Havent received any link?</string>
+    <string name="resend_link">Resend Link</string>
+    <string name="image">image</string>
+    <string name="password">enter new Password</string>
+    <string name="confirmpassword">conirm new Password</string>
+    <string name="resend_pass">Reset Password</string>
+    <string name="product">Product</string>
+    <string name="see_more">See more</string>
+    <string name="promo_for_you">Promo for you</string>
+    <string name="order_history">Order History</string>
+
+    <!-- Empty Field -->
+    <string name="empty_address">Empty address! Please add address first!</string>
 </resources>

@@ -22,6 +22,8 @@ class SharedPreference(private val context: Context) {
         const val CS_ADDRESS = "CS_ADDRESS"
         const val CS_LATITUDE = "CS_LATITUDE"
         const val CS_LONGITUDE = "CS_LONGITUDE"
+        const val CS_PIC_IMAGE = "CS_PIC_IMAGE"
+        const val CART_ID = "CART_ID"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -30,13 +32,17 @@ class SharedPreference(private val context: Context) {
     private val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
     fun createAccount(
+        csId: Int,
         token: String,
         acId: Int,
         acName: String,
         acEmail: String,
         acPhone: String,
         acLevel: Int,
-        csId: Int
+        csGender: String? = null,
+        csDob: String? = null,
+        csAddress: String? = null,
+        csPicImage: String? = null
     ) {
         editor.putBoolean(LOGIN, true)
         editor.putString(TOKEN, token)
@@ -46,6 +52,10 @@ class SharedPreference(private val context: Context) {
         editor.putString(AC_PHONE, acPhone)
         editor.putInt(AC_LEVEL, acLevel)
         editor.putInt(CS_ID, csId)
+        editor.putString(CS_GENDER, csGender)
+        editor.putString(CS_DOB, csDob)
+        editor.putString(CS_ADDRESS, csAddress)
+        editor.putString(CS_PIC_IMAGE, csPicImage)
         editor.commit()
     }
 
@@ -64,13 +74,33 @@ class SharedPreference(private val context: Context) {
         editor.commit()
     }
 
-    fun createCsGender(acGender: Int) {
-        editor.putInt(CS_GENDER, acGender)
+    fun createAddress(csAddress: String) {
+        editor.putString(CS_ADDRESS, csAddress)
+        editor.commit()
+    }
+
+    fun createCsGender(acGender: String) {
+        editor.putString(CS_GENDER, acGender)
         editor.commit()
     }
 
     fun createCsDateOfBirth(csDob: String) {
         editor.putString(CS_DOB, csDob)
+        editor.commit()
+    }
+
+    fun createCsPicImage(csPicImage: String) {
+        editor.putString(CS_PIC_IMAGE, csPicImage)
+        editor.commit()
+    }
+
+    fun createCartId(cartId: Int) {
+        editor.putInt(CART_ID, cartId)
+        editor.commit()
+    }
+
+    fun createEmail(acId: Int){
+        editor.putInt(AC_ID, acId)
         editor.commit()
     }
 
@@ -80,6 +110,10 @@ class SharedPreference(private val context: Context) {
 
     fun getAcId(): Int {
         return sharedPreferences.getInt(AC_ID, 0)
+    }
+
+    fun getCartId(): Int {
+        return sharedPreferences.getInt(CART_ID, 0)
     }
 
     fun getAcName(): String {
@@ -102,16 +136,28 @@ class SharedPreference(private val context: Context) {
         return sharedPreferences.getInt(CS_ID, 0)
     }
 
-    fun getCsGender(): Int {
-        return sharedPreferences.getInt(CS_GENDER, 0)
+    fun getCsAddress(): String? {
+        return sharedPreferences.getString(CS_ADDRESS, null)
     }
 
-    fun getCsDateOfBirth(): String {
-        return sharedPreferences.getString(CS_DOB, "")!!
+    fun getCsGender(): String? {
+        return sharedPreferences.getString(CS_GENDER, null)
+    }
+
+    fun getCsDateOfBirth(): String? {
+        return sharedPreferences.getString(CS_DOB, null)
+    }
+
+    fun getCsPicImage(): String? {
+        return sharedPreferences.getString(CS_PIC_IMAGE, null)
+    }
+
+    fun getIsLogin(): Boolean {
+        return sharedPreferences.getBoolean(LOGIN, false)
     }
 
     fun checkIsLogin() {
-        if (!sharedPreferences.getBoolean(LOGIN, false)) {
+        if (!getIsLogin()) {
             context.startActivity(Intent(context, LoginActivity::class.java))
             (context as MainActivity).finish()
         }
@@ -123,5 +169,14 @@ class SharedPreference(private val context: Context) {
 
         context.startActivity(Intent(context, LoginActivity::class.java))
         (context as MainActivity).finish()
+    }
+
+    fun getAccountUser(): HashMap<String, String> {
+        val user: HashMap<String, String> = HashMap()
+        user[AC_NAME] = sharedPreferences.getString(AC_NAME, "Not set")!!
+        user[AC_EMAIL] = sharedPreferences.getString(AC_EMAIL, "Not set")!!
+        user[TOKEN] = sharedPreferences.getString(TOKEN, "Not set")!!
+
+        return user
     }
 }

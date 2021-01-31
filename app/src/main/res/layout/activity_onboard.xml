@@ -7,10 +7,73 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.customer.onboard.OnboardActivity">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_title1"
+            android:text="Coffe for"
+            android:textColor="#000000"
+            android:textSize="60sp"
+            android:layout_marginTop="88dp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="0dp"
+            android:gravity="top"
+            android:includeFontPadding="false"
+            android:layout_marginStart="42dp"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_width="325dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_title2"
+            android:text="Everyone"
+            android:textColor="#000000"
+            android:textSize="60sp"
+            android:letterSpacing="-0.05"
+            android:textStyle="bold"
+            android:lineSpacingExtra="0dp"
+            android:includeFontPadding="false"
+            android:layout_marginStart="42dp"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_marginTop="143dp"
+            android:layout_width="325dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:src="@drawable/vt_onboarding_screen1"
+            android:layout_below="@id/tv_title2"
+            android:layout_width="match_parent"
+            android:layout_height="430dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bt_getStarted"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/primary"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:text="Get started"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:fontFamily="@font/poppins_bold"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"/>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
 </layout>

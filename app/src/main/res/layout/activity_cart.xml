@@ -7,10 +7,182 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".activity.customer.cart.CartActivity">
+        android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bgprofile"
+            tools:context=".activity.customer.cart.CartActivity">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginHorizontal="16dp"
+                android:background="@color/bgprofile"
+                android:fitsSystemWindows="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:titleTextColor="@color/primary" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/empty_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_cart"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/primary"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/empty_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/black"
+                    android:text="You Dont Have any cart"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/empty_image"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/container_1">
+
+                <Button
+                    android:id="@+id/btn_coupons"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/button_radius_secondary"
+                    android:textColor="@color/black"
+                    android:textAllCaps="false"
+                    android:text="Apply Delivery Coupons"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/poppins"
+                    android:layout_margin="32dp"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <View
+                    android:id="@+id/v_1"
+                    android:layout_height="2dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/shimmer"
+                    android:layout_margin="32dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_coupons"/>
+
+                <TextView
+                    android:id="@+id/tv_item_total"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Item Total"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintLeft_toLeftOf="@id/v_1"
+                    app:layout_constraintTop_toBottomOf="@id/v_1"/>
+
+                <TextView
+                    android:id="@+id/item_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="750000"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginLeft="70dp"
+                    app:layout_constraintTop_toTopOf="@id/tv_item_total"
+                    android:layout_marginRight="16dp"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Total :"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="48dp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_item_total"
+                    app:layout_constraintTop_toBottomOf="@id/tv_item_total"/>
+
+                <TextView
+                    android:id="@+id/total_price"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="IDR 160.000"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toTopOf="@id/total"
+                    app:layout_constraintLeft_toRightOf="@id/total"/>
+
+                <Button
+                    android:id="@+id/btn_checkout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/button_radius_secondary"
+                    android:textColor="@color/black"
+                    android:textAllCaps="false"
+                    android:text="CHECKOUT"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_margin="32dp"
+                    android:drawableEnd="@drawable/ic_arrow_right"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/total"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

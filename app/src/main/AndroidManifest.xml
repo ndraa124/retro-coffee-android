@@ -12,12 +12,37 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RetroCoffee">
+        android:theme="@style/Theme.RetroCoffee"
+        android:usesCleartextTraffic="true">
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <activity
+            android:name=".activity.customer.product_search.ProductSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
+            android:name=".activity.customer.favorite.FavoriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
+            android:name=".activity.customer.favorite.favorite_detail.FavoriteDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
+            android:name=".activity.customer.history_detail.HistoryDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
+            android:name=".activity.customer.profile.EditProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
+            android:name=".activity.customer.profile.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
         <activity
             android:name=".activity.customer.promote.PromoteActivity"
             android:screenOrientation="portrait"
@@ -45,7 +70,7 @@
         <activity
             android:name=".activity.customer.onboard.OnboardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+            android:theme="@style/Theme.RetroCoffee.Fullscreen" />
         <activity
             android:name=".activity.customer.register.RegisterActivity"
             android:screenOrientation="portrait"
@@ -65,7 +90,7 @@
         <activity
             android:name=".activity.customer.welcome.WelcomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+            android:theme="@style/Theme.RetroCoffee.Fullscreen" />
         <activity
             android:name=".activity.customer.main.MainActivity"
             android:screenOrientation="portrait"
@@ -90,6 +115,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
