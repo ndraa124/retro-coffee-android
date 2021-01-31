@@ -179,7 +179,7 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
         }
 
         if (sharedPref.getCsDateOfBirth() != null) {
-            bind.etDob.setText(sharedPref.getCsDateOfBirth())
+            bind.etDob.setText(sharedPref.getCsDateOfBirth()!!.split('T')[0])
         }
 
         if (sharedPref.getCsAddress() != null) {

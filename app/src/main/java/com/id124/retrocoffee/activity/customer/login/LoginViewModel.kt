@@ -72,7 +72,7 @@ class LoginViewModel : ViewModel(), CoroutineScope {
                         acPhone = data.acPhone,
                         token = data.token,
                         csGender = data.csGender,
-                        csDob = data.csDob.split('T')[0],
+                        csDob = data.csDob,
                         csAddress = data.csAddress,
                         csPicImage = data.csPicImage
                     )
