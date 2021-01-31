@@ -18,6 +18,7 @@ abstract class BaseActivity<ActivityBinding : ViewDataBinding> : AppCompatActivi
 
     companion object {
         const val IMAGE_PICK_CODE = 100
+        const val PERMISSION_CODE = 101
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

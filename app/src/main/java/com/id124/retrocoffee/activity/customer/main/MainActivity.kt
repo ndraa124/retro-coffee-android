@@ -114,6 +114,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onStart() {
+        super.onStart()
+        setNavigationDrawerHeader()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setNavigationDrawerHeader()
+    }
+
     private fun setToolbarActionBar() {
         setStatusBar()
         setSupportActionBar(bind.toolbar)
@@ -154,7 +164,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         val tvName = navHead.findViewById<TextView>(R.id.tv_name)
         val tvEmail = navHead.findViewById<TextView>(R.id.tv_email)
 
-        if (sharedPref.getCsPicImage() == "") {
+        if (sharedPref.getCsPicImage() == null || sharedPref.getCsPicImage() == "") {
             ivProfile.setImageResource(R.drawable.profile)
         } else {
             Glide.with(this@MainActivity)

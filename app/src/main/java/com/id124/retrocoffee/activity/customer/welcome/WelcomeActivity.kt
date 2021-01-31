@@ -15,10 +15,12 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>() {
 
         bind.btCreateNewAccount.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            this@WelcomeActivity.finish()
         }
 
         bind.btGoLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            this@WelcomeActivity.finish()
         }
     }
 }

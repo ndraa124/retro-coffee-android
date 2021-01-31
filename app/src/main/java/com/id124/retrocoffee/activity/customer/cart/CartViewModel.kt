@@ -13,6 +13,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
     private lateinit var service: CartApiService
 
     val onSuccess = MutableLiveData<List<CartModel>>()
+    val onSuccessCart = MutableLiveData<String>()
     val onFail = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
 
@@ -59,5 +60,44 @@ class CartViewModel : ViewModel(), CoroutineScope {
             }
         }
     }
+
+    fun serviceDeleteApi(csId: Int) {
+        launch {
+            isLoading.value = true
+
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    service.deleteCart(
+                        csId = csId
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+
+                        when {
+                            e.code() == 404 -> {
+                                onFail.value = "Data not found!"
+                            }
+                            else -> {
+                                onFail.value = "Server is maintenance!"
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (response is CartResponse) {
+                isLoading.value = false
+
+                if (response.success) {
+                    onSuccessCart.value = response.message
+                } else {
+                    onFail.value = response.message
+                }
+            }
+        }
+    }
+
+
 
 }

@@ -2,6 +2,7 @@ package com.id124.retrocoffee.activity.customer.history_detail
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,16 +26,37 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
         super.onCreate(savedInstanceState)
 
         setRecycleView()
+        setToolbarActionBar()
         setViewModel()
         subscribeLiveData()
         setPayTotal()
-        setButtonChooseStore()
+        setIntentData()
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btn_back -> {
+                onBackPressed()
+            }
+        }
+    }
+
+    private fun setToolbarActionBar() {
+        setStatusBar()
+        setSupportActionBar(bind.toolbar)
+    }
+
+    private fun setStatusBar() {
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.statusBarColor = this.resources.getColor(R.color.background, theme)
     }
 
     private fun setRecycleView(){
         bind.rvProduct.adapter = HistoryDetailAdapter(listHistory)
         bind.rvProduct.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false)
-
     }
 
     private fun setViewModel() {
@@ -67,7 +89,13 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
         })
     }
 
-    private fun setButtonChooseStore() {
+    private fun setIntentData() {
+        if (intent.getStringExtra("orderAddress") == "") {
+            bind.address = "Address is empty!"
+        } else {
+            bind.address = intent.getStringExtra("orderAddress")
+        }
+
         when (intent.getStringExtra("approveNote")) {
             "Dine In" -> {
                 bind.btnDineIn.setTextColor(resources.getColor(R.color.white, theme))
@@ -118,14 +146,6 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
 
         bind.tvIdrTotal.text = Utils.currencyFormat(subtotal.toString())
         bind.tvTaxTotal.text = Utils.currencyFormat(fee.toString())
-        bind.tvPayTotal.text = intent.getStringExtra("payTotal")
-    }
-
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btn_back -> {
-                onBackPressed()
-            }
-        }
+        bind.tvPayTotal.text = Utils.currencyFormat(intent.getStringExtra("payTotal")!!)
     }
 }

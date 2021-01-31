@@ -23,6 +23,7 @@ class SharedPreference(private val context: Context) {
         const val CS_LATITUDE = "CS_LATITUDE"
         const val CS_LONGITUDE = "CS_LONGITUDE"
         const val CS_PIC_IMAGE = "CS_PIC_IMAGE"
+        const val CART_ID = "CART_ID"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -38,10 +39,10 @@ class SharedPreference(private val context: Context) {
         acEmail: String,
         acPhone: String,
         acLevel: Int,
-        csGender: Int,
-        csDob: String,
-        csAddress: String,
-        csPicImage: String
+        csGender: String? = null,
+        csDob: String? = null,
+        csAddress: String? = null,
+        csPicImage: String? = null
     ) {
         editor.putBoolean(LOGIN, true)
         editor.putString(TOKEN, token)
@@ -51,7 +52,7 @@ class SharedPreference(private val context: Context) {
         editor.putString(AC_PHONE, acPhone)
         editor.putInt(AC_LEVEL, acLevel)
         editor.putInt(CS_ID, csId)
-        editor.putInt(CS_GENDER, csGender)
+        editor.putString(CS_GENDER, csGender)
         editor.putString(CS_DOB, csDob)
         editor.putString(CS_ADDRESS, csAddress)
         editor.putString(CS_PIC_IMAGE, csPicImage)
@@ -78,8 +79,8 @@ class SharedPreference(private val context: Context) {
         editor.commit()
     }
 
-    fun createCsGender(acGender: Int) {
-        editor.putInt(CS_GENDER, acGender)
+    fun createCsGender(acGender: String) {
+        editor.putString(CS_GENDER, acGender)
         editor.commit()
     }
 
@@ -90,6 +91,11 @@ class SharedPreference(private val context: Context) {
 
     fun createCsPicImage(csPicImage: String) {
         editor.putString(CS_PIC_IMAGE, csPicImage)
+        editor.commit()
+    }
+
+    fun createCartId(cartId: Int) {
+        editor.putInt(CART_ID, cartId)
         editor.commit()
     }
 
@@ -107,6 +113,10 @@ class SharedPreference(private val context: Context) {
 
     fun getAcId(): Int {
         return sharedPreferences.getInt(AC_ID, 0)
+    }
+
+    fun getCartId(): Int {
+        return sharedPreferences.getInt(CART_ID, 0)
     }
 
     fun getAcName(): String {
@@ -129,20 +139,20 @@ class SharedPreference(private val context: Context) {
         return sharedPreferences.getInt(CS_ID, 0)
     }
 
-    fun getCsAddress(): String {
-        return sharedPreferences.getString(CS_ADDRESS, "")!!
+    fun getCsAddress(): String? {
+        return sharedPreferences.getString(CS_ADDRESS, null)
     }
 
-    fun getCsGender(): Int {
-        return sharedPreferences.getInt(CS_GENDER, 0)
+    fun getCsGender(): String? {
+        return sharedPreferences.getString(CS_GENDER, null)
     }
 
-    fun getCsDateOfBirth(): String {
-        return sharedPreferences.getString(CS_DOB, "")!!
+    fun getCsDateOfBirth(): String? {
+        return sharedPreferences.getString(CS_DOB, null)
     }
 
-    fun getCsPicImage(): String {
-        return sharedPreferences.getString(CS_PIC_IMAGE, "")!!
+    fun getCsPicImage(): String? {
+        return sharedPreferences.getString(CS_PIC_IMAGE, null)
     }
 
     fun getIsLogin(): Boolean {

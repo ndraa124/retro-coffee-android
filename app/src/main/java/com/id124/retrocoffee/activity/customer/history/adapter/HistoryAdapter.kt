@@ -1,4 +1,4 @@
-package com.id124.retrocoffee.activity.customer.history.Adapter
+package com.id124.retrocoffee.activity.customer.history.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -7,6 +7,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.login.LoginActivity
+import com.id124.retrocoffee.activity.customer.welcome.WelcomeActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityRegisterBinding
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valEmail
@@ -58,6 +59,11 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(), View.OnClickLi
         }
     }
 
+    override fun onBackPressed() {
+        intents<WelcomeActivity>(this@RegisterActivity)
+        this@RegisterActivity.finish()
+    }
+
     private fun setViewModel() {
         viewModel = ViewModelProvider(this@RegisterActivity).get(RegisterViewModel::class.java)
         viewModel.setService(createApi(this@RegisterActivity))
@@ -74,13 +80,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(), View.OnClickLi
                 bind.progressBar.visibility = View.GONE
                 bind.btnCreateAccount.visibility = View.VISIBLE
 
-                if (intent.getIntExtra("onBoard", 0) == 1) {
-                    intents<LoginActivity>(this@RegisterActivity)
-                    this@RegisterActivity.finish()
-                } else {
-                    this@RegisterActivity.finish()
-                }
-
+                intents<LoginActivity>(this@RegisterActivity)
+                this@RegisterActivity.finish()
             } else {
                 bind.progressBar.visibility = View.GONE
                 bind.btnCreateAccount.visibility = View.VISIBLE

@@ -44,7 +44,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
             }
             R.id.btn_payment -> {
                 when {
-                    sharedPref.getCsAddress() == "" -> {
+                    sharedPref.getCsAddress() == null -> {
                         noticeToast("Please add address first!")
                         intents<EditProfileActivity>(this@CheckoutActivity)
                     }

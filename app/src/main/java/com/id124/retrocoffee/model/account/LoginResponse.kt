@@ -32,7 +32,7 @@ data class LoginResponse(val success: Boolean, val message: String, val data: Ac
         val csId: Int,
 
         @SerializedName("cs_gender")
-        val csGender: Int,
+        val csGender: String,
 
         @SerializedName("cs_dob")
         val csDob: String,

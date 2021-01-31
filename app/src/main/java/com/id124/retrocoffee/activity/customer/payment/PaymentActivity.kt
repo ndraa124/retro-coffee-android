@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.id124.retrocoffee.R
+import com.id124.retrocoffee.activity.customer.history.HistoryActivity
 import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.activity.customer.payment.adapter.CardSliderAdapter
 import com.id124.retrocoffee.activity.customer.payment.adapter.CartAdapter
@@ -148,8 +149,9 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
             if (it) {
                 noticeToast("Order success")
 
-                val intent = Intent(this@PaymentActivity, MainActivity::class.java)
+                val intent = Intent(this@PaymentActivity, HistoryActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("orderTransaction", 1)
                 startActivity(intent)
                 finish()
             }
@@ -189,7 +191,7 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
                 viewModel.serviceAddApi(
                     csId = sharedPref.getCsId(),
                     orPayTotal = intent.getLongExtra("pay_total", 0),
-                    orAddress = sharedPref.getCsAddress(),
+                    orAddress = sharedPref.getCsAddress()!!,
                     orNoteApprove = intent.getStringExtra("store")!!,
                     orMethodPayment = paymentMethod!!,
                     orFee = 5000,
