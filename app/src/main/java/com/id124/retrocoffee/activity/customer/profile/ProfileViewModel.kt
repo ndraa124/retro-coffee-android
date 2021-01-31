@@ -12,7 +12,7 @@ import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
-class ProfileViewModel: ViewModel(), CoroutineScope {
+class ProfileViewModel : ViewModel(), CoroutineScope {
 
     private lateinit var customerService: CustomerApiService
     private lateinit var historyService: HistoryApiService
@@ -26,11 +26,11 @@ class ProfileViewModel: ViewModel(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    fun setServiceProfile(service: CustomerApiService){
+    fun setServiceProfile(service: CustomerApiService) {
         this.customerService = service
     }
 
-    fun getCustomerById(csId: Int){
+    fun getCustomerById(csId: Int) {
         launch {
             isLoading.value = true
             val response = withContext(Dispatchers.IO) {
@@ -88,8 +88,17 @@ class ProfileViewModel: ViewModel(), CoroutineScope {
             if (response is HistoryResponse) {
                 isLoading.value = false
                 if (response.success) {
-                    val list = response.data?.map {
-                        HistoryModel(it.historyId, it.customerId, it.orderId, it.historyProduct, it.historyPrice, it.historyQty, it.historyTotal)
+                    val list = response.data.map {
+                        HistoryModel(
+                            it.historyId,
+                            it.customerId,
+                            it.orderId,
+                            it.historyProduct,
+                            it.historyPrice,
+                            it.historyQty,
+                            it.historyTotal,
+                            it.historyImage
+                        )
                     }
                     listHistory.value = list
                 } else {
