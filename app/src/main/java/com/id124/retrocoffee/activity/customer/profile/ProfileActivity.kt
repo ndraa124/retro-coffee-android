@@ -43,6 +43,16 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), View.OnClickList
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        setDataSharedPref()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setDataSharedPref()
+    }
+
     private fun setToolbarActionBar() {
         setStatusBar()
         setSupportActionBar(bind.toolbar)

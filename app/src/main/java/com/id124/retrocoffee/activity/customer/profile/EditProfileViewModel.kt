@@ -3,71 +3,33 @@ package com.id124.retrocoffee.activity.customer.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.id124.retrocoffee.model.account.RegisterResponse
-import com.id124.retrocoffee.model.customer.CustomerModel
-import com.id124.retrocoffee.model.customer.CustomerResponse
+import com.id124.retrocoffee.model.customer.CustomerUpdateResponse
 import com.id124.retrocoffee.service.AccountApiService
 import com.id124.retrocoffee.service.CustomerApiService
 import kotlinx.coroutines.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
-class EditProfileViewModel: ViewModel(), CoroutineScope {
-
+class EditProfileViewModel : ViewModel(), CoroutineScope {
     private lateinit var accountService: AccountApiService
     private lateinit var customerService: CustomerApiService
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    val listProfile = MutableLiveData<List<CustomerModel>>()
-    val onSuccessProfile = MutableLiveData<Boolean>()
-    val onSuccessUpdate = MutableLiveData<Boolean>()
+    val onSuccess = MutableLiveData<Boolean>()
+    val onSuccessCs = MutableLiveData<String>()
     val onFail = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
-
-    fun setServiceProfile(service: CustomerApiService){
-        this.customerService = service
-    }
 
     fun setServiceAccount(service: AccountApiService) {
         this.accountService = service
     }
 
-    fun getCustomerById(csId: Int){
-        launch {
-            isLoading.value = true
-            val response = withContext(Dispatchers.IO) {
-                try {
-                    customerService.getCustomerByCsId(csId)
-                } catch (e: HttpException) {
-                    withContext(Dispatchers.Main) {
-                        isLoading.value = false
-                        when {
-                            e.code() == 404 -> {
-                                onFail.value = "Data not found"
-                            }
-
-                            else -> {
-                                onFail.value = "Server is maintenance"
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (response is CustomerResponse) {
-                isLoading.value = false
-                if (response.success) {
-                    listProfile.value = response.data
-                    onSuccessProfile.value = true
-                } else {
-                    onSuccessProfile.value = false
-                }
-            }
-        }
+    fun setServiceCustomer(service: CustomerApiService) {
+        this.customerService = service
     }
 
     fun updateAccount(acId: Int, acName: String, acEmail: String, acPhone: String) {
@@ -79,11 +41,11 @@ class EditProfileViewModel: ViewModel(), CoroutineScope {
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
                         isLoading.value = false
+
                         when {
                             e.code() == 404 -> {
                                 onFail.value = "Data not found"
                             }
-
                             else -> {
                                 onFail.value = "Server is maintenance"
                             }
@@ -91,10 +53,12 @@ class EditProfileViewModel: ViewModel(), CoroutineScope {
                     }
                 }
             }
+
             if (response is RegisterResponse) {
                 isLoading.value = false
+
                 if (response.success) {
-                    onSuccessUpdate.value = true
+                    onSuccess.value = true
                 } else {
                     onFail.value = response.message
                 }
@@ -102,19 +66,29 @@ class EditProfileViewModel: ViewModel(), CoroutineScope {
         }
     }
 
-    fun updateCustomer(csId: Int, csGender: String, csDob: String, csAddress: String) {
-        val gender = csGender.toRequestBody("text/plain".toMediaTypeOrNull())
-        val dob = csDob.toRequestBody("text/plain".toMediaTypeOrNull())
-        val address = csAddress.toRequestBody("text/plain".toMediaTypeOrNull())
-
+    fun updateCustomer(
+        csId: Int,
+        csGender: RequestBody,
+        csDob: RequestBody,
+        csAddress: RequestBody,
+        image: MultipartBody.Part? = null
+    ) {
         launch {
             isLoading.value = true
+
             val response = withContext(Dispatchers.IO) {
                 try {
-                    customerService.updateCustomer(csId, gender, dob, address)
+                    customerService.updateCustomer(
+                        csId = csId,
+                        csGender = csGender,
+                        csDob = csDob,
+                        csAddress = csAddress,
+                        image = image
+                    )
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
                         isLoading.value = false
+
                         when {
                             e.code() == 404 -> {
                                 onFail.value = "Data not found"
@@ -127,46 +101,13 @@ class EditProfileViewModel: ViewModel(), CoroutineScope {
                     }
                 }
             }
-            if (response is RegisterResponse) {
+
+            if (response is CustomerUpdateResponse) {
                 isLoading.value = false
+
                 if (response.success) {
-                    onSuccessUpdate.value = true
-                } else {
-                    onFail.value = response.message
-                }
-            }
-        }
-    }
-
-    fun updateCustomerWithImage(csId: Int, csGender: String, csDob: String, csAddress: String, image: MultipartBody.Part) {
-        val gender = csGender.toRequestBody("text/plain".toMediaTypeOrNull())
-        val dob = csDob.toRequestBody("text/plain".toMediaTypeOrNull())
-        val address = csAddress.toRequestBody("text/plain".toMediaTypeOrNull())
-
-        launch {
-            isLoading.value = true
-            val response = withContext(Dispatchers.IO) {
-                try {
-                    customerService.updateCustomerWithImage(csId, gender, dob, address, image)
-                } catch (e: HttpException) {
-                    withContext(Dispatchers.Main) {
-                        isLoading.value = false
-                        when {
-                            e.code() == 404 -> {
-                                onFail.value = "Data not found"
-                            }
-
-                            else -> {
-                                onFail.value = "Server is maintenance"
-                            }
-                        }
-                    }
-                }
-            }
-            if (response is RegisterResponse) {
-                isLoading.value = false
-                if (response.success) {
-                    onSuccessUpdate.value = true
+                    onSuccess.value = true
+                    onSuccessCs.value = response.image
                 } else {
                     onFail.value = response.message
                 }

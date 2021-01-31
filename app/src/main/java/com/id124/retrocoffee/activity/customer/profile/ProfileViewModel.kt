@@ -29,7 +29,7 @@ class ProfileViewModel : ViewModel(), CoroutineScope {
 
             val response = withContext(Dispatchers.IO) {
                 try {
-                    serviceHistory.getAllHistoryOrder(csId)
+                    serviceHistory.getAllHistory(csId)
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
                         isLoadingHistory.value = false

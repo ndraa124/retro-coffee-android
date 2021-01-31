@@ -78,8 +78,8 @@ class SharedPreference(private val context: Context) {
         editor.commit()
     }
 
-    fun createCsGender(acGender: Int) {
-        editor.putInt(CS_GENDER, acGender)
+    fun createCsGender(acGender: String) {
+        editor.putString(CS_GENDER, acGender)
         editor.commit()
     }
 

@@ -114,6 +114,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onStart() {
+        super.onStart()
+        setNavigationDrawerHeader()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setNavigationDrawerHeader()
+    }
+
     private fun setToolbarActionBar() {
         setStatusBar()
         setSupportActionBar(bind.toolbar)
