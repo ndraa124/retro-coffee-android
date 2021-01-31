@@ -1,42 +1,22 @@
 package com.id124.retrocoffee.activity.customer.profile
 
-import android.Manifest
-import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
+import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.View
-import android.widget.RadioButton
+import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
-import androidx.loader.content.CursorLoader
 import com.id124.retrocoffee.R
-import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityEditProfileBinding
-import com.id124.retrocoffee.remote.ApiClient
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
+import com.id124.retrocoffee.remote.ApiClient.Companion.BASE_URL_IMAGE
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>() {
+class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnClickListener {
     private lateinit var viewModel: EditProfileViewModel
-    private lateinit var deadlineProject: DatePickerDialog.OnDateSetListener
-    private lateinit var c: Calendar
-    private var gender: Int = 0
+    private lateinit var myCalendar: Calendar
+    private lateinit var dateOfBirth: OnDateSetListener
 
     companion object {
         private const val IMAGE_PICK_CODE = 100
@@ -46,229 +26,90 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_edit_profile
         super.onCreate(savedInstanceState)
-        c = Calendar.getInstance()
 
-        setToolbar()
-        setViewModel()
-        subcsribeLiveData()
+        setToolbarActionBar()
+        setDataSharedPref()
 
-        bind.radioGroup.setOnCheckedChangeListener { radioGroup, i ->
-            if (i == R.id.male) {
-                sharedPref.createCsGender(1)
-                Log.d("gender", sharedPref.getCsGender().toString())
-                Toast.makeText(this, sharedPref.getCsGender().toString() , Toast.LENGTH_SHORT).show()
-            } else if (i == R.id.female) {
-                sharedPref.createCsGender(0)
-                Log.d("gender", sharedPref.getCsGender().toString())
-                Toast.makeText(this, sharedPref.getCsGender().toString() , Toast.LENGTH_SHORT).show()
-            } else {
-                Log.d("error", "error")
-            }
-        }
-
-
-
-
-        bind.tvDob.setOnClickListener {
-            datePicker()
-        }
-
-        bind.btnDob.setOnClickListener {
-            datePicker()
-        }
-
-        bind.btnSave.setOnClickListener {
-            val acId = sharedPref.getAcId()
-            val csId = sharedPref.getCsId()
-            val name = bind.etName.text.toString()
-            val email = bind.etEmail.text.toString()
-            val phone = bind.etPhone.text.toString()
-            val gender = sharedPref.getCsGender().toString()
-            val dob = bind.tvDob.text.toString()
-            val address = bind.etAddress.text.toString()
-
-            viewModel.updateAccount(acId, name, email, phone)
-            viewModel.updateCustomer(csId, gender, dob, address)
-        }
-
-        bind.editImage.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                    PackageManager.PERMISSION_DENIED){
-                    //permission denied
-                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    //show popup to request runtime permission
-                    requestPermissions(permissions,
-                        PERMISSION_CODE
-                    )
-                }
-                else{
-                    //permission already granted
-                    pickImageFromGallery()
-                }
-            } else {
-                //system OS is < Marshmallow
-                pickImageFromGallery()
-            }
-        }
-        deadlineProject()
+        myCalendar = Calendar.getInstance()
+        dateOfBirth()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when(requestCode) {
-            PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED){
-                    pickImage()
-                }
-                else {
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
-                }
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.et_dob -> {
+                DatePickerDialog(
+                    this@EditProfileActivity, dateOfBirth, myCalendar.get(Calendar.YEAR),
+                    myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
+            R.id.iv_edit_profile -> {
+
+            }
+            R.id.btn_save -> {
+
+            }
+            R.id.btn_back -> {
+                onBackPressed()
             }
         }
     }
 
-    private fun pickImage(){
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent,
-            IMAGE_PICK_CODE
-        )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            bind.imageProfile.setImageURI(data?.data)
-
-            val filePath = data?.data?.let { getPath(this, it) }
-            val file = File(filePath)
-            Log.d("FileName", file.name)
-
-            var img: MultipartBody.Part? = null
-            val mediaTypeImg = "image/jpeg".toMediaType()
-            val inputStream = data?.data?.let { contentResolver.openInputStream(it) }
-            val reqFile: RequestBody? = inputStream?.readBytes()?.toRequestBody(mediaTypeImg)
-
-            img = reqFile?.let { it1 ->
-                MultipartBody.Part.createFormData("image", file.name, it1)
-            }
-
-            bind.btnSave.setOnClickListener {
-                val acId = sharedPref.getAcId()
-                val csId = sharedPref.getCsId()
-                val name = bind.etName.text.toString()
-                val email = bind.etEmail.text.toString()
-                val phone = bind.etPhone.text.toString()
-                val gender = sharedPref.getCsGender().toString()
-                val dob = bind.tvDob.text.toString()
-                val address = bind.etAddress.text.toString()
-
-                if (img != null) {
-                    viewModel.updateAccount(acId, name, email, phone)
-                    viewModel.updateCustomerWithImage(csId, gender, dob, address, img)
-                }
-
-            }
-
-
-        }
-    }
-
-    private fun getPath(context: Context, contentUri: Uri) : String? {
-        var result: String? = null
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-
-        val cursorLoader = CursorLoader(context, contentUri, proj, null, null, null)
-        val cursor = cursorLoader.loadInBackground()
-
-        if (cursor != null) {
-            val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor.moveToFirst()
-            result = cursor.getString(columnIndex)
-            cursor.close()
-        }
-        return result
-    }
-
-    private fun datePicker(){
-        DatePickerDialog(
-            this, deadlineProject, c.get(Calendar.YEAR),
-            c.get(Calendar.MONTH),
-            c.get(Calendar.DAY_OF_MONTH)
-        ).show()
-    }
-
-    private fun deadlineProject() {
-        deadlineProject = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            c.set(Calendar.YEAR, year)
-            c.set(Calendar.MONTH, month)
-            c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            val day = findViewById<TextView>(R.id.tv_dob)
-            val formatDate = "yyyy-MM-dd"
-            val sdf = SimpleDateFormat(formatDate, Locale.US)
-
-            day.text = sdf.format(c.time)
-        }
-    }
-
-
-    private fun setToolbar(){
-        bind.toolbar.title = "Edit Profile"
+    private fun setToolbarActionBar() {
+        setStatusBar()
         setSupportActionBar(bind.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        bind.toolbar.setNavigationOnClickListener {
-            onBackPressed()
+    }
+
+    private fun setStatusBar() {
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.statusBarColor = this.resources.getColor(R.color.background, theme)
+    }
+
+    private fun setDataSharedPref() {
+        if (sharedPref.getCsPicImage() == null) {
+            bind.ivImageProfile.setImageResource(R.drawable.profile)
+        } else {
+            bind.imageUrl = BASE_URL_IMAGE + sharedPref.getCsPicImage()
         }
-    }
 
-    private fun setViewModel(){
-        viewModel = ViewModelProvider(this).get(EditProfileViewModel::class.java)
-        viewModel.setServiceProfile(createApi(this))
-        viewModel.setServiceAccount(createApi(this))
-        viewModel.getCustomerById(csId = sharedPref.getCsId())
-    }
+        bind.etName.setText(sharedPref.getAcName())
+        bind.etEmail.setText(sharedPref.getAcEmail())
+        bind.etPhoneNumber.setText(sharedPref.getAcPhone())
 
-    private fun subcsribeLiveData(){
-        viewModel.isLoading.observe(this) {
-            if(it) {
-                bind.progressBar.visibility = View.VISIBLE
-            } else {
-                bind.progressBar.visibility = View.GONE
+        if (sharedPref.getCsGender() != null) {
+            when {
+                sharedPref.getCsGender() == "1" -> {
+                    bind.rbMale.isChecked = true
+                }
+                else -> {
+                    bind.rbFemale.isChecked = true
+                }
             }
         }
 
-        viewModel.onSuccessUpdate.observe(this) {
-            if(it) {
-                intents<MainActivity>(this)
-                Toast.makeText(this, "Success to update account", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, "Failed to update account", Toast.LENGTH_LONG).show()
-            }
+        if (sharedPref.getCsDateOfBirth() != null) {
+            bind.etDob.setText(sharedPref.getCsDateOfBirth())
         }
 
-        viewModel.listProfile.observe(this) {
-            bind.model = it[0]
-            val dob = it[0].csDob.split("T")[0].toString()
-            bind.tvDob.text = dob
-            bind.imageUrl = ApiClient.BASE_URL_IMAGE + it[0].csImage
-
-            val gender = it[0].csGender
-
-            if (gender == 1) {
-                val b = findViewById<View>(R.id.male) as RadioButton
-                b.isChecked = true
-            } else {
-                val b = findViewById<View>(R.id.female) as RadioButton
-                b.isChecked = true
-            }
+        if (sharedPref.getCsAddress() != null) {
+            bind.etAddress.setText(sharedPref.getCsAddress())
         }
     }
 
+    private fun dateOfBirth() {
+        dateOfBirth = OnDateSetListener { _, year, month, dayOfMonth ->
+            myCalendar.set(Calendar.YEAR, year)
+            myCalendar.set(Calendar.MONTH, month)
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            val day = findViewById<TextView>(R.id.et_dob)
+            val myFormat = "yyyy-MM-dd"
+            val sdf = SimpleDateFormat(myFormat, Locale.US)
+
+            day.text = sdf.format(myCalendar.time)
+        }
+    }
 }

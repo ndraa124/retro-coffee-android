@@ -24,18 +24,52 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/background"
             android:fitsSystemWindows="true"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@color/primary" />
+            app:titleTextColor="@color/black">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="24dp"
+                    android:background="@color/background"
+                    android:contentDescription="@string/img_description"
+                    android:onClick="onClick"
+                    android:src="@drawable/ic_chevron_left_primary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:text="Detail Order History"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -284,6 +318,7 @@
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/poppins"
                     android:gravity="start"
@@ -304,6 +339,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="start"
+                    android:paddingBottom="16dp"
                     android:text="Total"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
@@ -321,6 +357,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="start"
+                    android:paddingBottom="16dp"
                     android:text="IDR 0"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"

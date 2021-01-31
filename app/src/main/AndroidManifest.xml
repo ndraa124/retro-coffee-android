@@ -16,12 +16,15 @@
         android:theme="@style/Theme.RetroCoffee"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".activity.customer.history_detail.HistoryDetailActivity"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <activity
+            android:name=".activity.customer.history_detail.HistoryDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar"/>
         <activity
             android:name=".activity.customer.profile.EditProfileActivity"
             android:screenOrientation="portrait"

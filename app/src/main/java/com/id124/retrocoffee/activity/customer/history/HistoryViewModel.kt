@@ -19,20 +19,15 @@ import kotlin.coroutines.CoroutineContext
 class HistoryViewModel: ViewModel(), CoroutineScope {
     private lateinit var service: OrderApiService
 
-    val onSuccessLiveData = MutableLiveData<Boolean>()
+    val onSuccessLiveData = MutableLiveData<List<OrderModel>>()
     val onFailLiveData = MutableLiveData<String>()
     val isLoadingLiveData = MutableLiveData<Boolean>()
-    var listOrder = MutableLiveData<List<OrderModel>>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
     fun setService(service: OrderApiService) {
         this@HistoryViewModel.service = service
-    }
-
-    fun getAllOrder(): LiveData<List<OrderModel>> {
-        return listOrder
     }
 
     fun serviceApi(id: Int) {
@@ -46,7 +41,7 @@ class HistoryViewModel: ViewModel(), CoroutineScope {
                     )
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
-                        onSuccessLiveData.value = false
+                        isLoadingLiveData.value = false
 
                         when {
                             e.code() == 404 -> {
@@ -62,9 +57,8 @@ class HistoryViewModel: ViewModel(), CoroutineScope {
 
             if (response is OrderResponse) {
                 isLoadingLiveData.value = false
+
                 if (response.success) {
-                    Log.d("a" , response.toString())
-                    onSuccessLiveData.value = true
                     val list = response.data?.map {
                         OrderModel(
                             it.orderId,
@@ -80,7 +74,8 @@ class HistoryViewModel: ViewModel(), CoroutineScope {
                             it.orderFee,
                             it.orderDate )
                     }
-                    listOrder.value = list
+
+                    onSuccessLiveData.value = list
                 } else {
                     onFailLiveData.value = response.message
                 }

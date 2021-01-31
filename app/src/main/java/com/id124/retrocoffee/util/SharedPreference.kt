@@ -38,10 +38,10 @@ class SharedPreference(private val context: Context) {
         acEmail: String,
         acPhone: String,
         acLevel: Int,
-        csGender: Int,
-        csDob: String,
-        csAddress: String,
-        csPicImage: String
+        csGender: String? = null,
+        csDob: String? = null,
+        csAddress: String? = null,
+        csPicImage: String? = null
     ) {
         editor.putBoolean(LOGIN, true)
         editor.putString(TOKEN, token)
@@ -51,7 +51,7 @@ class SharedPreference(private val context: Context) {
         editor.putString(AC_PHONE, acPhone)
         editor.putInt(AC_LEVEL, acLevel)
         editor.putInt(CS_ID, csId)
-        editor.putInt(CS_GENDER, csGender)
+        editor.putString(CS_GENDER, csGender)
         editor.putString(CS_DOB, csDob)
         editor.putString(CS_ADDRESS, csAddress)
         editor.putString(CS_PIC_IMAGE, csPicImage)
@@ -126,20 +126,20 @@ class SharedPreference(private val context: Context) {
         return sharedPreferences.getInt(CS_ID, 0)
     }
 
-    fun getCsAddress(): String {
-        return sharedPreferences.getString(CS_ADDRESS, "")!!
+    fun getCsAddress(): String? {
+        return sharedPreferences.getString(CS_ADDRESS, null)
     }
 
-    fun getCsGender(): Int {
-        return sharedPreferences.getInt(CS_GENDER, 0)
+    fun getCsGender(): String? {
+        return sharedPreferences.getString(CS_GENDER, null)
     }
 
-    fun getCsDateOfBirth(): String {
-        return sharedPreferences.getString(CS_DOB, "")!!
+    fun getCsDateOfBirth(): String? {
+        return sharedPreferences.getString(CS_DOB, null)
     }
 
-    fun getCsPicImage(): String {
-        return sharedPreferences.getString(CS_PIC_IMAGE, "")!!
+    fun getCsPicImage(): String? {
+        return sharedPreferences.getString(CS_PIC_IMAGE, null)
     }
 
     fun getIsLogin(): Boolean {
