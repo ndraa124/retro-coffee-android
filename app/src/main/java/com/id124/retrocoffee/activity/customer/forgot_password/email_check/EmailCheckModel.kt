@@ -1,15 +1,18 @@
-package com.id124.retrocoffee.activity.customer.login
+package com.id124.retrocoffee.activity.customer.forgot_password.email_check
 
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.id124.retrocoffee.model.account.LoginResponse
+import com.id124.retrocoffee.activity.customer.forgot_password.new_password.NewPasswordActivity
+import com.id124.retrocoffee.model.account.EmailModel
 import com.id124.retrocoffee.service.AccountApiService
 import com.id124.retrocoffee.util.SharedPreference
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
-class LoginViewModel : ViewModel(), CoroutineScope {
+class EmailCheckModel: ViewModel(),CoroutineScope {
     private lateinit var service: AccountApiService
     private lateinit var sharedPref: SharedPreference
 
@@ -21,27 +24,22 @@ class LoginViewModel : ViewModel(), CoroutineScope {
         get() = Job() + Dispatchers.Main
 
     fun setService(service: AccountApiService) {
-        this@LoginViewModel.service = service
+        this@EmailCheckModel.service = service
     }
-
     fun setSharedPref(sharedPref: SharedPreference) {
-        this@LoginViewModel.sharedPref = sharedPref
+        this@EmailCheckModel.sharedPref = sharedPref
     }
-
-    fun serviceApi(email: String, password: String) {
+    fun serviceApi(email: String) {
         launch {
             isLoadingLiveData.value = true
-
             val response = withContext(Dispatchers.IO) {
                 try {
-                    service.loginAccount(
-                        email = email,
-                        password = password
+                    service.cekEmail(
+                        email = email
                     )
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
                         onSuccessLiveData.value = false
-
                         when {
                             e.code() == 404 -> {
                                 onFailLiveData.value = "Account not registered"
@@ -50,35 +48,23 @@ class LoginViewModel : ViewModel(), CoroutineScope {
                                 onFailLiveData.value = "Password is invalid!"
                             }
                             else -> {
-                                onFailLiveData.value = "Login is fail! Please try again later!"
+                                onFailLiveData.value = "Email is fail! Please try again later!"
                             }
                         }
                     }
                 }
             }
-
-            if (response is LoginResponse) {
+            if (response is EmailModel) {
                 isLoadingLiveData.value = false
-
                 if (response.success) {
-                    val data = response.data
-
-                    sharedPref.createAccount(
-                        csId = data.csId,
-                        acId = data.acId,
-                        acLevel = data.acLevel,
-                        acName = data.acName,
-                        acEmail = data.acEmail,
-                        acPhone = data.acPhone,
-                        token = data.token,
-                        csGender = data.csGender,
-                        csDob = data.csDob,
-                        csAddress = data.csAddress,
-                        csPicImage = data.csPicImage
+                    val data = response
+                    sharedPref.createEmail(
+                        acId = data.data.ac_id,
                     )
                     onSuccessLiveData.value = true
                 } else {
                     onFailLiveData.value = response.message
+
                 }
             }
         }

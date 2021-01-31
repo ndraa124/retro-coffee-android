@@ -61,17 +61,17 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(), HistoryAdapter.o
     }
 
     private fun subscribeLiveData() {
-        viewModel.isLoadingLiveData.observe(this@HistoryActivity, {
+        viewModel.isLoadingLiveData.observe(this@HistoryActivity) {
             if (it) {
                 bind.progressBar.visibility = View.VISIBLE
             } else {
                 bind.progressBar.visibility = View.GONE
             }
-        })
+        }
 
         viewModel.getAllOrder().observe(this, {
             (bind.rvHistory.adapter as HistoryAdapter).addList(it)
-        })
+        }
     }
 
     override fun onOrderItem(position: Int) {

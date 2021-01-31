@@ -44,10 +44,10 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
             }
             R.id.btn_payment -> {
                 when {
-                    /*sharedPref.getCsAddress() == "" -> {
+                    sharedPref.getCsAddress() == "" -> {
                         noticeToast("Please add address first!")
                         intents<EditProfileActivity>(this@CheckoutActivity)
-                    }*/
+                    }
                     chooseStore == null -> {
                         noticeToast("Please choose store first!")
                     }
@@ -191,15 +191,15 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
     }
 
     private fun subscribeLiveData() {
-        viewModel.isLoading.observe(this@CheckoutActivity, {
+        viewModel.isLoading.observe(this@CheckoutActivity) {
             if (it) {
                 bind.progressBar.visibility = View.VISIBLE
             } else {
                 bind.progressBar.visibility = View.GONE
             }
-        })
+        }
 
-        viewModel.onSuccess.observe(this@CheckoutActivity, { list ->
+        viewModel.onSuccess.observe(this@CheckoutActivity) { list ->
             for (i in list.indices) {
                 subtotal += list[i].crTotal
             }
@@ -208,12 +208,12 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
             bind.tvDataNotFound.visibility = View.GONE
 
             setPayTotal()
-        })
+        }
 
-        viewModel.onFail.observe(this@CheckoutActivity, { message ->
+        viewModel.onFail.observe(this@CheckoutActivity) { message ->
             bind.tvDataNotFound.text = message
             bind.tvDataNotFound.visibility = View.VISIBLE
-        })
+        }
     }
 
     @SuppressLint("SetTextI18n")

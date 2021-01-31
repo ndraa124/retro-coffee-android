@@ -14,6 +14,7 @@
     <!-- Menu Drawer -->
     <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_orders">History Orders</string>
+    <string name="menu_promo">Promo</string>
     <string name="menu_all">Favorite</string>
     <string name="menu_privacy">Privacy policy</string>
     <string name="menu_security">Security</string>
@@ -36,4 +37,18 @@
     <string name="not_found">not found</string>
     <string name="search_now">Search Now</string>
     <string name="you_don_t_have_any_favorite_yet">You don\'t have any favorite yet</string>
+
+<!-- Fitur forget password   -->
+    <string name="don_t_worry">Dont Worry!</string>
+    <string name="enter_your_">Enter your email adress to get reset password link</string>
+    <string name="enter_your_email">Enter your email adress</string>
+    <string name="haven_t_rec">Havent received any link?</string>
+    <string name="resend_link">Resend Link</string>
+    <string name="image">image</string>
+    <string name="password">enter new Password</string>
+    <string name="confirmpassword">conirm new Password</string>
+    <string name="resend_pass">Reset Password</string>
+    <string name="product">Product</string>
+    <string name="see_more">See more</string>
+    <string name="promo_for_you">Promo for you</string>
 </resources>

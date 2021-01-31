@@ -9,13 +9,11 @@ import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.login.LoginActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityRegisterBinding
-import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valCompany
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valEmail
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valName
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valPassConf
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valPassword
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valPhoneNumber
-import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valPosition
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding>(), View.OnClickListener {
     private lateinit var viewModel: RegisterViewModel
