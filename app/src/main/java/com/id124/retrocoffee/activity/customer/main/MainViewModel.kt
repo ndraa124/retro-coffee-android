@@ -4,42 +4,54 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.id124.retrocoffee.model.category.CategoryModel
 import com.id124.retrocoffee.model.category.CategoryResponse
+import com.id124.retrocoffee.model.product.ProductModel
+import com.id124.retrocoffee.model.product.ProductResponse
 import com.id124.retrocoffee.service.CategoryApiService
+import com.id124.retrocoffee.service.ProductApiService
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
 class MainViewModel : ViewModel(), CoroutineScope {
-    private lateinit var service: CategoryApiService
+    private lateinit var serviceCategory: CategoryApiService
+    private lateinit var serviceProduct: ProductApiService
 
-    val onSuccessLiveData = MutableLiveData<List<CategoryModel>>()
-    val onFailLiveData = MutableLiveData<String>()
-    val isLoadingLiveData = MutableLiveData<Boolean>()
+    val onSuccessCategory = MutableLiveData<List<CategoryModel>>()
+    val onFailCategory = MutableLiveData<String>()
+    val isLoadingCategory = MutableLiveData<Boolean>()
+
+    val onSuccessProduct = MutableLiveData<List<ProductModel>>()
+    val onFailProduct = MutableLiveData<String>()
+    val isLoadingProduct = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    fun setService(service: CategoryApiService) {
-        this@MainViewModel.service = service
+    fun setServiceCategory(service: CategoryApiService) {
+        this@MainViewModel.serviceCategory = service
     }
 
-    fun serviceGetApi() {
+    fun setServiceProduct(service: ProductApiService) {
+        this@MainViewModel.serviceProduct = service
+    }
+
+    fun serviceGetCategoryApi() {
         launch {
-            isLoadingLiveData.value = true
+            isLoadingCategory.value = true
 
             val response = withContext(Dispatchers.IO) {
                 try {
-                    service.getAllCategory()
+                    serviceCategory.getAllCategory()
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
-                        isLoadingLiveData.value = false
+                        isLoadingCategory.value = false
 
                         when {
                             e.code() == 404 -> {
-                                onFailLiveData.value = "Category is empty!"
+                                onFailCategory.value = "Category is empty!"
                             }
                             else -> {
-                                onFailLiveData.value = "Server is maintenance!"
+                                onFailCategory.value = "Server is maintenance!"
                             }
                         }
                     }
@@ -47,7 +59,7 @@ class MainViewModel : ViewModel(), CoroutineScope {
             }
 
             if (response is CategoryResponse) {
-                isLoadingLiveData.value = false
+                isLoadingCategory.value = false
 
                 if (response.success) {
                     val list = response.data.map {
@@ -59,9 +71,46 @@ class MainViewModel : ViewModel(), CoroutineScope {
                         )
                     }
 
-                    onSuccessLiveData.value = list
+                    onSuccessCategory.value = list
                 } else {
-                    onFailLiveData.value = response.message
+                    onFailCategory.value = response.message
+                }
+            }
+        }
+    }
+
+    fun serviceGetPromoApi() {
+        launch {
+            isLoadingProduct.value = true
+
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    serviceProduct.getAllProductByPromo(
+                        limit = 5
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        isLoadingProduct.value = false
+
+                        when {
+                            e.code() == 404 -> {
+                                onFailProduct.value = "Product is empty!"
+                            }
+                            else -> {
+                                onFailProduct.value = "Server is maintenance!"
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (response is ProductResponse) {
+                isLoadingProduct.value = false
+
+                if (response.success) {
+                    onSuccessProduct.value = response.data
+                } else {
+                    onFailProduct.value = response.message
                 }
             }
         }

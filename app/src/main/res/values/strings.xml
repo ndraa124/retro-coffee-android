@@ -48,4 +48,6 @@
     <string name="password">enter new Password</string>
     <string name="confirmpassword">conirm new Password</string>
     <string name="resend_pass">Reset Password</string>
+    <string name="product">Product</string>
+    <string name="see_more">See more</string>
 </resources>

@@ -15,22 +15,25 @@
         <variable
             name="price"
             type="String" />
+
+        <variable
+            name="pricePromo"
+            type="String" />
     </data>
 
     <RelativeLayout
         android:layout_width="200dp"
-        android:layout_height="250dp"
-        android:background="@color/background"
-        android:layout_marginTop="16dp"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/background">
 
         <com.tistory.zladnrms.roundablelayout.RoundableLayout
             android:id="@+id/cv_product"
-            android:layout_width="250dp"
-            android:layout_height="180dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="60dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="18dp"
             android:layout_marginBottom="16dp"
             android:elevation="4dp"
             app:backgroundColor="@color/white"
@@ -77,7 +80,7 @@
 
         </com.tistory.zladnrms.roundablelayout.RoundableLayout>
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_productImage"
             android:layout_width="110dp"
             android:layout_height="110dp"
@@ -85,10 +88,22 @@
             android:layout_centerHorizontal="true"
             android:elevation="9dp"
             android:src="@drawable/lepet1"
-            android:scaleType="fitXY"
-            app:loadImage="@{imageUrl}"
-            app:riv_corner_radius="16dp" />
+            app:loadImage="@{imageUrl}" />
+
+        <TextView
+            android:id="@+id/tv_price_promo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/bg_radius_corner_text_view"
+            android:elevation="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@{pricePromo}"
+            android:textColor="@color/primary"
+            android:textSize="15sp" />
 
     </RelativeLayout>
-
 </layout>

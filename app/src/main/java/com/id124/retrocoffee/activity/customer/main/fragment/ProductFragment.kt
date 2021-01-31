@@ -85,7 +85,7 @@ class ProductFragment(private val ctId: Int) : BaseFragment<FragmentProductBindi
 
         activity?.let {
             viewModel.onFailLiveData.observe(it, { message ->
-                noticeToast(message)
+                Log.d("msg", message)
             })
         }
     }
