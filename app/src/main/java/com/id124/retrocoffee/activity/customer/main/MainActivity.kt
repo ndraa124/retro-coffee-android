@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -222,13 +221,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     private fun subscribeCategoryLiveData() {
         viewModel.isLoadingCategory.observe(this@MainActivity) {
             if (it) {
-                Log.d("msg", "Show Loading")
+                bind.progressBarCategory.visibility = View.VISIBLE
             } else {
-                Log.d("msg", "Hide Loading")
+                bind.progressBarCategory.visibility = View.GONE
             }
         }
 
         viewModel.onSuccessCategory.observe(this@MainActivity) { list ->
+            bind.tvDataNotFoundCategory.visibility = View.GONE
+
             bind.tabLayoutProduct.setupWithViewPager(bind.viewPagerProduct)
             val adapter = ViewPagerAdapter(supportFragmentManager)
 
@@ -239,26 +240,29 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
             bind.viewPagerProduct.adapter = adapter
         }
 
-        viewModel.onFailCategory.observe(this@MainActivity) {
-            noticeToast(it)
+        viewModel.onFailCategory.observe(this@MainActivity) { message ->
+            bind.dataNotFoundCategory = message
+            bind.tvDataNotFoundCategory.visibility = View.VISIBLE
         }
     }
 
     private fun subscribeProductLiveData() {
         viewModel.isLoadingProduct.observe(this@MainActivity) {
             if (it) {
-                Log.d("msg", "Show Loading")
+                bind.progressBar.visibility = View.VISIBLE
             } else {
-                Log.d("msg", "Hide Loading")
+                bind.progressBar.visibility = View.GONE
             }
         }
 
         viewModel.onSuccessProduct.observe(this@MainActivity) { list ->
+            bind.tvDataNotFound.visibility = View.GONE
             adapter.addList(list)
         }
 
-        viewModel.onFailProduct.observe(this@MainActivity) {
-            noticeToast(it)
+        viewModel.onFailProduct.observe(this@MainActivity) { message ->
+            bind.dataNotFound = message
+            bind.tvDataNotFound.visibility = View.VISIBLE
         }
     }
 }

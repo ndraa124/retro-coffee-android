@@ -2,7 +2,6 @@ package com.id124.retrocoffee.activity.customer.main.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -70,22 +69,24 @@ class ProductFragment(private val ctId: Int) : BaseFragment<FragmentProductBindi
         activity?.let {
             viewModel.isLoadingLiveData.observe(it, { isLoading ->
                 if (isLoading) {
-                    Log.d("msg", "Show Loading")
+                    bind.progressBar.visibility = View.VISIBLE
                 } else {
-                    Log.d("msg", "Hide Loading")
+                    bind.progressBar.visibility = View.GONE
                 }
             })
         }
 
         activity?.let {
             viewModel.onSuccessLiveData.observe(it, { list ->
+                bind.tvDataNotFound.visibility = View.GONE
                 adapter.addList(list)
             })
         }
 
         activity?.let {
             viewModel.onFailLiveData.observe(it, { message ->
-                Log.d("msg", message)
+                bind.dataNotFound = message
+                bind.tvDataNotFound.visibility = View.VISIBLE
             })
         }
     }

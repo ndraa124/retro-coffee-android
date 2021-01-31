@@ -3,6 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="dataNotFound"
+            type="String" />
+
+        <variable
+            name="dataNotFoundCategory"
+            type="String" />
+    </data>
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -102,7 +113,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:text="@string/product"
                         android:textAlignment="textStart"
-                        android:textColor="@color/black"
+                        android:textColor="@color/primary"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/ln_search" />
@@ -117,10 +128,41 @@
                         android:onClick="onClick"
                         android:text="@string/see_more"
                         android:textAlignment="textStart"
+                        android:textColor="@color/primary"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toTopOf="@+id/tab_layout_product"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/ln_search" />
+
+                    <TextView
+                        android:id="@+id/tv_data_not_found_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="@{dataNotFoundCategory}"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray_500"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_pager_product"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_product" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar_category"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/primary"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/view_pager_product"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_product" />
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tab_layout_product"
@@ -135,10 +177,10 @@
                         app:tabMode="scrollable"
                         app:tabTextAppearance="@style/Theme.RetroCoffee.FontTabLayout" />
 
-                    <com.id124.retrocoffee.util.WrapContentViewPager
+                    <androidx.viewpager.widget.ViewPager
                         android:id="@+id/view_pager_product"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="270dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tab_layout_product" />
@@ -151,9 +193,9 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="@string/menu_promo"
+                        android:text="@string/promo_for_you"
                         android:textAlignment="textStart"
-                        android:textColor="@color/black"
+                        android:textColor="@color/primary"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view_pager_product" />
@@ -167,10 +209,42 @@
                         android:onClick="onClick"
                         android:text="@string/see_more"
                         android:textAlignment="center"
+                        android:textColor="@color/primary"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toTopOf="@+id/rv_product"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view_pager_product" />
+
+                    <TextView
+                        android:id="@+id/tv_data_not_found"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="@{dataNotFound}"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray_500"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_promo" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="32dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/primary"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_promo" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_product"
