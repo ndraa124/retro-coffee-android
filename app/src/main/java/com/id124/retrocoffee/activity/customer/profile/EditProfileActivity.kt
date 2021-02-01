@@ -11,6 +11,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityEditProfileBinding
@@ -230,7 +231,7 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
             }
         }
 
-        viewModel.onSuccess.observe(this@EditProfileActivity, { image ->
+        viewModel.onSuccess.observe(this@EditProfileActivity) { image ->
             sharedPref.createAcName(bind.etName.text.toString())
             sharedPref.createAcEmail(bind.etEmail.text.toString())
             sharedPref.createAcPhone(bind.etPhoneNumber.text.toString())
@@ -245,11 +246,11 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
 
             noticeToast("Update profile success")
             this@EditProfileActivity.finish()
-        })
+        }
 
-        viewModel.onFail.observe(this@EditProfileActivity, { message ->
+        viewModel.onFail.observe(this@EditProfileActivity) { message ->
             noticeToast(message)
-        })
+        }
     }
 
     inner class MyTextWatcher(private val view: View) : TextWatcher {
