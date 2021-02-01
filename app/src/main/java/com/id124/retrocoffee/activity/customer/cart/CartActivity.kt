@@ -95,7 +95,6 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
                 } else {
                     confirmDelete(crId = data.crId)
                 }
-
             }
         })
     }
