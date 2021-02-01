@@ -131,9 +131,8 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
 
         viewModel.onSuccessCart.observe(this@CartActivity) {
             if (it) {
-                viewModel.serviceGetApi(
-                    csId = sharedPref.getCsId()
-                )
+                intents<CartActivity>(this@CartActivity)
+                finish()
             }
         }
 
