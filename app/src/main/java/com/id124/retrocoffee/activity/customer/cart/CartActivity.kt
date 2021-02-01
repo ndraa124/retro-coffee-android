@@ -130,7 +130,11 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
         }
 
         viewModel.onSuccessCart.observe(this@CartActivity) {
-            viewModel.serviceGetApi(csId = sharedPref.getCsId())
+            if (it) {
+                viewModel.serviceGetApi(
+                    csId = sharedPref.getCsId()
+                )
+            }
         }
 
         viewModel.onFail.observe(this@CartActivity) {

@@ -13,7 +13,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
     private lateinit var service: CartApiService
 
     val onSuccess = MutableLiveData<List<CartModel>>()
-    val onSuccessCart = MutableLiveData<String>()
+    val onSuccessCart = MutableLiveData<Boolean>()
     val onFail = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
 
@@ -90,7 +90,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
                 isLoading.value = false
 
                 if (response.success) {
-                    onSuccessCart.value = response.message
+                    onSuccessCart.value = true
                 } else {
                     onFail.value = response.message
                 }
@@ -128,7 +128,7 @@ class CartViewModel : ViewModel(), CoroutineScope {
                 isLoading.value = false
 
                 if (response.success) {
-                    onSuccessCart.value = response.message
+                    onSuccessCart.value = true
                 } else {
                     onFail.value = response.message
                 }

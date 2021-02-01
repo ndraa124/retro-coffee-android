@@ -31,12 +31,23 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_add_to_cart -> {
+                val price: Long
+                val total: Long
+
+                if (intent.getIntExtra("pr_is_discount", 0) == 1) {
+                    price = intent.getLongExtra("pr_discount_price", 0)
+                    total = intent.getLongExtra("pr_discount_price", 0) * 1
+                } else {
+                    price = intent.getLongExtra("pr_price", 0)
+                    total = intent.getLongExtra("pr_price", 0) * 1
+                }
+
                 viewModel.serviceAddApi(
                     csId = sharedPref.getCsId(),
                     crProduct = intent.getStringExtra("pr_name")!!,
-                    crPrice = intent.getLongExtra("pr_price", 0),
+                    crPrice = price,
                     crQty = 1,
-                    crTotal = intent.getLongExtra("pr_price", 0) * 1,
+                    crTotal = total,
                     crExpired = 0,
                     crPicImage = intent.getStringExtra("pr_pic_image")!!,
                 )
@@ -110,7 +121,11 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
             prPicImage = intent.getStringExtra("pr_pic_image")
         )
 
-        bind.price = currencyFormat(intent.getLongExtra("pr_price", 0).toString())
+        if (intent.getIntExtra("pr_is_discount", 0) == 1) {
+            bind.price = currencyFormat(intent.getLongExtra("pr_discount_price", 0).toString())
+        } else {
+            bind.price = currencyFormat(intent.getLongExtra("pr_price", 0).toString())
+        }
 
         if (intent.getStringExtra("pr_pic_image") != null) {
             bind.imageUrl = BASE_URL_IMAGE + intent.getStringExtra("pr_pic_image")
