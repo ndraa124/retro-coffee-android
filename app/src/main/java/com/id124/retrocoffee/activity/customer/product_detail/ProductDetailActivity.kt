@@ -1,7 +1,7 @@
 package com.id124.retrocoffee.activity.customer.product_detail
 
+import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -122,8 +122,13 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
         )
 
         if (intent.getIntExtra("pr_is_discount", 0) == 1) {
+            bind.tvPriceDiscount.paintFlags = bind.tvPriceDiscount.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            bind.tvPriceDiscount.visibility = View.VISIBLE
+
             bind.price = currencyFormat(intent.getLongExtra("pr_discount_price", 0).toString())
+            bind.priceDiscount = currencyFormat(intent.getLongExtra("pr_price", 0).toString())
         } else {
+            bind.tvPriceDiscount.visibility = View.GONE
             bind.price = currencyFormat(intent.getLongExtra("pr_price", 0).toString())
         }
 
@@ -145,9 +150,11 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
     private fun subscribeLiveData() {
         viewModel.isLoading.observe(this@ProductDetailActivity) {
             if (it) {
-                Log.d("msg", "Show Loading")
+                bind.btnAddToCart.visibility = View.GONE
+                bind.progressBar.visibility = View.VISIBLE
             } else {
-                Log.d("msg", "Hide Loading")
+                bind.progressBar.visibility = View.GONE
+                bind.btnAddToCart.visibility = View.VISIBLE
             }
         }
 
