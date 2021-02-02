@@ -72,6 +72,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
     }
 
     private fun setCartRecyclerView() {
+        bind.rvCart.isNestedScrollingEnabled = false
         layoutManager = LinearLayoutManager(this@CartActivity, RecyclerView.VERTICAL, false)
         bind.rvCart.layoutManager = layoutManager
 

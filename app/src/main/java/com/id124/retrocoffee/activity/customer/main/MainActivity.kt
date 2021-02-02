@@ -40,6 +40,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     private lateinit var adapter: PromoteAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
+    private var backButtonCount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main
         super.onCreate(savedInstanceState)
@@ -95,7 +97,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         if (bind.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             bind.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            if(backButtonCount >= 1) {
+                super.onBackPressed()
+            } else {
+                noticeToast("Click back button twice to exit from apps")
+                backButtonCount++
+            }
         }
     }
 
