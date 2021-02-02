@@ -1,13 +1,6 @@
 package com.id124.retrocoffee.service
 
-<<<<<<< HEAD
-import com.id124.retrocoffee.model.account.CheckEmailResponse
-import com.id124.retrocoffee.model.account.LoginResponse
-import com.id124.retrocoffee.model.account.RegisterResponse
-import com.id124.retrocoffee.model.account.ResetPasswordResponse
-=======
 import com.id124.retrocoffee.model.account.*
->>>>>>> 298d00a06fabd45d73d76f12f2c047857fd991d0
 import retrofit2.http.*
 
 interface AccountApiService {
@@ -33,11 +26,7 @@ interface AccountApiService {
     @POST("account/email")
     suspend fun cekEmail(
         @Field("email") email: String
-<<<<<<< HEAD
-    ): CheckEmailResponse
-=======
     ): VerifyResponse
->>>>>>> 298d00a06fabd45d73d76f12f2c047857fd991d0
 
     @FormUrlEncoded
     @PUT("account/{id}")
@@ -50,15 +39,8 @@ interface AccountApiService {
 
     @FormUrlEncoded
     @PUT("account/password/{acId}")
-<<<<<<< HEAD
-    suspend fun updatePassword(
-        @Path("acId") accountId: Int,
-        @Field("ac_password") acPassword: String
-    ): ResetPasswordResponse
-=======
     suspend fun resetPassword(
         @Path("acId") acId: Int,
         @Field("ac_password") acPassword : String
     ): PasswordResponse
->>>>>>> 298d00a06fabd45d73d76f12f2c047857fd991d0
 }

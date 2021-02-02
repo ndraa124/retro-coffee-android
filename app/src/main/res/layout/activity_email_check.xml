@@ -14,64 +14,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            app:helperTextTextColor="@color/primary"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-            <EditText
-                android:id="@+id/et_email_reset"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:hint="Enter your email adress"
-                android:importantForAutofill="no"
-                android:inputType="textEmailAddress"
-                android:padding="18dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ln_cek_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/input_layout_email"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/primary"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btn_cekEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/button_radius"
-                android:onClick="onClick"
-                android:padding="10dp"
-                android:text= "Next"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                app:backgroundTint="#80450A" />
-
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-=======
             android:background="@color/background">
 
             <TextView
@@ -176,5 +118,4 @@
 
     </ScrollView>
 
->>>>>>> 298d00a06fabd45d73d76f12f2c047857fd991d0
 </layout>
