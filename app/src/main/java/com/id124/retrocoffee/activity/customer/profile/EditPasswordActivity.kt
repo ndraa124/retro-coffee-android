@@ -6,11 +6,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import com.id124.retrocoffee.R
-import com.id124.retrocoffee.activity.customer.login.LoginViewModel
-import com.id124.retrocoffee.activity.customer.main.MainActivity
-import com.id124.retrocoffee.activity.customer.welcome.WelcomeActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityEditPasswordBinding
 import com.id124.retrocoffee.util.form_validate.ValidateAccount.Companion.valPassConf
@@ -53,23 +49,74 @@ class EditPasswordActivity : BaseActivity<ActivityEditPasswordBinding>(), View.O
                     !valPassConf(bind.inputLayoutConfirmPassword, bind.etConfirmPassword, bind.etNewPassword) -> {
                     }
                     else -> {
-                        viewModel.ResetPassword(acId = sharedPref.getAcId(), password = bind.etNewPassword.text.toString())
+                        viewModel.checkPassword(
+                            acId = sharedPref.getAcId(),
+                            password = bind.etOldPassword.text.toString()
+                        )
                     }
                 }
             }
+            R.id.btn_back -> {
+                onBackPressed()
+            }
         }
-    }
-
-    override fun onBackPressed() {
-        intents<MainActivity>(this)
-        this.finish()
     }
 
     private fun initTextWatcher() {
         bind.etOldPassword.addTextChangedListener(MyTextWatcher(bind.etOldPassword))
         bind.etNewPassword.addTextChangedListener(MyTextWatcher(bind.etNewPassword))
         bind.etConfirmPassword.addTextChangedListener(MyTextWatcher(bind.etConfirmPassword))
+    }
 
+    private fun setViewModel() {
+        viewModel = ViewModelProvider(this@EditPasswordActivity).get(EditPasswordViewModel::class.java)
+        viewModel.setService(createApi(this@EditPasswordActivity))
+    }
+
+    private fun subscribeLiveData() {
+        viewModel.isLoading.observe(this@EditPasswordActivity) {
+            if (it) {
+                bind.btnChangePassword.visibility = View.GONE
+                bind.progressBar.visibility = View.VISIBLE
+            }
+        }
+
+        viewModel.onSuccessCheck.observe(this@EditPasswordActivity) {
+            if (it) {
+                viewModel.resetPassword(
+                    acId = sharedPref.getAcId(),
+                    password = bind.etNewPassword.text.toString()
+                )
+            }
+        }
+
+        viewModel.onSuccessUpdate.observe(this@EditPasswordActivity) {
+            if (it) {
+                bind.progressBar.visibility = View.GONE
+                bind.btnChangePassword.visibility = View.VISIBLE
+
+                noticeToast("Success to change password")
+
+                intents<ProfileActivity>(this@EditPasswordActivity)
+                this@EditPasswordActivity.finish()
+            }
+        }
+
+        viewModel.onFailCheck.observe(this@EditPasswordActivity) {
+            bind.progressBar.visibility = View.GONE
+            bind.btnChangePassword.visibility = View.VISIBLE
+
+            bind.inputLayoutOldPassword.isHelperTextEnabled = true
+            bind.inputLayoutOldPassword.helperText = "Password is invalid!"
+            bind.etOldPassword.requestFocus()
+        }
+
+        viewModel.onFail.observe(this@EditPasswordActivity) { message ->
+            bind.progressBar.visibility = View.GONE
+            bind.btnChangePassword.visibility = View.VISIBLE
+
+            noticeToast(message)
+        }
     }
 
     inner class MyTextWatcher(private val view: View) : TextWatcher {
@@ -82,40 +129,5 @@ class EditPasswordActivity : BaseActivity<ActivityEditPasswordBinding>(), View.O
                 R.id.et_confirm_password -> valPassConf(bind.inputLayoutConfirmPassword, bind.etConfirmPassword, bind.etNewPassword)
             }
         }
-    }
-
-    private fun setViewModel() {
-        viewModel = ViewModelProvider(this).get(EditPasswordViewModel::class.java)
-        viewModel.setService(createApi(this))
-    }
-
-    private fun subscribeLiveData() {
-        viewModel.isLoading.observe(this) {
-            if (it) {
-                bind.btnChangePassword.visibility = View.GONE
-                bind.progressBar.visibility = View.VISIBLE
-            } else {
-                bind.progressBar.visibility = View.GONE
-                bind.btnChangePassword.visibility = View.VISIBLE
-            }
-        }
-
-        viewModel.onSuccessUpdate.observe(this) {
-            if (it) {
-                bind.progressBar.visibility = View.GONE
-                bind.btnChangePassword.visibility = View.VISIBLE
-
-                intents<MainActivity>(this)
-                this.finish()
-            } else {
-                bind.progressBar.visibility = View.GONE
-                bind.btnChangePassword.visibility = View.VISIBLE
-            }
-        }
-
-        viewModel.onFail.observe(this) { message ->
-            noticeToast(message)
-        }
-
     }
 }

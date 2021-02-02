@@ -14,7 +14,9 @@ class EditPasswordViewModel: ViewModel(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
+    val onSuccessCheck = MutableLiveData<Boolean>()
     val onSuccessUpdate = MutableLiveData<Boolean>()
+    val onFailCheck = MutableLiveData<String>()
     val onFail = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
 
@@ -22,15 +24,55 @@ class EditPasswordViewModel: ViewModel(), CoroutineScope {
         this.service = service
     }
 
-    fun ResetPassword(acId: Int, password: String) {
+    fun checkPassword(acId: Int, password: String) {
         launch {
             isLoading.value = true
+
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    service.checkPassword(
+                        acId = acId,
+                        password = password
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        isLoading.value = false
+
+                        when {
+                            e.code() == 404 -> {
+                                onFailCheck.value = "Data not found"
+                            }
+                            else -> {
+                                onFailCheck.value = "Server is maintenance"
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (response is PasswordResponse) {
+                isLoading.value = false
+
+                if (response.success) {
+                    onSuccessCheck.value = true
+                } else {
+                    onFailCheck.value = response.message
+                }
+            }
+        }
+    }
+
+    fun resetPassword(acId: Int, password: String) {
+        launch {
+            isLoading.value = true
+
             val response = withContext(Dispatchers.IO) {
                 try {
                     service.resetPassword(acId, password)
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
                         isLoading.value = false
+
                         when {
                             e.code() == 404 -> {
                                 onFail.value = "Data not found"
@@ -42,8 +84,10 @@ class EditPasswordViewModel: ViewModel(), CoroutineScope {
                     }
                 }
             }
+
             if (response is PasswordResponse) {
                 isLoading.value = false
+
                 if (response.success) {
                     onSuccessUpdate.value = true
                 } else {

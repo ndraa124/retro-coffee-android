@@ -29,6 +29,13 @@ interface AccountApiService {
     ): VerifyResponse
 
     @FormUrlEncoded
+    @POST("account/password")
+    suspend fun checkPassword(
+        @Field("acId") acId: Int,
+        @Field("password") password : String
+    ): PasswordResponse
+
+    @FormUrlEncoded
     @PUT("account/{id}")
     suspend fun updateAccount(
         @Path("id") accountId: Int,
