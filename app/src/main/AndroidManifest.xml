@@ -20,10 +20,13 @@
             android:required="false" />
 
         <activity
+            android:name=".activity.customer.order.OrderSuccessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
             android:name=".activity.customer.profile.EditPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.RetroCoffee.NoActionBar" />
-
         <activity
             android:name=".activity.customer.coupon.CouponActivity"
             android:screenOrientation="portrait"

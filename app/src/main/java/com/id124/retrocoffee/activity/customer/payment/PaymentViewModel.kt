@@ -18,7 +18,7 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
     val isLoading = MutableLiveData<Boolean>()
     val isLoadingOrder = MutableLiveData<Boolean>()
     val onSuccess = MutableLiveData<List<CartModel>>()
-    val onSuccessOrder = MutableLiveData<Boolean>()
+    val onSuccessOrder = MutableLiveData<String>()
     val onFail = MutableLiveData<String>()
     val onFailOrder = MutableLiveData<String>()
 
@@ -70,7 +70,15 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
         }
     }
 
-    fun serviceAddApi(csId: Int, orPayTotal: Long, orAddress: String, orNoteApprove: String, orMethodPayment: String, orFee: Long, orDateOrder: String) {
+    fun serviceAddApi(
+        csId: Int,
+        orPayTotal: Long,
+        orAddress: String,
+        orNoteApprove: String,
+        orMethodPayment: String,
+        orFee: Long,
+        orDateOrder: String
+    ) {
         launch {
             isLoadingOrder.value = true
 
@@ -106,7 +114,7 @@ class PaymentViewModel : ViewModel(), CoroutineScope {
                 isLoadingOrder.value = false
 
                 if (response.success) {
-                    onSuccessOrder.value = true
+                    onSuccessOrder.value = response.data!![0].orderDate.split('T')[0]
                 } else {
                     onFailOrder.value = response.message
                 }

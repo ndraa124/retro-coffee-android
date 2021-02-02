@@ -28,7 +28,7 @@
 
     <!-- Home -->
     <string name="a_good_coffee_is_a_good_day">A good coffee is a good day</string>
-    <string name="search">Search</string>
+    <string name="search">Search here</string>
 
     <!-- Detail Product -->
     <string name="info_detail_product">Delivery only on Monday to friday at 1 – 7 pm</string>
@@ -60,4 +60,10 @@
 
     <!-- Empty Field -->
     <string name="empty_address">Empty address! Please add address first!</string>
+
+    <!-- Success -->
+    <string name="success">Success!</string>
+    <string name="info_success1">Congratulations! Your order was</string>
+    <string name="info_success2">successfully ordered.</string>
+    <string name="btn_history">Go to order history</string>
 </resources>

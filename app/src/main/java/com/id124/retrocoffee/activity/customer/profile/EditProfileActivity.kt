@@ -11,7 +11,6 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityEditProfileBinding
@@ -161,6 +160,10 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
     }
 
     private fun setDataSharedPref() {
+        if (intent.getIntExtra("checkout", 0) == 1) {
+            bind.etAddress.requestFocus()
+        }
+
         if (sharedPref.getCsPicImage() == null || sharedPref.getCsPicImage() == "") {
             bind.ivImageProfile.setImageResource(R.drawable.profile)
         } else {

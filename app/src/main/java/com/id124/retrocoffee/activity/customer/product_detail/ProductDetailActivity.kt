@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
@@ -13,6 +14,8 @@ import com.id124.retrocoffee.databinding.ActivityProductDetailBinding
 import com.id124.retrocoffee.model.product.ProductModel
 import com.id124.retrocoffee.remote.ApiClient.Companion.BASE_URL_IMAGE
 import com.id124.retrocoffee.util.Utils.Companion.currencyFormat
+import kotlin.math.min
+
 
 class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View.OnClickListener {
     private lateinit var viewModel: ProductDetailViewModel
@@ -59,6 +62,10 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
         menuInflater.inflate(R.menu.menu_detail_product, menu)
         actionMenu = menu!!
 
+        val menuItem = actionMenu.findItem(R.id.nav_cart)
+        val actionView: View = menuItem.actionView
+        val cartBadge: TextView = actionView.findViewById(R.id.cart_badge_detail)
+
         viewModel.onSuccessCheckFavorite.observe(this@ProductDetailActivity) {
             if (it) {
                 actionMenu.findItem(R.id.nav_favorite).isVisible = true
@@ -71,6 +78,14 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
 
         viewModel.onSuccessFavorite.observe(this@ProductDetailActivity) {
             noticeToast("Success add to favorite")
+        }
+
+        subscribeCartLiveData(
+            cartView = cartBadge
+        )
+
+        actionView.setOnClickListener {
+            onOptionsItemSelected(menuItem)
         }
 
         return true
@@ -86,13 +101,23 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
 
                 actionMenu.findItem(R.id.nav_favorite).isVisible = true
                 actionMenu.findItem(R.id.nav_unfavorite).isVisible = false
+
+                return true
             }
             R.id.nav_cart -> {
                 intents<CartActivity>(this@ProductDetailActivity)
+                return true
             }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.serviceGetCartApi(
+            csId = sharedPref.getCsId()
+        )
     }
 
     private fun setToolbarActionBar() {
@@ -122,7 +147,8 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
         )
 
         if (intent.getIntExtra("pr_is_discount", 0) == 1) {
-            bind.tvPriceDiscount.paintFlags = bind.tvPriceDiscount.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            bind.tvPriceDiscount.paintFlags =
+                bind.tvPriceDiscount.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             bind.tvPriceDiscount.visibility = View.VISIBLE
 
             bind.price = currencyFormat(intent.getLongExtra("pr_discount_price", 0).toString())
@@ -145,6 +171,9 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
             csId = sharedPref.getCsId(),
             prId = intent.getIntExtra("pr_id", 0)
         )
+        viewModel.serviceGetCartApi(
+            csId = sharedPref.getCsId()
+        )
     }
 
     private fun subscribeLiveData() {
@@ -160,6 +189,34 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
 
         viewModel.onSuccessCart.observe(this@ProductDetailActivity) {
             noticeToast("Success add to cart")
+
+            viewModel.serviceGetCartApi(
+                csId = sharedPref.getCsId()
+            )
+        }
+    }
+
+    private fun subscribeCartLiveData(cartView: TextView) {
+        viewModel.onSuccessCarts.observe(this@ProductDetailActivity, { list ->
+            countBadge(list.size, cartView)
+        })
+
+        viewModel.onFailCart.observe(this@ProductDetailActivity, {
+            countBadge(0, cartView)
+        })
+    }
+
+    private fun countBadge(mCartItemCount: Int, cartView: TextView) {
+        if (mCartItemCount == 0) {
+            if (cartView.visibility != View.GONE) {
+                cartView.visibility = View.GONE
+            }
+        } else {
+            cartView.text = min(mCartItemCount, 99).toString()
+
+            if (cartView.visibility != View.VISIBLE) {
+                cartView.visibility = View.VISIBLE
+            }
         }
     }
 }

@@ -44,6 +44,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
                     noticeToast("Please add some product first!")
                 } else {
                     intents<CheckoutActivity>(this@CartActivity)
+                    this@CartActivity.finish()
                 }
             }
             R.id.btn_see_product -> {
