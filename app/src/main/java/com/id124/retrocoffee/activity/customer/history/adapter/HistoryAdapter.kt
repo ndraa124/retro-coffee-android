@@ -29,11 +29,24 @@ class HistoryAdapter(private val listOrder: ArrayList<OrderModel>, private val o
         holder.bind.price = currencyFormat(item.orTotal!!)
         holder.bind.date = item.orDate!!.split("T")[0]
 
-        if (item.orStatus == 1) {
-            holder.bind.status = "Waiting"
-        } else {
-            holder.bind.status = "Waiting For Delivery"
+        when (item.orStatus) {
+            0 -> {
+                holder.bind.status = "Waiting"
+            }
+            1 -> {
+                holder.bind.status = "Proceed"
+            }
+            2 -> {
+                holder.bind.status = "Reject"
+            }
+            3 -> {
+                holder.bind.status = "Delivery"
+            }
+            4 -> {
+                holder.bind.status = "Finish"
+            }
         }
+
         holder.itemView.setOnClickListener{
             onListOrderClick.onOrderItem(position)
         }

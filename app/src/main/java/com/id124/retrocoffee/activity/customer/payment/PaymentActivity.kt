@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.id124.retrocoffee.R
-import com.id124.retrocoffee.activity.customer.history.HistoryActivity
+import com.id124.retrocoffee.activity.customer.checkout.CheckoutActivity
 import com.id124.retrocoffee.activity.customer.main.MainActivity
+import com.id124.retrocoffee.activity.customer.order.OrderSuccessActivity
 import com.id124.retrocoffee.activity.customer.payment.adapter.CardSliderAdapter
 import com.id124.retrocoffee.activity.customer.payment.adapter.CartAdapter
 import com.id124.retrocoffee.base.BaseActivity
@@ -22,7 +23,6 @@ import com.id124.retrocoffee.util.Utils.Companion.currencyFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
-
 
 class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickListener {
     private lateinit var viewModel: PaymentViewModel
@@ -65,9 +65,15 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
                 }
             }
             R.id.btn_back -> {
-                onBackPressed()
+                intents<CheckoutActivity>(this@PaymentActivity)
+                this@PaymentActivity.finish()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        intents<CheckoutActivity>(this@PaymentActivity)
+        this@PaymentActivity.finish()
     }
 
     private fun setToolbarActionBar() {
@@ -146,15 +152,10 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
         })
 
         viewModel.onSuccessOrder.observe(this@PaymentActivity, {
-            if (it) {
-                noticeToast("Order success")
-
-                val intent = Intent(this@PaymentActivity, HistoryActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                intent.putExtra("orderTransaction", 1)
-                startActivity(intent)
-                finish()
-            }
+            val intent = Intent(this@PaymentActivity, OrderSuccessActivity::class.java)
+            intent.putExtra("date_order", it)
+            startActivity(intent)
+            this@PaymentActivity.finish()
         })
 
         viewModel.onFail.observe(this@PaymentActivity, { message ->
@@ -166,11 +167,8 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), View.OnClickList
         viewModel.onFailOrder.observe(this@PaymentActivity, {
             noticeToast("Order is fail! Please try again later.")
 
-            val intent = Intent(this@PaymentActivity, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-            finish()
+            intents<MainActivity>(this@PaymentActivity)
+            this@PaymentActivity.finish()
         })
     }
 

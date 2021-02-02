@@ -32,6 +32,7 @@ import com.id124.retrocoffee.model.product.ProductModel
 import com.id124.retrocoffee.remote.ApiClient.Companion.BASE_URL_IMAGE
 import com.id124.retrocoffee.util.ViewPagerAdapter
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlin.math.min
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     NavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +40,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: PromoteAdapter
     private lateinit var layoutManager: LinearLayoutManager
+
+    private lateinit var actionMenu: Menu
+
+    private var backButtonCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main
@@ -55,7 +60,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.ln_search -> {
+            R.id.cl_search -> {
                 intents<ProductSearchActivity>(this@MainActivity)
             }
             R.id.tv_more_product -> {
@@ -95,12 +100,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         if (bind.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             bind.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            if(backButtonCount >= 1) {
+                super.onBackPressed()
+            } else {
+                noticeToast("Click back button twice to exit from apps")
+                backButtonCount++
+            }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        actionMenu = menu!!
+
+        val menuItem = actionMenu.findItem(R.id.nav_cart)
+        val actionView: View = menuItem.actionView
+        val cartBadge: TextView = actionView.findViewById(R.id.cart_badge_home)
+
+        subscribeCartLiveData(
+            cartView = cartBadge
+        )
+
+        actionView.setOnClickListener {
+            onOptionsItemSelected(menuItem)
+        }
+
         return true
     }
 
@@ -108,6 +132,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         when (item.itemId) {
             R.id.nav_cart -> {
                 intents<CartActivity>(this@MainActivity)
+                return true
             }
         }
 
@@ -122,6 +147,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     override fun onResume() {
         super.onResume()
         setNavigationDrawerHeader()
+        viewModel.serviceGetCartApi(
+            csId = sharedPref.getCsId()
+        )
     }
 
     private fun setToolbarActionBar() {
@@ -224,8 +252,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         viewModel = ViewModelProvider(this@MainActivity).get(MainViewModel::class.java)
         viewModel.setServiceCategory(createApi(this@MainActivity))
         viewModel.setServiceProduct(createApi(this@MainActivity))
+        viewModel.setServiceCart(createApi(this@MainActivity))
         viewModel.serviceGetCategoryApi()
         viewModel.serviceGetPromoApi()
+        viewModel.serviceGetCartApi(
+            csId = sharedPref.getCsId()
+        )
     }
 
     private fun subscribeCategoryLiveData() {
@@ -273,6 +305,30 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         viewModel.onFailProduct.observe(this@MainActivity) { message ->
             bind.dataNotFound = message
             bind.tvDataNotFound.visibility = View.VISIBLE
+        }
+    }
+
+    private fun subscribeCartLiveData(cartView: TextView) {
+        viewModel.onSuccessCart.observe(this@MainActivity, { list ->
+            countBadge(list.size, cartView)
+        })
+
+        viewModel.onFailCart.observe(this@MainActivity, {
+            countBadge(0, cartView)
+        })
+    }
+
+    private fun countBadge(mCartItemCount: Int, cartView: TextView) {
+        if (mCartItemCount == 0) {
+            if (cartView.visibility != View.GONE) {
+                cartView.visibility = View.GONE
+            }
+        } else {
+            cartView.text = min(mCartItemCount, 99).toString()
+
+            if (cartView.visibility != View.VISIBLE) {
+                cartView.visibility = View.VISIBLE
+            }
         }
     }
 }

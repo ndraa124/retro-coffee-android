@@ -17,7 +17,8 @@
 
     <item
         android:id="@+id/nav_cart"
-        android:icon="@drawable/ic_cart_white"
+        android:enabled="true"
         android:title="@string/menu_cart"
-        app:showAsAction="ifRoom" />
+        app:actionLayout="@layout/menu_badge_detail"
+        app:showAsAction="always" />
 </menu>

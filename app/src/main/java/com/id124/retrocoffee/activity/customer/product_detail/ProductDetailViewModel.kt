@@ -2,6 +2,7 @@ package com.id124.retrocoffee.activity.customer.product_detail
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.id124.retrocoffee.model.cart.CartModel
 import com.id124.retrocoffee.model.cart.CartResponse
 import com.id124.retrocoffee.model.favorite.FavoriteResponse
 import com.id124.retrocoffee.service.CartApiService
@@ -20,6 +21,9 @@ class ProductDetailViewModel : ViewModel(), CoroutineScope {
     val onFail = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
 
+    val onSuccessCarts = MutableLiveData<List<CartModel>>()
+    val onFailCart = MutableLiveData<String>()
+
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
@@ -29,6 +33,37 @@ class ProductDetailViewModel : ViewModel(), CoroutineScope {
 
     fun setServiceFavorite(service: FavoriteApiService) {
         this@ProductDetailViewModel.serviceFavorite = service
+    }
+
+    fun serviceGetCartApi(csId: Int) {
+        launch {
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    serviceCart.getAllCart(
+                        csId = csId
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        when {
+                            e.code() == 404 -> {
+                                onFailCart.value = "Cart is empty!"
+                            }
+                            else -> {
+                                onFailCart.value = "Server is maintenance!"
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (response is CartResponse) {
+                if (response.success) {
+                    onSuccessCarts.value = response.data
+                } else {
+                    onFailCart.value = response.message
+                }
+            }
+        }
     }
 
     fun serviceAddApi(
@@ -117,34 +152,6 @@ class ProductDetailViewModel : ViewModel(), CoroutineScope {
             val response = withContext(Dispatchers.IO) {
                 try {
                     serviceFavorite.addFavorite(
-                        csId = csId,
-                        prId = prId
-                    )
-                } catch (e: HttpException) {
-                    withContext(Dispatchers.Main) {
-                        when {
-                            e.code() == 404 -> {
-                                onSuccessFavorite.value = "Data not found"
-                            }
-                            else -> {
-                                onSuccessFavorite.value = "Server is maintenance!"
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (response is FavoriteResponse) {
-                onSuccessFavorite.value = response.message
-            }
-        }
-    }
-
-    fun serviceDeleteFavoriteApi(csId: Int, prId: Int) {
-        launch {
-            val response = withContext(Dispatchers.IO) {
-                try {
-                    serviceFavorite.deleteFavoriteByProduct(
                         csId = csId,
                         prId = prId
                     )

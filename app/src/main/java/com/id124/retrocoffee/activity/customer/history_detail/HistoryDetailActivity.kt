@@ -1,8 +1,10 @@
 package com.id124.retrocoffee.activity.customer.history_detail
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -89,6 +91,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun setIntentData() {
         if (intent.getStringExtra("orderAddress") == "") {
             bind.address = "Address is empty!"

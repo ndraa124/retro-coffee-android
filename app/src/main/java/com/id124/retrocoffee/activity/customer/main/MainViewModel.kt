@@ -2,10 +2,13 @@ package com.id124.retrocoffee.activity.customer.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.id124.retrocoffee.model.cart.CartModel
+import com.id124.retrocoffee.model.cart.CartResponse
 import com.id124.retrocoffee.model.category.CategoryModel
 import com.id124.retrocoffee.model.category.CategoryResponse
 import com.id124.retrocoffee.model.product.ProductModel
 import com.id124.retrocoffee.model.product.ProductResponse
+import com.id124.retrocoffee.service.CartApiService
 import com.id124.retrocoffee.service.CategoryApiService
 import com.id124.retrocoffee.service.ProductApiService
 import kotlinx.coroutines.*
@@ -15,6 +18,7 @@ import kotlin.coroutines.CoroutineContext
 class MainViewModel : ViewModel(), CoroutineScope {
     private lateinit var serviceCategory: CategoryApiService
     private lateinit var serviceProduct: ProductApiService
+    private lateinit var serviceCart: CartApiService
 
     val onSuccessCategory = MutableLiveData<List<CategoryModel>>()
     val onFailCategory = MutableLiveData<String>()
@@ -23,6 +27,9 @@ class MainViewModel : ViewModel(), CoroutineScope {
     val onSuccessProduct = MutableLiveData<List<ProductModel>>()
     val onFailProduct = MutableLiveData<String>()
     val isLoadingProduct = MutableLiveData<Boolean>()
+
+    val onSuccessCart = MutableLiveData<List<CartModel>>()
+    val onFailCart = MutableLiveData<String>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
@@ -33,6 +40,10 @@ class MainViewModel : ViewModel(), CoroutineScope {
 
     fun setServiceProduct(service: ProductApiService) {
         this@MainViewModel.serviceProduct = service
+    }
+
+    fun setServiceCart(service: CartApiService) {
+        this@MainViewModel.serviceCart = service
     }
 
     fun serviceGetCategoryApi() {
@@ -111,6 +122,37 @@ class MainViewModel : ViewModel(), CoroutineScope {
                     onSuccessProduct.value = response.data
                 } else {
                     onFailProduct.value = response.message
+                }
+            }
+        }
+    }
+
+    fun serviceGetCartApi(csId: Int) {
+        launch {
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    serviceCart.getAllCart(
+                        csId = csId
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        when {
+                            e.code() == 404 -> {
+                                onFailCart.value = "Cart is empty!"
+                            }
+                            else -> {
+                                onFailCart.value = "Server is maintenance!"
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (response is CartResponse) {
+                if (response.success) {
+                    onSuccessCart.value = response.data
+                } else {
+                    onFailCart.value = response.message
                 }
             }
         }

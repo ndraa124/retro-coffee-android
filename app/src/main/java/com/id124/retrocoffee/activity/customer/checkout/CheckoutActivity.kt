@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
+import com.id124.retrocoffee.activity.customer.cart.CartActivity
 import com.id124.retrocoffee.activity.customer.checkout.adapter.CartAdapter
 import com.id124.retrocoffee.activity.customer.payment.PaymentActivity
 import com.id124.retrocoffee.activity.customer.profile.EditProfileActivity
@@ -40,7 +41,9 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_choose_address -> {
-                intents<EditProfileActivity>(this@CheckoutActivity)
+                val intent = Intent(this@CheckoutActivity, EditProfileActivity::class.java)
+                intent.putExtra("checkout", 1)
+                startActivity(intent)
             }
             R.id.btn_payment -> {
                 when {
@@ -56,11 +59,13 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
                         intent.putExtra("pay_total", total)
                         intent.putExtra("store", chooseStore)
                         startActivity(intent)
+                        this@CheckoutActivity.finish()
                     }
                 }
             }
             R.id.btn_back -> {
-                onBackPressed()
+                intents<CartActivity>(this@CheckoutActivity)
+                this@CheckoutActivity.finish()
             }
         }
     }
@@ -85,6 +90,11 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
         } else {
             bind.address = sharedPref.getCsAddress()
         }
+    }
+
+    override fun onBackPressed() {
+        intents<CartActivity>(this@CheckoutActivity)
+        this@CheckoutActivity.finish()
     }
 
     private fun setToolbarActionBar() {

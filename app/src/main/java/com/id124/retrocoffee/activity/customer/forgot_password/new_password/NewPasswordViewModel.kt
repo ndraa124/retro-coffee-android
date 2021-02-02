@@ -1,77 +1,62 @@
 package com.id124.retrocoffee.activity.customer.forgot_password.new_password
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.id124.retrocoffee.model.account.LoginResponse
-import com.id124.retrocoffee.model.account.ResetPasswordResponse
+import com.id124.retrocoffee.model.account.PasswordResponse
 import com.id124.retrocoffee.service.AccountApiService
-import com.id124.retrocoffee.util.SharedPreference
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
 class NewPasswordViewModel: ViewModel(), CoroutineScope {
     private lateinit var service: AccountApiService
-    private lateinit var sharedPref: SharedPreference
-
-    val onSuccessLiveData = MutableLiveData<Boolean>()
-    val onFailLiveData = MutableLiveData<String>()
-    val isLoadingLiveData = MutableLiveData<Boolean>()
-    val onMessageLiveData = MutableLiveData<String>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
+    val onSuccess = MutableLiveData<Boolean>()
+    val onFail = MutableLiveData<String>()
+    val isLoading = MutableLiveData<Boolean>()
+
     fun setService(service: AccountApiService) {
-        this@NewPasswordViewModel.service = service
+        this.service = service
     }
 
-    fun setSharedPref(sharedPref: SharedPreference) {
-        this@NewPasswordViewModel.sharedPref = sharedPref
-    }
-
-    fun serviceApi(acId: Int, password: String) {
+    fun serviceResetPassword(acId: Int, acPassword: String) {
         launch {
-            isLoadingLiveData.value = true
+            isLoading.value = true
 
             val response = withContext(Dispatchers.IO) {
                 try {
-                    service.updatePassword(
-                        accountId = acId,
-                        acPassword = password
+                    service.resetPassword(
+                        acId = acId,
+                        acPassword = acPassword
                     )
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
-                        onSuccessLiveData.value = false
+                        isLoading.value = false
 
                         when {
                             e.code() == 404 -> {
-                                onFailLiveData.value = "Failed Update Password"
-                            }
-                            e.code() == 400 -> {
-                                onFailLiveData.value = "Password is invalid!"
+                                onFail.value = "Data not found"
                             }
                             else -> {
-                                onFailLiveData.value = "Update is fail! Please try again later!"
+                                onFail.value = "Server is maintenance"
                             }
                         }
                     }
                 }
             }
 
-            if (response is ResetPasswordResponse) {
-                Log.d("Response Reset" , response.toString())
-                isLoadingLiveData.value = false
+            if (response is PasswordResponse) {
+                isLoading.value = false
 
                 if (response.success) {
-                    onSuccessLiveData.value = true
-                    onMessageLiveData.value = response.message
+                    onSuccess.value = true
                 } else {
-                    onFailLiveData.value = response.message
+                    onFail.value = response.message
                 }
             }
         }
     }
-
 }

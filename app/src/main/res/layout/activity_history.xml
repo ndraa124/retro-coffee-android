@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
-                android:text="Hit the orange button down\nbelow to Create an order"
+                android:text="Hit the button down\nbelow to Create an order"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="14sp"

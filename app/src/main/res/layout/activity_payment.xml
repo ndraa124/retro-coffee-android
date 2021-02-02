@@ -262,6 +262,7 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textSize="18sp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cv_payment_method" />
@@ -273,6 +274,7 @@
                         android:paddingStart="5dp"
                         android:paddingTop="0dp"
                         android:paddingEnd="150dp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_card" />
@@ -338,7 +340,7 @@
 
         <ProgressBar
             android:id="@+id/progress_bar_order"
-            android:layout_width="wrap_content"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
             android:indeterminate="true"
             android:indeterminateTint="@color/primary"

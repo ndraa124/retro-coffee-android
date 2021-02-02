@@ -23,9 +23,9 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(), View.OnClickLi
         setLayout = R.layout.activity_register
         super.onCreate(savedInstanceState)
 
+        initTextWatcher()
         setViewModel()
         subscribeLiveData()
-        initTextWatcher()
     }
 
     override fun onClick(v: View?) {
@@ -64,6 +64,14 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(), View.OnClickLi
         this@RegisterActivity.finish()
     }
 
+    private fun initTextWatcher() {
+        bind.etName.addTextChangedListener(MyTextWatcher(bind.etName))
+        bind.etEmail.addTextChangedListener(MyTextWatcher(bind.etEmail))
+        bind.etPhoneNumber.addTextChangedListener(MyTextWatcher(bind.etPhoneNumber))
+        bind.etPassword.addTextChangedListener(MyTextWatcher(bind.etPassword))
+        bind.etPasswordConfirmation.addTextChangedListener(MyTextWatcher(bind.etPasswordConfirmation))
+    }
+
     private fun setViewModel() {
         viewModel = ViewModelProvider(this@RegisterActivity).get(RegisterViewModel::class.java)
         viewModel.setService(createApi(this@RegisterActivity))
@@ -95,14 +103,6 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(), View.OnClickLi
         viewModel.onFailLiveData.observe(this@RegisterActivity, {
             noticeToast(it)
         })
-    }
-
-    private fun initTextWatcher() {
-        bind.etName.addTextChangedListener(MyTextWatcher(bind.etName))
-        bind.etEmail.addTextChangedListener(MyTextWatcher(bind.etEmail))
-        bind.etPhoneNumber.addTextChangedListener(MyTextWatcher(bind.etPhoneNumber))
-        bind.etPassword.addTextChangedListener(MyTextWatcher(bind.etPassword))
-        bind.etPasswordConfirmation.addTextChangedListener(MyTextWatcher(bind.etPasswordConfirmation))
     }
 
 

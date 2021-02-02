@@ -28,7 +28,7 @@
 
     <!-- Home -->
     <string name="a_good_coffee_is_a_good_day">A good coffee is a good day</string>
-    <string name="search">Search</string>
+    <string name="search">Search here</string>
 
     <!-- Detail Product -->
     <string name="info_detail_product">Delivery only on Monday to friday at 1 – 7 pm</string>
@@ -40,10 +40,10 @@
 
     <!-- Fitur forget password   -->
     <string name="don_t_worry">Dont Worry!</string>
-    <string name="enter_your_">Enter your email adress to get reset password link</string>
-    <string name="enter_your_email">Enter your email adress</string>
+    <string name="enter_your_">Enter your email address to get reset password link</string>
+    <string name="enter_your_email">Enter your email address</string>
     <string name="haven_t_rec">Havent received any link?</string>
-    <string name="resend_link">Resend Link</string>
+    <string name="resend_link">Next</string>
     <string name="image">image</string>
     <string name="password">enter new Password</string>
     <string name="confirmpassword">conirm new Password</string>
@@ -53,6 +53,17 @@
     <string name="promo_for_you">Promo for you</string>
     <string name="order_history">Order History</string>
 
+    <!--    coupons-->
+    <string name="my_coupons">My Coupons</string>
+    <string name="claim_coupo">Claim coupons by clicking it</string>
+    <string name="get_a_cup_o">Get a cup of coffee for free on sunday morning\nOnly at 7 to 9 AM</string>
+
     <!-- Empty Field -->
     <string name="empty_address">Empty address! Please add address first!</string>
+
+    <!-- Success -->
+    <string name="success">Success!</string>
+    <string name="info_success1">Congratulations! Your order was</string>
+    <string name="info_success2">successfully ordered.</string>
+    <string name="btn_history">Go to order history</string>
 </resources>
