@@ -21,7 +21,7 @@ interface ProductApiService {
         @Query("page") page: Int? = null
     ): ProductResponse
 
-    @GET("product")
+    @GET("product/filter/name")
     suspend fun getAllProduct() : ProductResponse
 
     @GET("product/filter/higher")
@@ -30,7 +30,7 @@ interface ProductApiService {
     @GET("product/filter/lower")
     suspend fun getProductByLower() : ProductResponse
 
-    @GET("product")
+    @GET("product/filter/name")
     suspend fun searchProductByName(@Query("search") productName:String) : ProductResponse
 
     @GET("product/filter/category")
