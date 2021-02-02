@@ -1,51 +1,58 @@
-package com.id124.retrocoffee.activity.customer.profile
+package com.id124.retrocoffee.activity.customer.forgot_password.email_check
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.id124.retrocoffee.model.account.PasswordResponse
+import com.id124.retrocoffee.model.account.VerifyResponse
 import com.id124.retrocoffee.service.AccountApiService
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
-class EditPasswordViewModel: ViewModel(), CoroutineScope {
-    private lateinit var service : AccountApiService
+class EmailCheckViewModel: ViewModel(),CoroutineScope {
+    private lateinit var service: AccountApiService
+
+    val onSuccess = MutableLiveData<Int>()
+    val onFail = MutableLiveData<String>()
+    val isLoading = MutableLiveData<Boolean>()
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
-    val onSuccessUpdate = MutableLiveData<Boolean>()
-    val onFail = MutableLiveData<String>()
-    val isLoading = MutableLiveData<Boolean>()
-
     fun setService(service: AccountApiService) {
-        this.service = service
+        this@EmailCheckViewModel.service = service
     }
 
-    fun ResetPassword(acId: Int, password: String) {
+    fun serviceApi(email: String) {
         launch {
             isLoading.value = true
+
             val response = withContext(Dispatchers.IO) {
                 try {
-                    service.resetPassword(acId, password)
+                    service.cekEmail(
+                        email = email
+                    )
                 } catch (e: HttpException) {
                     withContext(Dispatchers.Main) {
                         isLoading.value = false
+
                         when {
                             e.code() == 404 -> {
-                                onFail.value = "Data not found"
+                                onFail.value = "Account not registered"
                             }
                             else -> {
-                                onFail.value = "Server is maintenance"
+                                onFail.value = "Email is fail! Please try again later!"
                             }
                         }
                     }
                 }
             }
-            if (response is PasswordResponse) {
+
+            if (response is VerifyResponse) {
                 isLoading.value = false
+
                 if (response.success) {
-                    onSuccessUpdate.value = true
+                    val data = response.data
+                    onSuccess.value = data.acid
                 } else {
                     onFail.value = response.message
                 }

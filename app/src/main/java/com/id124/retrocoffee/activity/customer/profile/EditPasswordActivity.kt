@@ -53,7 +53,7 @@ class EditPasswordActivity : BaseActivity<ActivityEditPasswordBinding>(), View.O
                     !valPassConf(bind.inputLayoutConfirmPassword, bind.etConfirmPassword, bind.etNewPassword) -> {
                     }
                     else -> {
-                        viewModel.ResetPassword(acId = sharedPref.getAcId().toString(), password = bind.etNewPassword.text.toString())
+                        viewModel.ResetPassword(acId = sharedPref.getAcId(), password = bind.etNewPassword.text.toString())
                     }
                 }
             }
