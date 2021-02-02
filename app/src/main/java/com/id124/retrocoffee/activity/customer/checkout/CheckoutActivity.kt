@@ -49,7 +49,9 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
                 when {
                     sharedPref.getCsAddress() == null -> {
                         noticeToast("Please add address first!")
-                        intents<EditProfileActivity>(this@CheckoutActivity)
+                        val intent = Intent(this@CheckoutActivity, EditProfileActivity::class.java)
+                        intent.putExtra("checkout", 1)
+                        startActivity(intent)
                     }
                     chooseStore == null -> {
                         noticeToast("Please choose store first!")
