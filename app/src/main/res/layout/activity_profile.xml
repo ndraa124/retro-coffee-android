@@ -263,6 +263,7 @@
                     android:drawableEnd="@drawable/ic_arrow_forward"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="start|center_vertical"
+                    android:onClick="onClick"
                     android:paddingHorizontal="32dp"
                     android:text="Edit Password"
                     android:textAllCaps="false"
