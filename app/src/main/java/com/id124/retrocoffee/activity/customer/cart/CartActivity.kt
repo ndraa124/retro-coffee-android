@@ -2,6 +2,7 @@ package com.id124.retrocoffee.activity.customer.cart
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -52,6 +53,13 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
             }
             R.id.btn_coupons -> {
                 intents<CouponActivity>(this@CartActivity)
+                this@CartActivity.finish()
+            }
+            R.id.iv_cancel_coupon -> {
+                val intent = Intent(this@CartActivity, CartActivity::class.java)
+                intent.putExtra("is_discount", 0)
+                startActivity(intent)
+                this@CartActivity.finish()
             }
             R.id.btn_back -> {
                 onBackPressed()
@@ -146,7 +154,20 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun setPayTotal() {
         fee = 5000
-        total = subtotal + fee
+
+        if (intent.getIntExtra("is_discount", 0) == 1) {
+            bind.clDiscount.visibility = View.VISIBLE
+
+            bind.tvPayTotalDiscount.visibility = View.VISIBLE
+            bind.tvPayTotalDiscount.text = "-" + Utils.currencyFormat(intent.getIntExtra("cp_price_discount", 0).toString())
+
+            total = (subtotal + fee) - intent.getIntExtra("cp_price_discount", 0)
+        } else {
+            bind.clDiscount.visibility = View.GONE
+            bind.tvPayTotalDiscount.visibility = View.GONE
+
+            total = subtotal + fee
+        }
 
         bind.tvIdrTotal.text = Utils.currencyFormat(subtotal.toString())
         bind.tvTaxTotal.text = Utils.currencyFormat(fee.toString())
