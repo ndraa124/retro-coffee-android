@@ -241,11 +241,6 @@ class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(), View.OnC
             sharedPref.createCsGender(gender!!)
             sharedPref.createCsDateOfBirth(bind.etDob.text.toString())
             sharedPref.createAddress(bind.etAddress.text.toString())
-            if (image == "" || image == null) {
-                sharedPref.createCsPicImage("")
-            } else {
-                sharedPref.createCsPicImage(image)
-            }
 
             noticeToast("Update profile success")
             this@EditProfileActivity.finish()
