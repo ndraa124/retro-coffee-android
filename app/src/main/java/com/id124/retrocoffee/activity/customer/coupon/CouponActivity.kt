@@ -1,6 +1,5 @@
 package com.id124.retrocoffee.activity.customer.coupon
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -62,10 +61,11 @@ class CouponActivity : BaseActivity<ActivityCouponBinding>(), View.OnClickListen
 
         adapter.setOnItemClickCallback(object : CouponAdapter.OnItemClickCallback {
             override fun onItemClick(data: CouponModel) {
-                val intent = Intent(this@CouponActivity, CartActivity::class.java)
-                intent.putExtra("is_discount", 1)
-                intent.putExtra("cp_price_discount", data.cpPriceDiscount)
-                startActivity(intent)
+                sharedPref.createIsCoupon(
+                    cpPriceDiscount = data.cpPriceDiscount
+                )
+
+                intents<CartActivity>(this@CouponActivity)
                 this@CouponActivity.finish()
             }
         })

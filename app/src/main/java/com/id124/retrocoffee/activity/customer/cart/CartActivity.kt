@@ -2,7 +2,6 @@ package com.id124.retrocoffee.activity.customer.cart
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -56,9 +55,9 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
                 this@CartActivity.finish()
             }
             R.id.iv_cancel_coupon -> {
-                val intent = Intent(this@CartActivity, CartActivity::class.java)
-                intent.putExtra("is_discount", 0)
-                startActivity(intent)
+                sharedPref.removeIsCoupon()
+
+                intents<CartActivity>(this@CartActivity)
                 this@CartActivity.finish()
             }
             R.id.btn_back -> {
@@ -141,7 +140,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
         viewModel.onSuccessCart.observe(this@CartActivity) {
             if (it) {
                 intents<CartActivity>(this@CartActivity)
-                finish()
+                this@CartActivity.finish()
             }
         }
 
@@ -155,13 +154,13 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
     private fun setPayTotal() {
         fee = 5000
 
-        if (intent.getIntExtra("is_discount", 0) == 1) {
+        if (sharedPref.getIsCoupon() == 1) {
             bind.clDiscount.visibility = View.VISIBLE
 
             bind.tvPayTotalDiscount.visibility = View.VISIBLE
-            bind.tvPayTotalDiscount.text = "-" + Utils.currencyFormat(intent.getIntExtra("cp_price_discount", 0).toString())
+            bind.tvPayTotalDiscount.text = "-" + Utils.currencyFormat(sharedPref.getCouponPrice().toString())
 
-            total = (subtotal + fee) - intent.getIntExtra("cp_price_discount", 0)
+            total = (subtotal + fee) - sharedPref.getCouponPrice()
         } else {
             bind.clDiscount.visibility = View.GONE
             bind.tvPayTotalDiscount.visibility = View.GONE

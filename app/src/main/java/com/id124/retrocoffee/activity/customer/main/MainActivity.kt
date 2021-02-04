@@ -52,6 +52,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         setToolbarActionBar()
         setNavigationDrawer()
         setNavigationDrawerHeader()
+        setNavigationDrawerItem()
         setProductRecyclerView()
         setViewModel()
         subscribeCategoryLiveData()
@@ -114,6 +115,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         actionMenu = menu!!
 
         val menuItem = actionMenu.findItem(R.id.nav_cart)
+        menuItem.isVisible = sharedPref.getAcLevel() != 0
+
         val actionView: View = menuItem.actionView
         val cartBadge: TextView = actionView.findViewById(R.id.cart_badge_home)
 
@@ -218,6 +221,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
 
         tvName.text = sharedPref.getAcName()
         tvEmail.text = sharedPref.getAcEmail()
+    }
+
+    private fun setNavigationDrawerItem() {
+        val navMenu: Menu = bind.navView.menu
+
+        if (sharedPref.getAcLevel() == 0) {
+            navMenu.findItem(R.id.nav_orders).isVisible = false
+            navMenu.findItem(R.id.nav_promo).isVisible = false
+            navMenu.findItem(R.id.nav_all_menu).isVisible = false
+            navMenu.findItem(R.id.nav_all_product).isVisible = true
+            navMenu.findItem(R.id.nav_orders_customer).isVisible = true
+        } else {
+            navMenu.findItem(R.id.nav_orders).isVisible = true
+            navMenu.findItem(R.id.nav_promo).isVisible = true
+            navMenu.findItem(R.id.nav_all_menu).isVisible = true
+            navMenu.findItem(R.id.nav_all_product).isVisible = false
+            navMenu.findItem(R.id.nav_orders_customer).isVisible = false
+        }
     }
 
     private fun setProductRecyclerView() {

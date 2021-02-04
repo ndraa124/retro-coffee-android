@@ -208,6 +208,7 @@
                     android:textAlignment="textStart"
                     android:textColor="@color/gray_500"
                     android:textSize="12sp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_pay_total"
                     app:layout_constraintEnd_toStartOf="@+id/tv_pay_total"
                     app:layout_constraintTop_toTopOf="@+id/tv_pay_total" />

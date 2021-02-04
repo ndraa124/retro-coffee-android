@@ -345,6 +345,24 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_tax" />
 
                 <TextView
+                    android:id="@+id/tv_pay_total_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="start"
+                    android:text="IDR 0"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/gray_500"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_pay_total"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_pay_total"
+                    app:layout_constraintTop_toTopOf="@+id/tv_pay_total" />
+
+                <TextView
                     android:id="@+id/tv_pay_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

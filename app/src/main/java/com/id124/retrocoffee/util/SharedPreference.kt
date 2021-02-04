@@ -24,6 +24,8 @@ class SharedPreference(private val context: Context) {
         const val CS_LONGITUDE = "CS_LONGITUDE"
         const val CS_PIC_IMAGE = "CS_PIC_IMAGE"
         const val CART_ID = "CART_ID"
+        const val IS_COUPON = "IS_COUPON"
+        const val COUPON_PRICE_DISCOUNT = "COUPON_PRICE_DISCOUNT"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -103,6 +105,19 @@ class SharedPreference(private val context: Context) {
         editor.putString(AC_ID, acId.toString())
         editor.commit()
     }
+
+    fun createIsCoupon(cpPriceDiscount: Int) {
+        editor.putInt(IS_COUPON, 1)
+        editor.putInt(COUPON_PRICE_DISCOUNT, cpPriceDiscount)
+        editor.commit()
+    }
+
+    fun removeIsCoupon() {
+        editor.putInt(IS_COUPON, 0)
+        editor.putInt(COUPON_PRICE_DISCOUNT, 0)
+        editor.commit()
+    }
+
     fun getIdEmail():Int{
         return sharedPreferences.getInt(AC_ID, 0)
     }
@@ -153,6 +168,14 @@ class SharedPreference(private val context: Context) {
 
     fun getCsPicImage(): String? {
         return sharedPreferences.getString(CS_PIC_IMAGE, null)
+    }
+
+    fun getIsCoupon(): Int {
+        return sharedPreferences.getInt(IS_COUPON, 0)
+    }
+
+    fun getCouponPrice(): Int {
+        return sharedPreferences.getInt(COUPON_PRICE_DISCOUNT, 0)
     }
 
     fun getIsLogin(): Boolean {

@@ -66,13 +66,19 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
         val actionView: View = menuItem.actionView
         val cartBadge: TextView = actionView.findViewById(R.id.cart_badge_detail)
 
-        viewModel.onSuccessCheckFavorite.observe(this@ProductDetailActivity) {
-            if (it) {
-                actionMenu.findItem(R.id.nav_favorite).isVisible = true
-                actionMenu.findItem(R.id.nav_unfavorite).isVisible = false
-            } else {
-                actionMenu.findItem(R.id.nav_favorite).isVisible = false
-                actionMenu.findItem(R.id.nav_unfavorite).isVisible = true
+        if (sharedPref.getAcLevel() == 0) {
+            actionMenu.findItem(R.id.nav_favorite).isVisible = false
+            actionMenu.findItem(R.id.nav_unfavorite).isVisible = false
+            actionMenu.findItem(R.id.nav_cart).isVisible = false
+        } else {
+            viewModel.onSuccessCheckFavorite.observe(this@ProductDetailActivity) {
+                if (it) {
+                    actionMenu.findItem(R.id.nav_favorite).isVisible = true
+                    actionMenu.findItem(R.id.nav_unfavorite).isVisible = false
+                } else {
+                    actionMenu.findItem(R.id.nav_favorite).isVisible = false
+                    actionMenu.findItem(R.id.nav_unfavorite).isVisible = true
+                }
             }
         }
 

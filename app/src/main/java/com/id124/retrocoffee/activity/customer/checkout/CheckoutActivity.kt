@@ -231,7 +231,17 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
     @SuppressLint("SetTextI18n")
     private fun setPayTotal() {
         fee = 5000
-        total = subtotal + fee
+
+        if (sharedPref.getIsCoupon() == 1) {
+            bind.tvPayTotalDiscount.visibility = View.VISIBLE
+            bind.tvPayTotalDiscount.text = "-" + currencyFormat(sharedPref.getCouponPrice().toString())
+
+            total = (subtotal + fee) - sharedPref.getCouponPrice()
+        } else {
+            bind.tvPayTotalDiscount.visibility = View.GONE
+
+            total = subtotal + fee
+        }
 
         bind.tvIdrTotal.text = currencyFormat(subtotal.toString())
         bind.tvTaxTotal.text = currencyFormat(fee.toString())
