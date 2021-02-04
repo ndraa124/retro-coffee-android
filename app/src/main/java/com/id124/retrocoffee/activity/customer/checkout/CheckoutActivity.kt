@@ -54,7 +54,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
                         startActivity(intent)
                     }
                     chooseStore == null -> {
-                        noticeToast("Please choose store first!")
+                        noticeToast("Please choose method first!")
                     }
                     else -> {
                         val intent = Intent(this@CheckoutActivity, PaymentActivity::class.java)
