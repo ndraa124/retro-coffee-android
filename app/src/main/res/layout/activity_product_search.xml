@@ -39,34 +39,44 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="18dp"
+            app:cardElevation="4dp"
             android:layout_marginTop="32dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginHorizontal="40dp"
             android:layout_width="match_parent"
             android:layout_height="42dp">
 
-            <SearchView
-                android:id="@+id/tb_SearchBar"
-                android:queryHint="Product Name..."
-                app:queryBackground="@color/white"
-                android:fontFamily="@font/poppins_bold"
-                android:textColor="#000000"
-                android:iconifiedByDefault="false"
-                android:queryBackground="@color/white"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:layout_width="250dp"
-                android:layout_height="match_parent"/>
-
-            <ImageView
-                android:id="@+id/filter"
-                android:src="@drawable/ic_filter"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
 
-        </LinearLayout>
+                <SearchView
+                    android:id="@+id/tb_SearchBar"
+                    android:queryHint="Product Name..."
+                    app:queryBackground="@color/white"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="#000000"
+                    android:iconifiedByDefault="false"
+                    android:queryBackground="@color/white"
+                    android:gravity="center"
+                    android:textSize="25sp"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:id="@+id/filter"
+                    android:src="@drawable/ic_filter"
+                    android:layout_width="match_parent"
+                    android:padding="4dp"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
 
         <RelativeLayout
             android:id="@+id/loadingScreen"
