@@ -74,7 +74,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
 
     override fun onStart() {
         super.onStart()
-        if (sharedPref.getCsAddress() == "") {
+        if (sharedPref.getCsAddress() == null || sharedPref.getCsAddress() == "") {
             bind.address = "Empty address! Please add address first!"
             bind.addressDelivery.setTextColor(resources.getColor(R.color.gray_500, theme))
         } else {
