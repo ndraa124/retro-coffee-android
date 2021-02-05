@@ -17,6 +17,9 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.navigation.NavigationView
 import com.id124.retrocoffee.R
+import com.id124.retrocoffee.activity.admin.order.OrderActivity
+import com.id124.retrocoffee.activity.admin.product.ProductActivity
+import com.id124.retrocoffee.activity.admin.profile.ProfileAdminActivity
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
 import com.id124.retrocoffee.activity.customer.favorite.FavoriteActivity
 import com.id124.retrocoffee.activity.customer.history.HistoryActivity
@@ -80,7 +83,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_profile -> {
-                intents<ProfileActivity>(this@MainActivity)
+                if (sharedPref.getAcLevel() == 0) {
+                    intents<ProfileAdminActivity>(this@MainActivity)
+                } else {
+                    intents<ProfileActivity>(this@MainActivity)
+                }
             }
             R.id.nav_orders -> {
                 intents<HistoryActivity>(this@MainActivity)
@@ -90,6 +97,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
             }
             R.id.nav_promo -> {
                 intents<PromoteActivity>(this@MainActivity)
+            }
+            R.id.nav_all_product -> {
+                intents<ProductActivity>(this@MainActivity)
+            }
+            R.id.nav_orders_customer -> {
+                intents<OrderActivity>(this@MainActivity)
             }
         }
 
@@ -101,7 +114,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
         if (bind.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             bind.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            if(backButtonCount >= 1) {
+            if (backButtonCount >= 1) {
                 super.onBackPressed()
             } else {
                 noticeToast("Click back button twice to exit from apps")
