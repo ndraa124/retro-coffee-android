@@ -20,14 +20,26 @@
         android:id="@+id/nav_all_menu"
         android:icon="@drawable/ic_favorite_brown"
         android:title="@string/menu_all" />
-<!--
-    <item
-        android:id="@+id/nav_privacy"
-        android:icon="@drawable/ic_privacy"
-        android:title="@string/menu_privacy" />
 
     <item
-        android:id="@+id/nav_security"
-        android:icon="@drawable/ic_security"
-        android:title="@string/menu_security" />-->
+        android:id="@+id/nav_all_product"
+        android:icon="@drawable/ic_all_menu"
+        android:title="@string/menu_all_product"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/nav_orders_customer"
+        android:icon="@drawable/ic_orders"
+        android:title="@string/menu_orders_customer"
+        android:visible="false" />
+    <!--
+        <item
+            android:id="@+id/nav_privacy"
+            android:icon="@drawable/ic_privacy"
+            android:title="@string/menu_privacy" />
+
+        <item
+            android:id="@+id/nav_security"
+            android:icon="@drawable/ic_security"
+            android:title="@string/menu_security" />-->
 </menu>

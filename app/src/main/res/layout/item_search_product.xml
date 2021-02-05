@@ -7,12 +7,12 @@
         android:orientation="vertical"
         app:cardElevation="12dp"
         android:layout_width="200dp"
-        android:layout_height="300dp">
+        android:layout_height="330dp">
 
         <LinearLayout
             android:layout_marginTop="70dp"
             android:layout_width="match_parent"
-            android:layout_height="230dp">
+            android:layout_height="260dp">
 
             <androidx.cardview.widget.CardView
                 android:layout_marginBottom="18dp"
@@ -42,8 +42,11 @@
 
                     <TextView
                         android:id="@+id/tv_productPrice"
+                        android:layout_alignParentBottom="true"
                         android:text="IDR 4000"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="45dp"
+                        android:layout_marginBottom="25sp"
                         android:gravity="center"
                         android:textSize="13sp"
                         android:fontFamily="@font/poppins_bold"
@@ -51,7 +54,7 @@
                         android:layout_marginEnd="15dp"
                         android:layout_below="@id/tv_productName"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="50dp"/>
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
@@ -64,8 +67,6 @@
             android:layout_centerHorizontal="true"
             android:layout_width="110dp"
             android:layout_height="110dp"/>
-
-
 
     </RelativeLayout>
 </layout>

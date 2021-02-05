@@ -2,9 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -42,7 +51,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="Edit Password"
+                    android:text="Edit Profile"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -55,118 +64,143 @@
             android:layout_height="0dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/background">
+                android:paddingBottom="32dp">
 
-                <ImageView
-                    android:id="@+id/iv_lock"
-                    android:layout_width="120dp"
-                    android:layout_height="150dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_image_profile"
+                    android:layout_width="140dp"
+                    android:layout_height="172dp"
                     android:layout_marginTop="32dp"
-                    android:contentDescription="@string/img_description"
-                    android:src="@drawable/ic_lock"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_image_profile"
+                        android:layout_width="140dp"
+                        android:layout_height="172dp"
+                        android:src="@drawable/profile"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:loadImage="@{imageUrl}" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/tv_edit_password"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="32dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:gravity="center"
-                    android:text="Change Your Password"
-                    android:textColor="@color/black"
-                    android:textSize="32sp"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_lock" />
-
+                    android:text="Name :"
+                    android:textColor="@color/gray_500"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_image_profile" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_old_password"
+                    android:id="@+id/input_layout_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="24dp"
                     app:helperTextTextColor="@color/primary"
                     app:hintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_edit_password"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/primary">
+                    app:layout_constraintTop_toBottomOf="@+id/tv_name">
 
                     <EditText
-                        android:id="@+id/et_old_password"
+                        android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#00000000"
-                        android:hint="Enter your old password"
+                        android:hint="Enter your name"
                         android:importantForAutofill="no"
-                        android:inputType="textPassword"
+                        android:inputType="textPersonName"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Email Address :"
+                    android:textColor="@color/gray_500"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_layout_name" />
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_new_password"
+                    android:id="@+id/input_layout_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="24dp"
                     app:helperTextTextColor="@color/primary"
                     app:hintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/input_layout_old_password"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/primary">
+                    app:layout_constraintTop_toBottomOf="@+id/tv_email">
 
                     <EditText
-                        android:id="@+id/et_new_password"
+                        android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#00000000"
-                        android:hint="Enter your new password"
+                        android:enabled="false"
+                        android:hint="Enter your email"
                         android:importantForAutofill="no"
-                        android:inputType="textPassword"
+                        android:inputType="textEmailAddress"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/tv_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Phone Number :"
+                    android:textColor="@color/gray_500"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_layout_email" />
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_confirm_password"
+                    android:id="@+id/input_layout_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginHorizontal="24dp"
                     app:helperTextTextColor="@color/primary"
                     app:hintEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/input_layout_new_password"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/primary">
+                    app:layout_constraintTop_toBottomOf="@+id/tv_phone_number">
 
                     <EditText
-                        android:id="@+id/et_confirm_password"
+                        android:id="@+id/et_phone_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#00000000"
-                        android:hint="Enter again your new password"
+                        android:hint="Enter your phone number"
                         android:importantForAutofill="no"
-                        android:inputType="textPassword"
+                        android:inputType="phone"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp" />
 
@@ -174,39 +208,35 @@
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
-                    android:layout_width="32dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="32dp"
                     android:indeterminate="true"
                     android:indeterminateTint="@color/primary"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/input_layout_confirm_password"
-                    app:layout_constraintVertical_bias="0" />
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_change_password"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_save"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="32dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="32dp"
                     android:background="@drawable/button_radius"
+                    android:fontFamily="@font/poppins_semibold"
                     android:onClick="onClick"
-                    android:padding="10dp"
-                    android:text="Change Password"
+                    android:text="Save and Update"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    app:backgroundTint="#80450A"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/input_layout_confirm_password"
-                    app:layout_constraintVertical_bias="0" />
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

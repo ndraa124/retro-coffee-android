@@ -6,7 +6,7 @@
     <string name="welcome">Welcome!</string>
     <string name="create_new_account">Create New Account</string>
     <string name="img_description">MY IMAGE</string>
-    <string name="tv_login">login</string>
+    <string name="tv_login">Login</string>
     <string name="coffee_for">Coffee for</string>
     <string name="everyone">Everyone</string>
     <string name="get_started">Get started</string>
@@ -14,8 +14,10 @@
     <!-- Menu Drawer -->
     <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_orders">History Orders</string>
+    <string name="menu_orders_customer">Orders</string>
     <string name="menu_promo">Promo</string>
     <string name="menu_all">Favorite</string>
+    <string name="menu_all_product">Product</string>
     <string name="menu_privacy">Privacy policy</string>
     <string name="menu_security">Security</string>
     <string name="menu_divider">Divider</string>

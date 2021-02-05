@@ -148,101 +148,6 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
-                <TextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="350dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/poppins"
-                    android:maxLines="2"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textColor="@color/primary"
-                    android:textSize="14sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_phone_number" />
-
-                <View
-                    android:id="@+id/divider_data"
-                    android:layout_width="match_parent"
-                    android:layout_height="9dp"
-                    android:layout_marginTop="32dp"
-                    android:background="@color/shimmer"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_address" />
-
-                <TextView
-                    android:id="@+id/tv_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/order_history"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/primary"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider_data" />
-
-                <TextView
-                    android:id="@+id/tv_more_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/poppins"
-                    android:onClick="onClick"
-                    android:text="@string/see_more"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/primary"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_history"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_history" />
-
-                <TextView
-                    android:id="@+id/tv_data_not_found"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:fontFamily="@font/poppins"
-                    android:text="@{dataNotFound}"
-                    android:textAlignment="center"
-                    android:textColor="@color/gray_500"
-                    android:textSize="14sp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="@+id/divider_history"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_history" />
-
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="32dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:indeterminate="true"
-                    android:indeterminateTint="@color/primary"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="@+id/divider_history"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_history" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_history"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    app:layout_constraintBottom_toTopOf="@+id/divider_history"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_history" />
-
                 <View
                     android:id="@+id/divider_history"
                     android:layout_width="match_parent"
@@ -251,7 +156,7 @@
                     android:background="@color/shimmer"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_history" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_phone_number" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_edit_password"

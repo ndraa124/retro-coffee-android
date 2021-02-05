@@ -117,7 +117,7 @@
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="Choose store"
+                    android:text="Choose method"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -343,6 +343,24 @@
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_tax" />
+
+                <TextView
+                    android:id="@+id/tv_pay_total_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="start"
+                    android:text="IDR 0"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/gray_500"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_pay_total"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_pay_total"
+                    app:layout_constraintTop_toTopOf="@+id/tv_pay_total" />
 
                 <TextView
                     android:id="@+id/tv_pay_total"

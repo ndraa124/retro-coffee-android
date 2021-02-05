@@ -52,6 +52,13 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
             }
             R.id.btn_coupons -> {
                 intents<CouponActivity>(this@CartActivity)
+                this@CartActivity.finish()
+            }
+            R.id.iv_cancel_coupon -> {
+                sharedPref.removeIsCoupon()
+
+                intents<CartActivity>(this@CartActivity)
+                this@CartActivity.finish()
             }
             R.id.btn_back -> {
                 onBackPressed()
@@ -133,7 +140,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
         viewModel.onSuccessCart.observe(this@CartActivity) {
             if (it) {
                 intents<CartActivity>(this@CartActivity)
-                finish()
+                this@CartActivity.finish()
             }
         }
 
@@ -146,7 +153,20 @@ class CartActivity : BaseActivity<ActivityCartBinding>(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun setPayTotal() {
         fee = 5000
-        total = subtotal + fee
+
+        if (sharedPref.getIsCoupon() == 1) {
+            bind.clDiscount.visibility = View.VISIBLE
+
+            bind.tvPayTotalDiscount.visibility = View.VISIBLE
+            bind.tvPayTotalDiscount.text = "-" + Utils.currencyFormat(sharedPref.getCouponPrice().toString())
+
+            total = (subtotal + fee) - sharedPref.getCouponPrice()
+        } else {
+            bind.clDiscount.visibility = View.GONE
+            bind.tvPayTotalDiscount.visibility = View.GONE
+
+            total = subtotal + fee
+        }
 
         bind.tvIdrTotal.text = Utils.currencyFormat(subtotal.toString())
         bind.tvTaxTotal.text = Utils.currencyFormat(fee.toString())

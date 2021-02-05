@@ -49,10 +49,12 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
                 when {
                     sharedPref.getCsAddress() == null -> {
                         noticeToast("Please add address first!")
-                        intents<EditProfileActivity>(this@CheckoutActivity)
+                        val intent = Intent(this@CheckoutActivity, EditProfileActivity::class.java)
+                        intent.putExtra("checkout", 1)
+                        startActivity(intent)
                     }
                     chooseStore == null -> {
-                        noticeToast("Please choose store first!")
+                        noticeToast("Please choose method first!")
                     }
                     else -> {
                         val intent = Intent(this@CheckoutActivity, PaymentActivity::class.java)
@@ -72,7 +74,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
 
     override fun onStart() {
         super.onStart()
-        if (sharedPref.getCsAddress() == "") {
+        if (sharedPref.getCsAddress() == null || sharedPref.getCsAddress() == "") {
             bind.address = "Empty address! Please add address first!"
             bind.addressDelivery.setTextColor(resources.getColor(R.color.gray_500, theme))
         } else {
@@ -229,7 +231,17 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), View.OnClickLi
     @SuppressLint("SetTextI18n")
     private fun setPayTotal() {
         fee = 5000
-        total = subtotal + fee
+
+        if (sharedPref.getIsCoupon() == 1) {
+            bind.tvPayTotalDiscount.visibility = View.VISIBLE
+            bind.tvPayTotalDiscount.text = "-" + currencyFormat(sharedPref.getCouponPrice().toString())
+
+            total = (subtotal + fee) - sharedPref.getCouponPrice()
+        } else {
+            bind.tvPayTotalDiscount.visibility = View.GONE
+
+            total = subtotal + fee
+        }
 
         bind.tvIdrTotal.text = currencyFormat(subtotal.toString())
         bind.tvTaxTotal.text = currencyFormat(fee.toString())

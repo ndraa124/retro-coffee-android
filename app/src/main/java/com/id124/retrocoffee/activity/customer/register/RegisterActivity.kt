@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.login.LoginActivity
@@ -23,6 +24,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(), View.OnClickLi
         setLayout = R.layout.activity_register
         super.onCreate(savedInstanceState)
 
+        setStatusBar()
         initTextWatcher()
         setViewModel()
         subscribeLiveData()
@@ -62,6 +64,14 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(), View.OnClickLi
     override fun onBackPressed() {
         intents<WelcomeActivity>(this@RegisterActivity)
         this@RegisterActivity.finish()
+    }
+
+    private fun setStatusBar() {
+        val window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.statusBarColor = this.resources.getColor(R.color.background, theme)
     }
 
     private fun initTextWatcher() {
@@ -115,7 +125,11 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(), View.OnClickLi
                 R.id.et_email -> valEmail(bind.inputLayoutEmail, bind.etEmail)
                 R.id.et_phone_number -> valPhoneNumber(bind.inputPhoneNumber, bind.etPhoneNumber)
                 R.id.et_password -> valPassword(bind.inputLayoutPassword, bind.etPassword)
-                R.id.et_password_confirmation -> valPassConf(bind.inputLayoutPasswordConfirmation, bind.etPasswordConfirmation, bind.etPassword)
+                R.id.et_password_confirmation -> valPassConf(
+                    bind.inputLayoutPasswordConfirmation,
+                    bind.etPasswordConfirmation,
+                    bind.etPassword
+                )
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.id124.retrocoffee.activity.customer.profile
+package com.id124.retrocoffee.activity.admin.profile.edit_password
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,7 @@ import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
 
-class EditPasswordViewModel: ViewModel(), CoroutineScope {
+class EditPasswordAdminViewModel: ViewModel(), CoroutineScope {
     private lateinit var service : AccountApiService
 
     override val coroutineContext: CoroutineContext
