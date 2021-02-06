@@ -29,8 +29,18 @@ data class LoginResponse(val success: Boolean, val message: String, val data: Ac
         val expired: Long,
 
         @SerializedName("cs_id")
-        val csId: Int
+        val csId: Int,
 
+        @SerializedName("cs_gender")
+        val csGender: String,
 
+        @SerializedName("cs_dob")
+        val csDob: String,
+
+        @SerializedName("cs_address")
+        val csAddress: String,
+
+        @SerializedName("cs_pic_image")
+        val csPicImage: String,
     )
 }

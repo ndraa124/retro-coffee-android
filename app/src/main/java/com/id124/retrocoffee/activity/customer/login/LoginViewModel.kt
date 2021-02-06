@@ -62,7 +62,6 @@ class LoginViewModel : ViewModel(), CoroutineScope {
 
                 if (response.success) {
                     val data = response.data
-
                     sharedPref.createAccount(
                         csId = data.csId,
                         acId = data.acId,
@@ -71,8 +70,11 @@ class LoginViewModel : ViewModel(), CoroutineScope {
                         acEmail = data.acEmail,
                         acPhone = data.acPhone,
                         token = data.token,
+                        csGender = data.csGender,
+                        csDob = data.csDob,
+                        csAddress = data.csAddress,
+                        csPicImage = data.csPicImage
                     )
-
                     onSuccessLiveData.value = true
                 } else {
                     onFailLiveData.value = response.message

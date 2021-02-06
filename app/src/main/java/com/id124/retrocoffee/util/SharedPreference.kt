@@ -22,6 +22,10 @@ class SharedPreference(private val context: Context) {
         const val CS_ADDRESS = "CS_ADDRESS"
         const val CS_LATITUDE = "CS_LATITUDE"
         const val CS_LONGITUDE = "CS_LONGITUDE"
+        const val CS_PIC_IMAGE = "CS_PIC_IMAGE"
+        const val CART_ID = "CART_ID"
+        const val IS_COUPON = "IS_COUPON"
+        const val COUPON_PRICE_DISCOUNT = "COUPON_PRICE_DISCOUNT"
     }
 
     private val sharedPreferences: SharedPreferences =
@@ -36,7 +40,11 @@ class SharedPreference(private val context: Context) {
         acName: String,
         acEmail: String,
         acPhone: String,
-        acLevel: Int
+        acLevel: Int,
+        csGender: String? = null,
+        csDob: String? = null,
+        csAddress: String? = null,
+        csPicImage: String? = null
     ) {
         editor.putBoolean(LOGIN, true)
         editor.putString(TOKEN, token)
@@ -46,6 +54,10 @@ class SharedPreference(private val context: Context) {
         editor.putString(AC_PHONE, acPhone)
         editor.putInt(AC_LEVEL, acLevel)
         editor.putInt(CS_ID, csId)
+        editor.putString(CS_GENDER, csGender)
+        editor.putString(CS_DOB, csDob)
+        editor.putString(CS_ADDRESS, csAddress)
+        editor.putString(CS_PIC_IMAGE, csPicImage)
         editor.commit()
     }
 
@@ -64,8 +76,13 @@ class SharedPreference(private val context: Context) {
         editor.commit()
     }
 
-    fun createCsGender(acGender: Int) {
-        editor.putInt(CS_GENDER, acGender)
+    fun createAddress(csAddress: String) {
+        editor.putString(CS_ADDRESS, csAddress)
+        editor.commit()
+    }
+
+    fun createCsGender(acGender: String) {
+        editor.putString(CS_GENDER, acGender)
         editor.commit()
     }
 
@@ -74,12 +91,47 @@ class SharedPreference(private val context: Context) {
         editor.commit()
     }
 
+    fun createCsPicImage(csPicImage: String) {
+        editor.putString(CS_PIC_IMAGE, csPicImage)
+        editor.commit()
+    }
+
+    fun createCartId(cartId: Int) {
+        editor.putInt(CART_ID, cartId)
+        editor.commit()
+    }
+
+    fun createEmail(acId: Int){
+        editor.putString(AC_ID, acId.toString())
+        editor.commit()
+    }
+
+    fun createIsCoupon(cpPriceDiscount: Int) {
+        editor.putInt(IS_COUPON, 1)
+        editor.putInt(COUPON_PRICE_DISCOUNT, cpPriceDiscount)
+        editor.commit()
+    }
+
+    fun removeIsCoupon() {
+        editor.putInt(IS_COUPON, 0)
+        editor.putInt(COUPON_PRICE_DISCOUNT, 0)
+        editor.commit()
+    }
+
+    fun getIdEmail():Int{
+        return sharedPreferences.getInt(AC_ID, 0)
+    }
+
     fun getToken(): String {
         return sharedPreferences.getString(TOKEN, "")!!
     }
 
     fun getAcId(): Int {
         return sharedPreferences.getInt(AC_ID, 0)
+    }
+
+    fun getCartId(): Int {
+        return sharedPreferences.getInt(CART_ID, 0)
     }
 
     fun getAcName(): String {
@@ -102,16 +154,36 @@ class SharedPreference(private val context: Context) {
         return sharedPreferences.getInt(CS_ID, 0)
     }
 
-    fun getCsGender(): Int {
-        return sharedPreferences.getInt(CS_GENDER, 0)
+    fun getCsAddress(): String? {
+        return sharedPreferences.getString(CS_ADDRESS, null)
     }
 
-    fun getCsDateOfBirth(): String {
-        return sharedPreferences.getString(CS_DOB, "")!!
+    fun getCsGender(): String? {
+        return sharedPreferences.getString(CS_GENDER, null)
+    }
+
+    fun getCsDateOfBirth(): String? {
+        return sharedPreferences.getString(CS_DOB, null)
+    }
+
+    fun getCsPicImage(): String? {
+        return sharedPreferences.getString(CS_PIC_IMAGE, null)
+    }
+
+    fun getIsCoupon(): Int {
+        return sharedPreferences.getInt(IS_COUPON, 0)
+    }
+
+    fun getCouponPrice(): Int {
+        return sharedPreferences.getInt(COUPON_PRICE_DISCOUNT, 0)
+    }
+
+    fun getIsLogin(): Boolean {
+        return sharedPreferences.getBoolean(LOGIN, false)
     }
 
     fun checkIsLogin() {
-        if (!sharedPreferences.getBoolean(LOGIN, false)) {
+        if (!getIsLogin()) {
             context.startActivity(Intent(context, LoginActivity::class.java))
             (context as MainActivity).finish()
         }

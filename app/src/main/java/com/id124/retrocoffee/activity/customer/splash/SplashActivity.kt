@@ -1,59 +1,119 @@
 package com.id124.retrocoffee.activity.customer.splash
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.widget.Toast
-import androidx.core.os.HandlerCompat.postDelayed
-import androidx.navigation.fragment.findNavController
+import android.view.KeyEvent
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.customer.main.MainActivity
 import com.id124.retrocoffee.activity.customer.onboard.OnboardActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivitySplashBinding
+import com.id124.retrocoffee.util.Permission
+import java.util.*
 
-class SplashActivity : BaseActivity<ActivitySplashBinding>(), SplashContract.View {
+class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
-    private var presenter: SplashPresenter? = null
+    private var splashTimer: Timer? = null
+    private var permissionHelper: Permission? = null
+    private var applicationPaused = false
+    private var splashTimerHandler: SplashTimerHandler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_splash
         super.onCreate(savedInstanceState)
 
-        // Set CountDown
-        setCountdown()
-
+        permissionHelper = Permission(this@SplashActivity)
+        checkAndRequestPermissions()
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter?.bindToView(this)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionHelper?.onRequestCallBack(requestCode, permissions, grantResults)
     }
 
-    override fun onStop() {
-        super.onStop()
-        presenter?.unbind()
-    }
-
-    override fun setCountdown() {
-        //Condition Login
-        val condition = 0 // Just Asal nanti diperbaiki ketika login dah selesai
-
-        Handler().postDelayed({
-            if(condition == 1){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+    private fun checkAndRequestPermissions(): Boolean {
+        permissionHelper?.permissionListener(object : Permission.PermissionListener {
+            override fun onPermissionCheckDone() {
+                setSplash()
             }
-            else {
-                val intent = Intent(this, OnboardActivity::class.java)
-                setError()
-                startActivity(intent)
-                finish()
-            }
-        }, 3000)
+        })
+
+        permissionHelper?.checkAndRequestPermissions()
+
+        return true
     }
 
-    override fun setError() {
+    private fun setSplash() {
+        splashTimerHandler = SplashTimerHandler()
+        splashTimer = Timer()
+        splashTimer!!.schedule(this.splashTimerHandler, 0, 2000)
+    }
 
+    override fun onPause() {
+        super.onPause()
+        applicationPaused = true
+        this.closeSplashTimer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (applicationPaused) {
+            applicationPaused = false
+
+            closeSplashTimer()
+            setSplash()
+        }
+    }
+
+    inner class SplashTimerHandler : TimerTask() {
+        private var splashTimerCounter = 0
+
+        override fun run() {
+            splashTimerCounter++
+
+            if (splashTimerCounter > 2) {
+                runOnUiThread(splashTimeOver)
+            }
+        }
+
+        private val splashTimeOver = Runnable {
+            closeSplashTimer()
+            startHomeScreen()
+        }
+    }
+
+    private fun closeSplashTimer() {
+        if (splashTimer != null) {
+            splashTimer!!.cancel()
+            splashTimer = null
+        }
+    }
+
+    private fun startHomeScreen() {
+        closeSplashScreen()
+
+        if (!sharedPref.getIsLogin()) {
+            intents<OnboardActivity>(this@SplashActivity)
+            this@SplashActivity.finish()
+        } else {
+            intents<MainActivity>(this@SplashActivity)
+            this@SplashActivity.finish()
+        }
+    }
+
+    private fun closeSplashScreen() {
+        closeSplashTimer()
+    }
+
+    override fun onKeyDown(keycode: Int, event: KeyEvent?): Boolean {
+        if (keycode == KeyEvent.KEYCODE_BACK) {
+            closeSplashScreen()
+            finish()
+        }
+
+        return true
     }
 }

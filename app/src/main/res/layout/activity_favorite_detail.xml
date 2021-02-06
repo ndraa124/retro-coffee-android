@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.customer.favorite.favorite_detail.FavoriteDetailActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/loadingScreen"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_productImage"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="118dp"
+            app:cardCornerRadius="22dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_productImage"
+                android:scaleType="centerCrop"
+                android:layout_width="206dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/bg_splashscreen" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_productName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="24dp"
+            android:text="Cappucino"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_semibold"
+            app:layout_constraintEnd_toEndOf="@+id/cv_productImage"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="@+id/cv_productImage"
+            app:layout_constraintTop_toBottomOf="@+id/cv_productImage" />
+
+        <TextView
+            android:id="@+id/tv_productDesc"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/poppins_medium"
+            android:padding="8dp"
+            android:text="Cappucino"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_productName"
+            app:layout_constraintHorizontal_bias="0.516"
+            app:layout_constraintStart_toStartOf="@+id/tv_productName"
+            app:layout_constraintTop_toBottomOf="@+id/tv_productName" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bt_deleteFavorite"
+            app:cardElevation="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_productDesc"
+            app:layout_constraintStart_toStartOf="@+id/tv_productDesc"
+            app:layout_constraintTop_toBottomOf="@+id/tv_productDesc">
+
+            <TextView
+                android:text="DELETE FAVORITE"
+                android:textSize="18sp"
+                android:textColor="#FF0000"
+                android:gravity="center"
+                android:fontFamily="@font/poppins"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</layout>
