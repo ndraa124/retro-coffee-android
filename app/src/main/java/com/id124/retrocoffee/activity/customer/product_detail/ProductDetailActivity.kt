@@ -2,6 +2,7 @@ package com.id124.retrocoffee.activity.customer.product_detail
 
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -70,6 +71,8 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
             actionMenu.findItem(R.id.nav_favorite).isVisible = false
             actionMenu.findItem(R.id.nav_unfavorite).isVisible = false
             actionMenu.findItem(R.id.nav_cart).isVisible = false
+            actionMenu.findItem(R.id.nav_edit).isVisible = true
+            actionMenu.findItem(R.id.nav_delete).isVisible = true
         } else {
             viewModel.onSuccessCheckFavorite.observe(this@ProductDetailActivity) {
                 if (it) {
@@ -114,6 +117,12 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
                 intents<CartActivity>(this@ProductDetailActivity)
                 return true
             }
+            R.id.nav_edit -> {
+                Log.d("msg", "Edit Product")
+            }
+            R.id.nav_delete -> {
+                Log.d("msg", "Delete Product")
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -138,6 +147,12 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
     }
 
     private fun setDataFromIntent() {
+        if (sharedPref.getAcLevel() == 0) {
+            bind.btnAddToCart.visibility = View.GONE
+        } else {
+            bind.btnAddToCart.visibility = View.VISIBLE
+        }
+
         bind.product = ProductModel(
             ctId = intent.getIntExtra("ct_id", 0),
             ctName = intent.getStringExtra("ct_name")!!,
@@ -170,7 +185,8 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
     }
 
     private fun setViewModel() {
-        viewModel = ViewModelProvider(this@ProductDetailActivity).get(ProductDetailViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this@ProductDetailActivity).get(ProductDetailViewModel::class.java)
         viewModel.setServiceCart(createApi(this@ProductDetailActivity))
         viewModel.setServiceFavorite(createApi(this@ProductDetailActivity))
         viewModel.serviceCheckApi(

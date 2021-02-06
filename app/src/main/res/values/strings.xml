@@ -39,6 +39,8 @@
     <string name="not_found">not found</string>
     <string name="search_now">Search Now</string>
     <string name="you_don_t_have_any_favorite_yet">You don\'t have any favorite yet</string>
+    <string name="edit_product">Edit Product</string>
+    <string name="delete_product">Delete Product</string>
 
     <!-- Fitur forget password   -->
     <string name="don_t_worry">Dont Worry!</string>
