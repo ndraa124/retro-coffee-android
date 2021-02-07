@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import com.id124.retrocoffee.model.cart.CartModel
 import com.id124.retrocoffee.model.cart.CartResponse
 import com.id124.retrocoffee.model.favorite.FavoriteResponse
+import com.id124.retrocoffee.model.product.ProductResponse
 import com.id124.retrocoffee.service.CartApiService
 import com.id124.retrocoffee.service.FavoriteApiService
+import com.id124.retrocoffee.service.ProductApiService
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import kotlin.coroutines.CoroutineContext
@@ -14,6 +16,7 @@ import kotlin.coroutines.CoroutineContext
 class ProductDetailViewModel : ViewModel(), CoroutineScope {
     private lateinit var serviceCart: CartApiService
     private lateinit var serviceFavorite: FavoriteApiService
+    private lateinit var serviceProduct: ProductApiService
 
     val onSuccessCart = MutableLiveData<String>()
     val onSuccessFavorite = MutableLiveData<String>()
@@ -24,6 +27,10 @@ class ProductDetailViewModel : ViewModel(), CoroutineScope {
     val onSuccessCarts = MutableLiveData<List<CartModel>>()
     val onFailCart = MutableLiveData<String>()
 
+    val onSuccessProduct = MutableLiveData<Boolean>()
+    val onFailProduct = MutableLiveData<String>()
+    val isLoadingProduct = MutableLiveData<Boolean>()
+
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.Main
 
@@ -33,6 +40,10 @@ class ProductDetailViewModel : ViewModel(), CoroutineScope {
 
     fun setServiceFavorite(service: FavoriteApiService) {
         this@ProductDetailViewModel.serviceFavorite = service
+    }
+
+    fun setServiceProduct(service: ProductApiService) {
+        this@ProductDetailViewModel.serviceProduct = service
     }
 
     fun serviceGetCartApi(csId: Int) {
@@ -171,6 +182,43 @@ class ProductDetailViewModel : ViewModel(), CoroutineScope {
 
             if (response is FavoriteResponse) {
                 onSuccessFavorite.value = response.message
+            }
+        }
+    }
+
+    fun deleteProduct(prId: Int) {
+        launch {
+            isLoadingProduct.value = true
+
+            val response = withContext(Dispatchers.IO) {
+                try {
+                    serviceProduct.deleteProduct(
+                        prId = prId
+                    )
+                } catch (e: HttpException) {
+                    withContext(Dispatchers.Main) {
+                        isLoadingProduct.value = false
+
+                        when {
+                            e.code() == 404 -> {
+                                onFailProduct.value = "Data not found"
+                            }
+                            else -> {
+                                onFailProduct.value = "Server is maintenance"
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (response is ProductResponse) {
+                isLoadingProduct.value = false
+
+                if (response.success) {
+                    onSuccessProduct.value = true
+                } else {
+                    onFailProduct.value = response.message
+                }
             }
         }
     }

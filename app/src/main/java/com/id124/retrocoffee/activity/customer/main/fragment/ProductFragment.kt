@@ -31,6 +31,16 @@ class ProductFragment(private val ctId: Int) : BaseFragment<FragmentProductBindi
         subscribeLiveData()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.serviceGetApi(ctId)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.serviceGetApi(ctId)
+    }
+
     private fun setProductRecyclerView() {
         bind.rvProduct.isNestedScrollingEnabled = true
 
