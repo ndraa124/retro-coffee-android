@@ -14,6 +14,8 @@ import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityHistoryDetailBinding
 import com.id124.retrocoffee.model.history.HistoryModel
 import com.id124.retrocoffee.util.Utils
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View.OnClickListener {
     private lateinit var viewModel: HistoryDetailViewModel
@@ -32,6 +34,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
         setViewModel()
         subscribeLiveData()
         setPayTotal()
+        setNoOrders()
         setIntentData()
         setView()
     }
@@ -148,6 +151,30 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
     private fun setView() {
         bind.tvDiscountTotal.visibility = View.GONE
         bind.tvDiscount.visibility = View.GONE
+    }
+
+    private fun setNoOrders() {
+        var orderId = intent.getIntExtra("orderId", 0)
+        var orderDate = intent.getStringExtra("dateOrder").split("T")[0]
+        var no = formatOrderNumber(orderDate)
+
+        bind.ordersNumber = "RCS-${orderId}${no}"
+    }
+
+    fun formatOrderNumber(dateToFormat: String): String? {
+        try {
+            val convertedDate: String = SimpleDateFormat("yyMMdd")
+                .format(
+                    SimpleDateFormat("yyyy-MM-dd")
+                        .parse(dateToFormat)
+                )
+
+            //Update Date
+            return convertedDate
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return null
     }
 
     private fun setPayTotal() {

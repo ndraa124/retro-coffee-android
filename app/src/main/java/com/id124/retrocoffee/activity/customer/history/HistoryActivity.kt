@@ -117,6 +117,7 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(), HistoryAdapter.o
         intent.putExtra("orderAddress", listOrder[position].orAddress)
         intent.putExtra("payTotal", listOrder[position].orTotal)
         intent.putExtra("approveNote", listOrder[position].orNoteApprove)
+        intent.putExtra("dateOrder", listOrder[position].orDate)
         startActivity(intent)
     }
 
