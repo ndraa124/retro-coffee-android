@@ -11,6 +11,10 @@
         <variable
             name="dataNotFound"
             type="String" />
+
+        <variable
+            name="ordersNumber"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,14 +80,31 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/no_orders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="24dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="@{ordersNumber}"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/address_delivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="24dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/poppins_semibold"
+                    android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:singleLine="true"
                     android:text="@{address}"
@@ -92,7 +113,7 @@
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/no_orders" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btn_choose_address"
@@ -329,6 +350,43 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_idr_total" />
 
+
+                <TextView
+                    android:id="@+id/tv_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="start"
+                    android:text="Discount"
+                    android:visibility="gone"
+                    android:textAlignment="textStart"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_tax" />
+
+                <TextView
+                    android:id="@+id/tv_discount_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="start"
+                    android:visibility="gone"
+                    android:text="IDR 0"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_tax_total" />
+
                 <TextView
                     android:id="@+id/tv_total"
                     android:layout_width="wrap_content"
@@ -345,7 +403,7 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_tax" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_discount" />
 
                 <TextView
                     android:id="@+id/tv_pay_total"
@@ -363,7 +421,9 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_tax" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_discount" />
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
