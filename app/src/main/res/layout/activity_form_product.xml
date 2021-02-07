@@ -83,10 +83,10 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_image_profile"
+                        android:id="@+id/iv_image_product"
                         android:layout_width="140dp"
                         android:layout_height="172dp"
-                        android:src="@drawable/lepet1"
+                        android:src="@drawable/bg_edit_photos"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -97,7 +97,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:onClick="onClick"
-                        android:src="@drawable/ic_edit_my_profile"
+                        android:src="@drawable/ic_edit_plus"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:riv_corner_radius="16dp"

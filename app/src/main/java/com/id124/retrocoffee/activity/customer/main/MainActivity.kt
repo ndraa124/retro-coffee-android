@@ -163,6 +163,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), View.OnClickListener,
     override fun onResume() {
         super.onResume()
         setNavigationDrawerHeader()
+        viewModel.serviceGetPromoApi()
         viewModel.serviceGetCartApi(
             csId = sharedPref.getCsId()
         )
