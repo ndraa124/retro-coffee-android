@@ -20,8 +20,8 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
     private var listHistory = ArrayList<HistoryModel>()
 
     private var subtotal: Long = 0
-    private var total: Long = 0
     private var fee: Long = 0
+    private var discount: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_history_detail
@@ -33,6 +33,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
         subscribeLiveData()
         setPayTotal()
         setIntentData()
+        setView()
     }
 
     override fun onClick(v: View?) {
@@ -144,11 +145,32 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
         }
     }
 
+    private fun setView() {
+        bind.tvDiscountTotal.visibility = View.GONE
+        bind.tvDiscount.visibility = View.GONE
+    }
+
     private fun setPayTotal() {
         fee = 5000
 
-        bind.tvIdrTotal.text = Utils.currencyFormat(subtotal.toString())
-        bind.tvTaxTotal.text = Utils.currencyFormat(fee.toString())
-        bind.tvPayTotal.text = Utils.currencyFormat(intent.getStringExtra("payTotal")!!)
+        var subTotal =  Utils.currencyFormat(subtotal.toString())
+        bind.tvIdrTotal.text = subTotal
+
+        var tax = Utils.currencyFormat(fee.toString())
+        bind.tvTaxTotal.text = tax
+
+        var discount =  intent.getStringExtra("payTotal").toInt() - subtotal
+        bind.tvDiscountTotal.text = Utils.currencyFormat(discount.toString())
+
+        if(discount.toInt() == 5000) {
+            var payTotal = intent.getStringExtra("payTotal").toInt()
+            bind.tvPayTotal.text = Utils.currencyFormat(payTotal.toString())
+        } else if (discount.toInt() != 5000) {
+            bind.tvDiscountTotal.visibility = View.VISIBLE
+            bind.tvDiscount.visibility = View.VISIBLE
+            var payTotal = intent.getStringExtra("payTotal").toInt() + fee
+            bind.tvPayTotal.text = Utils.currencyFormat(payTotal.toString())
+        }
+
     }
 }

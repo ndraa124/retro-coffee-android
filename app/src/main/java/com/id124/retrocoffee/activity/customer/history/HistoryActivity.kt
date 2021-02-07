@@ -16,6 +16,8 @@ import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityHistoryBinding
 import com.id124.retrocoffee.model.order.OrderModel
 import com.id124.retrocoffee.util.Utils
+import java.text.SimpleDateFormat
+import java.util.logging.Logger
 
 class HistoryActivity : BaseActivity<ActivityHistoryBinding>(), HistoryAdapter.onListOrderClickListener, View.OnClickListener {
     private lateinit var viewModel: HistoryViewModel
@@ -30,6 +32,8 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(), HistoryAdapter.o
         setViewModel()
         subscribeLiveData()
     }
+
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -63,8 +67,8 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(), HistoryAdapter.o
 
         bind.rvHistory.addItemDecoration(bottomOffsetDecoration)
         bind.rvHistory.setHasFixedSize(true)
-        bind.rvHistory.adapter = HistoryAdapter(listOrder,this)
-        bind.rvHistory.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false)
+        bind.rvHistory.adapter = HistoryAdapter(listOrder, this)
+        bind.rvHistory.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
     }
 
     private fun setToolbarActionBar() {
