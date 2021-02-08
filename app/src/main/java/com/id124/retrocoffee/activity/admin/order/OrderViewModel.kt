@@ -2,8 +2,8 @@ package com.id124.retrocoffee.activity.admin.order
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.id124.retrocoffee.model.order.OrderModel
-import com.id124.retrocoffee.model.order.OrderResponse
+import com.id124.retrocoffee.model.order_admin.OrdersResponse
+import com.id124.retrocoffee.model.order_admin.OrderModel
 import com.id124.retrocoffee.service.OrderApiService
 import kotlinx.coroutines.*
 import retrofit2.HttpException
@@ -46,24 +46,25 @@ class OrderViewModel: ViewModel(), CoroutineScope {
                 }
             }
 
-            if (response is OrderResponse) {
+            if (response is OrdersResponse) {
                 isLoading.value = false
 
                 if (response.success) {
-                    val list = response.data?.map {
+                    val list = response.data.map {
                         OrderModel(
-                            it.orderId,
-                            it.customerId,
-                            it.orderPayTotal,
-                            it.orderAddress,
-                            it.orderLatitude,
-                            it.orderLongitude,
-                            it.orderStatus,
-                            it.orderNoteCancel,
-                            it.orderNoteApprove,
-                            it.orderMethodPayment,
-                            it.orderFee,
-                            it.orderDate
+                            orId = it.orId,
+                            csId = it.csId,
+                            orPayTotal = it.orPayTotal,
+                            orAddress = it.orAddress,
+                            orLatitude = it.orLatitude,
+                            orLongitude = it.orLongitude,
+                            orStatus = it.orStatus,
+                            orNoteCancel = it.orNoteCancel,
+                            orNoteApprove = it.orNoteApprove,
+                            orMethodPayment = it.orMethodPayment,
+                            orFee = it.orFee,
+                            orDateOrder = it.orDateOrder,
+                            historyProduct = it.historyProduct
                         )
                     }
 

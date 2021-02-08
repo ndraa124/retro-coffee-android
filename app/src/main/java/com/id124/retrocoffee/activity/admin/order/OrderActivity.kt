@@ -1,5 +1,6 @@
 package com.id124.retrocoffee.activity.admin.order
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -8,9 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.id124.retrocoffee.R
 import com.id124.retrocoffee.activity.admin.order.adapter.OrderAdapter
+import com.id124.retrocoffee.activity.admin.order.detail_order.DetailOrderActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityOrderBinding
-import com.id124.retrocoffee.model.order.OrderModel
+import com.id124.retrocoffee.model.order_admin.OrderModel
 import com.id124.retrocoffee.util.Utils
 
 class OrderActivity : BaseActivity<ActivityOrderBinding>(), View.OnClickListener {
@@ -34,6 +36,11 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(), View.OnClickListener
                 onBackPressed()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.serviceGetApi()
     }
 
     private fun setToolbarActionBar() {
@@ -64,7 +71,18 @@ class OrderActivity : BaseActivity<ActivityOrderBinding>(), View.OnClickListener
 
         adapter.setOnItemClickCallback(object : OrderAdapter.OnItemClickCallback {
             override fun onItemClick(data: OrderModel) {
-
+                val intent = Intent(this@OrderActivity, DetailOrderActivity::class.java)
+                intent.putExtra("or_id", data.orId)
+                intent.putExtra("cs_id", data.csId)
+                intent.putExtra("or_total", data.orPayTotal.toInt())
+                intent.putExtra("or_address", data.orAddress)
+                intent.putExtra("or_status", data.orStatus)
+                intent.putExtra("or_note_cancel", data.orNoteCancel)
+                intent.putExtra("or_note_approve", data.orNoteApprove)
+                intent.putExtra("or_method_payment", data.orMethodPayment)
+                intent.putExtra("or_fee", data.orFee)
+                intent.putExtra("or_date_order", data.orDateOrder.split("T")[0])
+                startActivity(intent)
             }
         })
     }

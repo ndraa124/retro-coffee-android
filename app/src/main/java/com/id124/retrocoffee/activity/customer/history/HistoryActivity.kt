@@ -33,8 +33,6 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(), HistoryAdapter.o
         subscribeLiveData()
     }
 
-
-
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_start_ordering -> {

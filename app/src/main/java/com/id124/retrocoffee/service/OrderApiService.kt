@@ -1,6 +1,8 @@
 package com.id124.retrocoffee.service
 
+import com.id124.retrocoffee.model.cart.CartResponse
 import com.id124.retrocoffee.model.order.OrderResponse
+import com.id124.retrocoffee.model.order_admin.OrdersResponse
 import retrofit2.http.*
 
 interface OrderApiService {
@@ -23,5 +25,13 @@ interface OrderApiService {
     ): OrderResponse
 
     @GET("order/orders/all")
-    suspend fun getAllOrderCustomer(): OrderResponse
+    suspend fun getAllOrderCustomer(): OrdersResponse
+
+    @FormUrlEncoded
+    @PUT("order")
+    suspend fun updateStatus(
+        @Query("csId") csId: Int,
+        @Query("orId") orId: Int,
+        @Field("or_status") orStatus: Int
+    ): OrdersResponse
 }
