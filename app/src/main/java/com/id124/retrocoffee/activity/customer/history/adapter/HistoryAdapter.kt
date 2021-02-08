@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 class HistoryAdapter(
     private val listOrder: ArrayList<OrderModel>,
     private val onListOrderClick: onListOrderClickListener
-): RecyclerView.Adapter<HistoryAdapter.OrderHolder>() {
+) : RecyclerView.Adapter<HistoryAdapter.OrderHolder>() {
 
     fun addList(list: List<OrderModel>) {
         listOrder.clear()
@@ -37,7 +37,7 @@ class HistoryAdapter(
 
     override fun onBindViewHolder(holder: OrderHolder, position: Int) {
         val item = listOrder[position]
-        var date =  item.orDate!!.split("T")[0]
+        var date = item.orDate!!.split("T")[0]
 
         var dateTime = formatDate(date)
 
@@ -62,18 +62,18 @@ class HistoryAdapter(
             }
         }
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             onListOrderClick.onOrderItem(position)
         }
     }
 
     override fun getItemCount(): Int = listOrder.size
 
-    interface onListOrderClickListener  {
+    interface onListOrderClickListener {
         fun onOrderItem(position: Int)
     }
 
-    fun formatDate(dateToFormat: String): String? {
+    private fun formatDate(dateToFormat: String): String? {
         try {
             val convertedDate: String = SimpleDateFormat("dd MMMM yyyy")
                 .format(

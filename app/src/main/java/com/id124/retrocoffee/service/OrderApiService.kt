@@ -1,6 +1,5 @@
 package com.id124.retrocoffee.service
 
-import com.id124.retrocoffee.model.history.HistoryResponse
 import com.id124.retrocoffee.model.order.OrderResponse
 import retrofit2.http.*
 
@@ -22,4 +21,7 @@ interface OrderApiService {
     suspend fun getAllOrder(
         @Path("csId") csId: Int,
     ): OrderResponse
+
+    @GET("order/orders/all")
+    suspend fun getAllOrderCustomer(): OrderResponse
 }
