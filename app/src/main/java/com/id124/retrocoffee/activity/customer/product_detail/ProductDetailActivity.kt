@@ -1,5 +1,7 @@
 package com.id124.retrocoffee.activity.customer.product_detail
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
@@ -9,18 +11,31 @@ import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.id124.retrocoffee.R
+import com.id124.retrocoffee.activity.admin.product.form_product.FormProductActivity
 import com.id124.retrocoffee.activity.customer.cart.CartActivity
 import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityProductDetailBinding
 import com.id124.retrocoffee.model.product.ProductModel
 import com.id124.retrocoffee.remote.ApiClient.Companion.BASE_URL_IMAGE
 import com.id124.retrocoffee.util.Utils.Companion.currencyFormat
+import java.util.*
 import kotlin.math.min
-
 
 class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View.OnClickListener {
     private lateinit var viewModel: ProductDetailViewModel
     private lateinit var actionMenu: Menu
+
+    private var ctId: Int? = 0
+    private var ctName: String? = null
+    private var prId: Int? = 0
+    private var prName: String? = null
+    private var prPrice: Long? = 0
+    private var prDesc: String? = null
+    private var prDiscount: Int? = 0
+    private var prDiscountPrice: Long? = 0
+    private var prIsDiscount: Int? = 0
+    private var prStatus: Int? = 0
+    private var prPicImage: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_product_detail
@@ -30,6 +45,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
         setDataFromIntent()
         setViewModel()
         subscribeLiveData()
+        subscribeProductLiveData()
     }
 
     override fun onClick(v: View?) {
@@ -118,10 +134,24 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
                 return true
             }
             R.id.nav_edit -> {
-                Log.d("msg", "Edit Product")
+                Log.e("PR ID", "${intent.getIntExtra("pr_id", 0)}")
+
+                val intent = Intent(this@ProductDetailActivity, FormProductActivity::class.java)
+                intent.putExtra("ct_id", ctId)
+                intent.putExtra("ct_name", ctName)
+                intent.putExtra("pr_id", prId)
+                intent.putExtra("pr_name", prName)
+                intent.putExtra("pr_price", prPrice)
+                intent.putExtra("pr_desc", prDesc)
+                intent.putExtra("pr_discount", prDiscount)
+                intent.putExtra("pr_discount_price", prDiscountPrice)
+                intent.putExtra("pr_is_discount", prIsDiscount)
+                intent.putExtra("pr_status", prStatus)
+                intent.putExtra("pr_pic_image", prPicImage)
+                startActivity(intent)
             }
             R.id.nav_delete -> {
-                Log.d("msg", "Delete Product")
+                confirmDelete()
             }
         }
 
@@ -130,6 +160,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
 
     override fun onResume() {
         super.onResume()
+        setDataFromIntent()
         viewModel.serviceGetCartApi(
             csId = sharedPref.getCsId()
         )
@@ -147,6 +178,18 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
     }
 
     private fun setDataFromIntent() {
+        ctId = intent.getIntExtra("ct_id", 0)
+        ctName = intent.getStringExtra("ct_name")
+        prId = intent.getIntExtra("pr_id", 0)
+        prName = intent.getStringExtra("pr_name")
+        prPrice = intent.getLongExtra("pr_price", 0)
+        prDesc = intent.getStringExtra("pr_desc")
+        prDiscount = intent.getIntExtra("pr_discount", 0)
+        prDiscountPrice = intent.getLongExtra("pr_discount_price", 0)
+        prIsDiscount = intent.getIntExtra("pr_is_discount", 0)
+        prStatus = intent.getIntExtra("pr_status", 0)
+        prPicImage = intent.getStringExtra("pr_pic_image")
+
         if (sharedPref.getAcLevel() == 0) {
             bind.btnAddToCart.visibility = View.GONE
         } else {
@@ -154,17 +197,17 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
         }
 
         bind.product = ProductModel(
-            ctId = intent.getIntExtra("ct_id", 0),
-            ctName = intent.getStringExtra("ct_name")!!,
-            prId = intent.getIntExtra("pr_id", 0),
-            prName = intent.getStringExtra("pr_name")!!,
-            prPrice = intent.getLongExtra("pr_price", 0),
-            prDesc = intent.getStringExtra("pr_desc")!!,
-            prDiscount = intent.getIntExtra("pr_discount", 0),
-            prDiscountPrice = intent.getLongExtra("pr_discount_price", 0),
-            prIsDiscount = intent.getIntExtra("pr_is_discount", 0),
-            prStatus = intent.getIntExtra("pr_status", 0),
-            prPicImage = intent.getStringExtra("pr_pic_image")
+            ctId = ctId!!,
+            ctName = ctName!!,
+            prId = prId!!,
+            prName = prName!!,
+            prPrice = prPrice!!,
+            prDesc = prDesc!!,
+            prDiscount = prDiscount!!,
+            prDiscountPrice = prDiscountPrice!!,
+            prIsDiscount = prIsDiscount!!,
+            prStatus = prStatus!!,
+            prPicImage = prPicImage
         )
 
         if (intent.getIntExtra("pr_is_discount", 0) == 1) {
@@ -189,6 +232,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
             ViewModelProvider(this@ProductDetailActivity).get(ProductDetailViewModel::class.java)
         viewModel.setServiceCart(createApi(this@ProductDetailActivity))
         viewModel.setServiceFavorite(createApi(this@ProductDetailActivity))
+        viewModel.setServiceProduct(createApi(this@ProductDetailActivity))
         viewModel.serviceCheckApi(
             csId = sharedPref.getCsId(),
             prId = intent.getIntExtra("pr_id", 0)
@@ -228,6 +272,27 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
         })
     }
 
+    private fun subscribeProductLiveData() {
+        viewModel.isLoadingProduct.observe(this@ProductDetailActivity, {
+            if (it) {
+                bind.progressBarLinear.visibility = View.VISIBLE
+            } else {
+                bind.progressBarLinear.visibility = View.GONE
+            }
+        })
+
+        viewModel.onSuccessProduct.observe(this@ProductDetailActivity, {
+            if (it) {
+                noticeToast("Success to delete product")
+                this@ProductDetailActivity.finish()
+            }
+        })
+
+        viewModel.onFailProduct.observe(this@ProductDetailActivity, {
+            noticeToast(it)
+        })
+    }
+
     private fun countBadge(mCartItemCount: Int, cartView: TextView) {
         if (mCartItemCount == 0) {
             if (cartView.visibility != View.GONE) {
@@ -240,5 +305,22 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(), View
                 cartView.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun confirmDelete() {
+        val dialog = AlertDialog
+            .Builder(this@ProductDetailActivity)
+            .setTitle("Notice!")
+            .setMessage("Are you sure to delete this product?")
+            .setPositiveButton("OK") { _, _ ->
+                viewModel.deleteProduct(
+                    prId = intent.getIntExtra("pr_id", 0)
+                )
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        dialog?.show()
     }
 }

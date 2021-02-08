@@ -1,8 +1,10 @@
 package com.id124.retrocoffee.activity.customer.history_detail
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,14 +14,16 @@ import com.id124.retrocoffee.base.BaseActivity
 import com.id124.retrocoffee.databinding.ActivityHistoryDetailBinding
 import com.id124.retrocoffee.model.history.HistoryModel
 import com.id124.retrocoffee.util.Utils
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View.OnClickListener {
     private lateinit var viewModel: HistoryDetailViewModel
     private var listHistory = ArrayList<HistoryModel>()
 
     private var subtotal: Long = 0
-    private var total: Long = 0
     private var fee: Long = 0
+    private var discount: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_history_detail
@@ -30,7 +34,9 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
         setViewModel()
         subscribeLiveData()
         setPayTotal()
+        setNoOrders()
         setIntentData()
+        setView()
     }
 
     override fun onClick(v: View?) {
@@ -89,6 +95,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun setIntentData() {
         if (intent.getStringExtra("orderAddress") == "") {
             bind.address = "Address is empty!"
@@ -141,11 +148,56 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(), View
         }
     }
 
+    private fun setView() {
+        bind.tvDiscountTotal.visibility = View.GONE
+        bind.tvDiscount.visibility = View.GONE
+    }
+
+    private fun setNoOrders() {
+        var orderId = intent.getIntExtra("orderId", 0)
+        var orderDate = intent.getStringExtra("dateOrder").split("T")[0]
+        var no = formatOrderNumber(orderDate)
+
+        bind.ordersNumber = "RCS-${orderId}${no}"
+    }
+
+    fun formatOrderNumber(dateToFormat: String): String? {
+        try {
+            val convertedDate: String = SimpleDateFormat("yyMMdd")
+                .format(
+                    SimpleDateFormat("yyyy-MM-dd")
+                        .parse(dateToFormat)
+                )
+
+            //Update Date
+            return convertedDate
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
     private fun setPayTotal() {
         fee = 5000
 
-        bind.tvIdrTotal.text = Utils.currencyFormat(subtotal.toString())
-        bind.tvTaxTotal.text = Utils.currencyFormat(fee.toString())
-        bind.tvPayTotal.text = Utils.currencyFormat(intent.getStringExtra("payTotal")!!)
+        var subTotal =  Utils.currencyFormat(subtotal.toString())
+        bind.tvIdrTotal.text = subTotal
+
+        var tax = Utils.currencyFormat(fee.toString())
+        bind.tvTaxTotal.text = tax
+
+        var discount =  intent.getStringExtra("payTotal").toInt() - subtotal
+        bind.tvDiscountTotal.text = Utils.currencyFormat(discount.toString())
+
+        if(discount.toInt() == 5000) {
+            var payTotal = intent.getStringExtra("payTotal").toInt()
+            bind.tvPayTotal.text = Utils.currencyFormat(payTotal.toString())
+        } else if (discount.toInt() != 5000) {
+            bind.tvDiscountTotal.visibility = View.VISIBLE
+            bind.tvDiscount.visibility = View.VISIBLE
+            var payTotal = intent.getStringExtra("payTotal").toInt() + fee
+            bind.tvPayTotal.text = Utils.currencyFormat(payTotal.toString())
+        }
+
     }
 }

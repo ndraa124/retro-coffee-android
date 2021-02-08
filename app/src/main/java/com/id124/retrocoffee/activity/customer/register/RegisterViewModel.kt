@@ -55,7 +55,6 @@ class RegisterViewModel: ViewModel(), CoroutineScope {
 
             if (response is RegisterResponse) {
                 isLoadingLiveData.value = false
-
                 if (response.success) {
                     onSuccessLiveData.value = true
                     onMessageLiveData.value = response.message

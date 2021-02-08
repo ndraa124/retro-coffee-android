@@ -20,6 +20,10 @@
             android:required="false" />
 
         <activity
+            android:name=".activity.admin.order.detail_order.DetailOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RetroCoffee.NoActionBar" />
+        <activity
             android:name=".activity.admin.product.form_product.FormProductActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.RetroCoffee.NoActionBar" />
