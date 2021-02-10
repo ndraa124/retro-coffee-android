@@ -35,17 +35,20 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:textSize="18sp"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="12sp"
+                        android:autoSizeMaxTextSize="15sp"
+                        android:autoSizeStepGranularity="2sp"
                         android:layout_marginStart="14dp"
                         android:layout_marginEnd="14dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="60dp"/>
 
                     <TextView
                         android:id="@+id/tv_productPrice"
                         android:layout_alignParentBottom="true"
                         android:text="IDR 4000"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="45dp"
                         android:layout_marginBottom="25sp"
                         android:gravity="center"
                         android:textSize="13sp"
